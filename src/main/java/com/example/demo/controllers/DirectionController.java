@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.DepartementDto;
+import com.example.demo.dto.DirectionDto;
+import com.example.demo.dto.PersonnelDto;
+import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
+import com.example.demo.entities.Personnel;
 import com.example.demo.services.DirectionService;
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,10 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
 
 @RestController
 @RequestMapping(path = "direction")
@@ -42,8 +44,42 @@ public class DirectionController {
 
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Direction>> getAll(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionService.getAllDirection());
+    public ResponseEntity<List<DirectionDto>> getAll(){
+        List<Direction> directions = directionService.getAllDirection();
+        List<DirectionDto> directionDtos = new ArrayList<>();
+        for(Direction direction:directions){
+            directionDtos.add(convertDirectionToDTO(direction, 1));
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionDtos);
     }
+
+    public static DirectionDto convertDirectionToDTO(Direction direction, int depthDepartement){
+        DirectionDto directionDto = new DirectionDto(
+                direction.getId(),
+                direction.getOrganizationId(),
+                direction.getLevel(),
+                direction.getType(),
+                direction.getTreepath(),
+                direction.getParentorganizationId(),
+                direction.getName()
+
+                );
+        if (depthDepartement > 0) {
+
+            Set<DepartementDto> departementDto = new HashSet<>();
+            for (Departement departement : direction.getDepartements()) {
+                departementDto.add(convertDepartementToDto(departement, depthDepartement - 1, 1));
+            }
+
+            directionDto.setDepartements(departementDto);
+        }
+        return directionDto;
+
+
+    }
+
+
+
+
 
 }
