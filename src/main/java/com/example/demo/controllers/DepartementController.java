@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.example.demo.controllers.DirectionController.convertDirectionToDTO;
+import static com.example.demo.controllers.DirectionController.convertDtoToDirection;
 import static com.example.demo.controllers.PersonnelController.convertPersonnelToDto;
 
 public class DepartementController {
@@ -41,5 +42,26 @@ public class DepartementController {
             dto.setPersonnels(personnelDtos);
         }
         return dto;
+    }
+
+    public static Departement convertDtoToDepartement(DepartementDto departementDto){
+        Departement departement = new Departement(
+                departementDto.getId(),
+                departementDto.getOrganizationId(),
+                departementDto.getLevel(),
+                departementDto.getType(),
+                departementDto.getTreepath(),
+                departementDto.getParentorganizationId(),
+                departementDto.getName()
+        );
+        if (departementDto.getDirection()!= null) {
+            departement.setDirection(convertDtoToDirection(departementDto.getDirection()));
+        }
+        Set<Personnel> personnels = new HashSet<>();
+        for(PersonnelDto personnelDto:departementDto.getPersonnels()){
+            personnels.add(PersonnelController.convertDtoToPersonnel(personnelDto));
+        }
+        departement.setPersonnels(personnels);
+        return departement;
     }
 }

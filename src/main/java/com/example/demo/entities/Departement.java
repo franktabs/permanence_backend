@@ -103,6 +103,16 @@ public class Departement {
         this.parentorganizationId = parentorganizationId;
     }
 
+    public Departement(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
+        this.id = id;
+        this.organizationId = organizationId;
+        this.level = level;
+        this.type = type;
+        this.treepath = treepath;
+        this.parentorganizationId = parentorganizationId;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

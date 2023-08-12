@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
+import static com.example.demo.controllers.DepartementController.convertDtoToDepartement;
 
 @RestController
 @RequestMapping(path = "direction")
@@ -79,7 +80,24 @@ public class DirectionController {
     }
 
 
+    public static Direction convertDtoToDirection(DirectionDto directionDto){
+        Direction direction = new Direction(
+                directionDto.getId(),
+                directionDto.getOrganizationId(),
+                directionDto.getLevel(),
+                directionDto.getType(),
+                directionDto.getTreepath(),
+                directionDto.getParentorganizationId(),
+                directionDto.getName()
 
+                );
+        Set<Departement> departements = new HashSet<>();
+        for (DepartementDto departementDto:directionDto.getDepartements()){
+            departements.add(convertDtoToDepartement(departementDto));
+        }
+        direction.setDepartements(departements);
+    return direction;
+    }
 
 
 }

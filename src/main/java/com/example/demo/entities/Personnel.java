@@ -191,6 +191,21 @@ public class Personnel {
         this.departement = departement;
     }
 
+    public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
+        this.id = id;
+        this.firstname = firstname;
+        this.emailaddress = emailaddress;
+        this.telephoneCisco = telephoneCisco;
+        this.telephoneMobile = telephoneMobile;
+        this.userId = userId;
+        this.sexe = sexe;
+        this.fonction = fonction;
+        this.service = service;
+        this.libAge = libAge;
+        this.organizationId = organizationId;
+        this.agent = agent;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

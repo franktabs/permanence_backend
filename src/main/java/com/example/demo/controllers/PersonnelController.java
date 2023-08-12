@@ -38,7 +38,7 @@ public class PersonnelController {
         List<Personnel> personnels = personnelService.getAllPerson();
         List<PersonnelDto> personnelDtos = new ArrayList<>();
         for (Personnel personnel:personnels){
-            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1));
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.FOUND).body(personnelDtos);
     }
@@ -99,5 +99,37 @@ public class PersonnelController {
         return personnelDto;
     }
 
+    public static Personnel convertDtoToPersonnel(PersonnelDto personnelDto){
+        Personnel personnel = new Personnel(
+                personnelDto.getId(),
+                personnelDto.getFirstname(),
+                personnelDto.getEmailaddress(),
+                personnelDto.getTelephoneCisco(),
+                personnelDto.getTelephoneMobile(),
+                personnelDto.getUserId(),
+                personnelDto.getSexe(),
+                personnelDto.getFonction(),
+                personnelDto.getService(),
+                personnelDto.getLibAge(),
+                personnelDto.getOrganizationId(),
+                personnelDto.getAgent()
+        );
+        if (personnelDto.getDepartement()!= null) {
+            personnel.setDepartement(DepartementController.convertDtoToDepartement(personnelDto.getDepartement()));
+        }
+        Set<Absence> absences = new HashSet<>();
+        for (AbsenceDto absenceDto:personnelDto.getAbsences()){
+            absences.add(AbsenceController.convertDtoToAbsence(absenceDto));
+        }
+        personnel.setAbsences(absences);
+
+        Set<Remplacement> remplacements = new HashSet<>();
+        for (RemplacementDto remplacementDto:personnelDto.getRemplacements()){
+            remplacements.add(RemplacementController.convertDtoToRemplacement(remplacementDto));
+        }
+        personnel.setRemplacements(remplacements);
+
+        return personnel;
+    }
 
 }

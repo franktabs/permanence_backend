@@ -30,4 +30,23 @@ public class RemplacementController {
 
         return remplacementDto;
     }
+
+    public static Remplacement convertDtoToRemplacement(RemplacementDto remplacementDto) {
+        Remplacement remplacement = new Remplacement(
+                remplacementDto.getId(),
+                remplacementDto.getMessage(),
+                remplacementDto.getMotif(),
+                remplacementDto.getValidate(),
+                remplacementDto.getSubmissionDate(),
+                remplacementDto.getStart(),
+                remplacementDto.getEnd()
+        );
+        if(remplacementDto.getPersonnel()!=null){
+            remplacement.setPersonnel(PersonnelController.convertDtoToPersonnel(remplacementDto.getPersonnel()));
+        }
+        if(remplacementDto.getRemplaceur()!=null){
+            remplacement.setRemplaceur(PersonnelController.convertDtoToPersonnel(remplacementDto.getRemplaceur()));
+        }
+        return remplacement;
+    }
 }

@@ -46,6 +46,16 @@ public class Remplacement {
     @JoinColumn(name = "remplaceur", nullable = false)
     private Personnel remplaceur;
 
+    public Remplacement(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end) {
+        this.id = id;
+        this.message = message;
+        this.motif = motif;
+        this.validate = validate;
+        this.submissionDate = submissionDate;
+        this.start = start;
+        this.end = end;
+    }
+
     public Long getId() {
         return id;
     }

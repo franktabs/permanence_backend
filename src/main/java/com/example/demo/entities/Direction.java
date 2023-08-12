@@ -37,6 +37,16 @@ public class Direction {
     @Column(name = "name", nullable = false)
     private String name;
 
+    public Direction(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
+        this.id = id;
+        this.organizationId = organizationId;
+        this.level = level;
+        this.type = type;
+        this.treepath = treepath;
+        this.parentorganizationId = parentorganizationId;
+        this.name = name;
+    }
+
     @OneToMany(mappedBy = "direction", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<Departement> departements = new LinkedHashSet<>();
 

@@ -6,6 +6,7 @@ import com.example.demo.entities.Absence;
 import com.example.demo.entities.Personnel;
 
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
+import static com.example.demo.controllers.PersonnelController.convertDtoToPersonnel;
 import static com.example.demo.controllers.PersonnelController.convertPersonnelToDto;
 
 public class AbsenceController {
@@ -27,5 +28,22 @@ public class AbsenceController {
             }
         }
         return absenceDto;
+    }
+
+    public static Absence convertDtoToAbsence(AbsenceDto absenceDto){
+        Absence absence = new Absence(
+                absenceDto.getId(),
+                absenceDto.getMessage(),
+                absenceDto.getMotif(),
+                absenceDto.getValidate(),
+                absenceDto.getSubmissionDate(),
+                absenceDto.getStart(),
+                absenceDto.getEnd(),
+                absenceDto.getType_()
+        );
+        if (absenceDto.getPersonnel()!= null) {
+            absence.setPersonnel(convertDtoToPersonnel(absenceDto.getPersonnel()));
+        }
+        return absence;
     }
 }
