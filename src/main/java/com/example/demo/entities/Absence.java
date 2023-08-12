@@ -43,6 +43,7 @@ public class Absence {
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
+    public Absence(){}
     public Absence(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end, String type) {
         this.id = id;
         this.message = message;

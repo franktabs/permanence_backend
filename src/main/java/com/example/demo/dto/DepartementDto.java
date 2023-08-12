@@ -15,7 +15,7 @@ public class DepartementDto implements Serializable {
     private Long organizationId;
     private Long level;
     @Size(max = 45)
-    private String type;
+    private String type_;
     @Size(max = 255)
     private String treepath;
     private Integer parentorganizationId;
@@ -26,44 +26,45 @@ public class DepartementDto implements Serializable {
     private DirectionDto direction;
     private Set<PersonnelDto> personnels;
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
-        this.type = type;
+        this.type_ = type_;
         this.treepath = treepath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
     }
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
-        this.type = type;
+        this.type_ = type_;
         this.treepath = treepath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
         this.direction = direction;
     }
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name, Set<PersonnelDto> personnels) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, Set<PersonnelDto> personnels) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
-        this.type = type;
+        this.type_ = type_;
         this.treepath = treepath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
         this.personnels = personnels;
     }
 
+    public DepartementDto(){}
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction, Set<PersonnelDto> personnels) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction, Set<PersonnelDto> personnels) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
-        this.type = type;
+        this.type_ = type_;
         this.treepath = treepath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
@@ -83,8 +84,8 @@ public class DepartementDto implements Serializable {
         return level;
     }
 
-    public String getType() {
-        return type;
+    public String getType_() {
+        return type_;
     }
 
     public String getTreepath() {
@@ -123,7 +124,7 @@ public class DepartementDto implements Serializable {
         return Objects.equals(this.id, entity.id) &&
                 Objects.equals(this.organizationId, entity.organizationId) &&
                 Objects.equals(this.level, entity.level) &&
-                Objects.equals(this.type, entity.type) &&
+                Objects.equals(this.type_, entity.type_) &&
                 Objects.equals(this.treepath, entity.treepath) &&
                 Objects.equals(this.parentorganizationId, entity.parentorganizationId) &&
                 Objects.equals(this.name, entity.name) &&
@@ -133,7 +134,7 @@ public class DepartementDto implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, organizationId, level, type, treepath, parentorganizationId, name, direction, personnels);
+        return Objects.hash(id, organizationId, level, type_, treepath, parentorganizationId, name, direction, personnels);
     }
 
     @Override
@@ -142,7 +143,7 @@ public class DepartementDto implements Serializable {
                 "id = " + id + ", " +
                 "organizationId = " + organizationId + ", " +
                 "level = " + level + ", " +
-                "type = " + type + ", " +
+                "type_ = " + type_ + ", " +
                 "treepath = " + treepath + ", " +
                 "parentorganizationId = " + parentorganizationId + ", " +
                 "name = " + name + ", " +

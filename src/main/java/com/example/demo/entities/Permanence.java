@@ -22,6 +22,14 @@ public class Permanence {
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
+    public Permanence() {
+    }
+    public Permanence(Long id, @NotNull LocalDate date, @NotNull String type) {
+        this.id = id;
+        this.date = date;
+        this.type = type;
+    }
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "month_id", nullable = false)

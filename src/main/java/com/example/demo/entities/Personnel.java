@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "personnel")
 public class Personnel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
     private Long id;
 
@@ -61,14 +62,14 @@ public class Personnel {
     private Boolean agent;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.ALL})
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
-    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.ALL})
     private Set<Remplacement> remplacements = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.ALL})
     private Set<Absence> absences = new LinkedHashSet<>();
 
     public Set<Absence> getAbsences() {
@@ -189,6 +190,9 @@ public class Personnel {
 
     public void setDepartement(Departement departement) {
         this.departement = departement;
+    }
+
+    public Personnel() {
     }
 
     public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {

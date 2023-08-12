@@ -40,11 +40,11 @@ public class Departement {
     private String name;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "direction_id", nullable = false)
     private Direction direction;
 
-    @OneToMany(mappedBy = "departement", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "departement", cascade = {CascadeType.ALL})
     private Set<Personnel> personnels = new LinkedHashSet<>();
 
     public Set<Personnel> getPersonnels() {
@@ -103,6 +103,8 @@ public class Departement {
         this.parentorganizationId = parentorganizationId;
     }
 
+    public Departement() {
+    }
     public Departement(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;

@@ -7,19 +7,23 @@ import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
 import com.example.demo.entities.Personnel;
 import com.example.demo.services.DirectionService;
+import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
 import static com.example.demo.controllers.DepartementController.convertDtoToDepartement;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "direction")
 public class DirectionController {
 
@@ -30,31 +34,49 @@ public class DirectionController {
     Validator validator;
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> creerOne( @RequestBody Direction direction){
-        Errors errors = new BeanPropertyBindingResult(direction, "direction");
-        validator.validate(direction, errors);
-        if(errors.hasErrors()){
-            Map<String, String> mapErrors = new HashMap<>();
-            for(FieldError error: errors.getFieldErrors()){
-                mapErrors.put(error.getField(),error.getDefaultMessage());
+    public ResponseEntity<?> creerOne(@Valid @RequestBody DirectionDto directionDto, BindingResult bindingResult) {
+        /*Errors errors = new BeanPropertyBindingResult(direction, "direction");
+        validator.validate(direction, errors);*/
+
+        try{
+            if (bindingResult.hasErrors()) {
+                Map<String, String> mapErrors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    mapErrors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(mapErrors);
             }
-            return  ResponseEntity.badRequest().body(mapErrors);
+            Direction direction = convertDtoToDirection(directionDto);
+            System.out.println("\n\n Conversion termninée"+ direction.toString()+" \n\n");
+            direction = directionService.sauvegarder(direction);
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertDirectionToDTO(direction, 1));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(directionService.sauvegarder(direction));
+        catch (DataIntegrityViolationException e){
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici"+ message+"\n\n");
+            if(message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
     }
 
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DirectionDto>> getAll(){
+    public ResponseEntity<List<DirectionDto>> getAll() {
         List<Direction> directions = directionService.getAllDirection();
         List<DirectionDto> directionDtos = new ArrayList<>();
-        for(Direction direction:directions){
+        for (Direction direction : directions) {
             directionDtos.add(convertDirectionToDTO(direction, 1));
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionDtos);
     }
 
-    public static DirectionDto convertDirectionToDTO(Direction direction, int depthDepartement){
+    public static DirectionDto convertDirectionToDTO(Direction direction, int depthDepartement) {
         DirectionDto directionDto = new DirectionDto(
                 direction.getId(),
                 direction.getOrganizationId(),
@@ -64,7 +86,7 @@ public class DirectionController {
                 direction.getParentorganizationId(),
                 direction.getName()
 
-                );
+        );
         if (depthDepartement > 0) {
 
             Set<DepartementDto> departementDto = new HashSet<>();
@@ -80,23 +102,25 @@ public class DirectionController {
     }
 
 
-    public static Direction convertDtoToDirection(DirectionDto directionDto){
+    public static Direction convertDtoToDirection(DirectionDto directionDto) {
         Direction direction = new Direction(
                 directionDto.getId(),
                 directionDto.getOrganizationId(),
                 directionDto.getLevel(),
-                directionDto.getType(),
+                directionDto.getType_(),
                 directionDto.getTreepath(),
                 directionDto.getParentorganizationId(),
                 directionDto.getName()
 
-                );
+        );
         Set<Departement> departements = new HashSet<>();
-        for (DepartementDto departementDto:directionDto.getDepartements()){
-            departements.add(convertDtoToDepartement(departementDto));
+        if(directionDto.getDepartements()!=null){
+            for (DepartementDto departementDto : directionDto.getDepartements()) {
+                departements.add(convertDtoToDepartement(departementDto));
+            }
         }
         direction.setDepartements(departements);
-    return direction;
+        return direction;
     }
 
 

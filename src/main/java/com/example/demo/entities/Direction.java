@@ -37,6 +37,8 @@ public class Direction {
     @Column(name = "name", nullable = false)
     private String name;
 
+    public Direction() {
+    }
     public Direction(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
@@ -47,7 +49,7 @@ public class Direction {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "direction", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "direction", cascade = {CascadeType.ALL})
     private Set<Departement> departements = new LinkedHashSet<>();
 
     public Set<Departement> getDepartements() {
@@ -114,4 +116,17 @@ public class Direction {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Direction{" +
+                "id=" + id +
+                ", organizationId=" + organizationId +
+                ", level=" + level +
+                ", type='" + type + '\'' +
+                ", treepath='" + treepath + '\'' +
+                ", parentorganizationId=" + parentorganizationId +
+                ", name='" + name + '\'' +
+                ", departements=" + departements +
+                '}';
+    }
 }

@@ -15,8 +15,7 @@ import static com.example.demo.controllers.PersonnelController.convertPersonnelT
 public class DepartementController {
 
 
-
-    public static DepartementDto convertDepartementToDto(Departement departement, int depthDirection, int depthPersonnel){
+    public static DepartementDto convertDepartementToDto(Departement departement, int depthDirection, int depthPersonnel) {
         DepartementDto dto = new DepartementDto(
                 departement.getId(),
                 departement.getOrganizationId(),
@@ -32,10 +31,10 @@ public class DepartementController {
             }
 
         }
-        if(depthPersonnel > 0){
+        if (depthPersonnel > 0) {
 
             Set<PersonnelDto> personnelDtos = new HashSet<>();
-            for(Personnel personnel:departement.getPersonnels()){
+            for (Personnel personnel : departement.getPersonnels()) {
                 personnelDtos.add(convertPersonnelToDto(personnel, depthPersonnel - 1, 1, 1));
             }
 
@@ -44,22 +43,25 @@ public class DepartementController {
         return dto;
     }
 
-    public static Departement convertDtoToDepartement(DepartementDto departementDto){
+    public static Departement convertDtoToDepartement(DepartementDto departementDto) {
         Departement departement = new Departement(
                 departementDto.getId(),
                 departementDto.getOrganizationId(),
                 departementDto.getLevel(),
-                departementDto.getType(),
+                departementDto.getType_(),
                 departementDto.getTreepath(),
                 departementDto.getParentorganizationId(),
                 departementDto.getName()
         );
-        if (departementDto.getDirection()!= null) {
+        if (departementDto.getDirection() != null) {
             departement.setDirection(convertDtoToDirection(departementDto.getDirection()));
         }
         Set<Personnel> personnels = new HashSet<>();
-        for(PersonnelDto personnelDto:departementDto.getPersonnels()){
-            personnels.add(PersonnelController.convertDtoToPersonnel(personnelDto));
+        if (departementDto.getPersonnels() != null) {
+
+            for (PersonnelDto personnelDto : departementDto.getPersonnels()) {
+                personnels.add(PersonnelController.convertDtoToPersonnel(personnelDto));
+            }
         }
         departement.setPersonnels(personnels);
         return departement;

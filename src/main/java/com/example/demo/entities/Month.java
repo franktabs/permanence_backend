@@ -26,6 +26,16 @@ public class Month {
     @Column(name = "end")
     private LocalDate end;
 
+    public Month(){}
+
+    public Month(Long id, String name, Long numero, LocalDate start, LocalDate end) {
+        this.id = id;
+        this.name = name;
+        this.numero = numero;
+        this.start = start;
+        this.end = end;
+    }
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "superviseur", nullable = false)

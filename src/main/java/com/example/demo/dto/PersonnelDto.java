@@ -41,6 +41,8 @@ public class PersonnelDto implements Serializable {
     private Set<RemplacementDto> absentList;
     private Set<AbsenceDto> vacancies;
 
+    public PersonnelDto() {
+    }
     public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
         this.id = id;
         this.firstname = firstname;
@@ -120,11 +122,11 @@ public class PersonnelDto implements Serializable {
         return departement;
     }
 
-    public Set<RemplacementDto> getRemplacements() {
+    public Set<RemplacementDto> getAbsentList() {
         return absentList;
     }
 
-    public Set<AbsenceDto> getAbsences() {
+    public Set<AbsenceDto> getVacancies() {
         return vacancies;
     }
 

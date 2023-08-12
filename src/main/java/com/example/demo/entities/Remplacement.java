@@ -37,7 +37,7 @@ public class Remplacement {
     private LocalDate end;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
@@ -46,6 +46,8 @@ public class Remplacement {
     @JoinColumn(name = "remplaceur", nullable = false)
     private Personnel remplaceur;
 
+    public Remplacement() {
+    }
     public Remplacement(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end) {
         this.id = id;
         this.message = message;

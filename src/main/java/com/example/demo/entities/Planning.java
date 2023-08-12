@@ -28,6 +28,16 @@ public class Planning {
     @Column(name = "isValid")
     private Boolean isValid;
 
+    public Planning() {
+    }
+    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.periode = periode;
+        this.isValid = isValid;
+    }
+
     public Long getId() {
         return id;
     }
