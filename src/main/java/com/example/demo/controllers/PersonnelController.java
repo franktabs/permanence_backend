@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.AbsenceDto;
 import com.example.demo.dto.PersonnelDto;
+import com.example.demo.entities.Absence;
 import com.example.demo.entities.Personnel;
 import com.example.demo.services.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static com.example.demo.controllers.AbsenceController.convertAbsenceToDto;
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
 
 @RestController
@@ -30,8 +31,13 @@ public class PersonnelController {
     Validator validator;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Personnel> allPersonnel(){
-        return personnelService.getAllPerson();
+    public ResponseEntity<List<PersonnelDto>> allPersonnel(){
+        List<Personnel> personnels = personnelService.getAllPerson();
+        List<PersonnelDto> personnelDtos = new ArrayList<>();
+        for (Personnel personnel:personnels){
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1));
+        }
+        return ResponseEntity.status(HttpStatus.FOUND).body(personnelDtos);
     }
 
     @PostMapping()
@@ -49,7 +55,7 @@ public class PersonnelController {
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement){
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence){
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -68,6 +74,15 @@ public class PersonnelController {
             if (personnel.getDepartement()!= null) {
                 personnelDto.setDepartement(convertDepartementToDto(personnel.getDepartement(), 1,depthDepartement - 1));
             }
+        }
+        if(depthAbsence > 0){
+
+            Set<AbsenceDto> absenceDtos = new HashSet<>();
+            for(Absence absence:personnel.getAbsences()){
+                absenceDtos.add(convertAbsenceToDto(absence, depthAbsence-1));
+            }
+
+            personnelDto.setAbsences(absenceDtos);
         }
         return personnelDto;
     }

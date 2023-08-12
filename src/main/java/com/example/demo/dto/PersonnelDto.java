@@ -39,7 +39,7 @@ public class PersonnelDto implements Serializable {
     @NotNull
     private DepartementDto departement;
     private Set<Remplacement> remplacements;
-    private Set<Absence> absences;
+    private Set<AbsenceDto> absences;
 
     public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
         this.id = id;
@@ -64,7 +64,7 @@ public class PersonnelDto implements Serializable {
         this.remplacements = remplacements;
     }
 
-    public void setAbsences(Set<Absence> absences) {
+    public void setAbsences(Set<AbsenceDto> absences) {
         this.absences = absences;
     }
 
@@ -124,7 +124,7 @@ public class PersonnelDto implements Serializable {
         return remplacements;
     }
 
-    public Set<Absence> getAbsences() {
+    public Set<AbsenceDto> getAbsences() {
         return absences;
     }
 

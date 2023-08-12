@@ -23,7 +23,7 @@ public class Absence {
     private String motif;
 
     @Column(name = "validate")
-    private Byte validate;
+    private Boolean validate;
 
     @Column(name = "submission_date")
     private LocalDate submissionDate;
@@ -67,11 +67,11 @@ public class Absence {
         this.motif = motif;
     }
 
-    public Byte getValidate() {
+    public Boolean getValidate() {
         return validate;
     }
 
-    public void setValidate(Byte validate) {
+    public void setValidate(Boolean validate) {
         this.validate = validate;
     }
 
