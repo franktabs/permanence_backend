@@ -2,8 +2,10 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.AbsenceDto;
 import com.example.demo.dto.PersonnelDto;
+import com.example.demo.dto.RemplacementDto;
 import com.example.demo.entities.Absence;
 import com.example.demo.entities.Personnel;
+import com.example.demo.entities.Remplacement;
 import com.example.demo.services.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.*;
 
 import static com.example.demo.controllers.AbsenceController.convertAbsenceToDto;
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
+import static com.example.demo.controllers.RemplacementController.convertRemplacementToDto;
 
 @RestController
 @RequestMapping(path = "personnel")
@@ -55,7 +58,7 @@ public class PersonnelController {
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence){
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement){
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -83,6 +86,15 @@ public class PersonnelController {
             }
 
             personnelDto.setAbsences(absenceDtos);
+        }
+        if(depthRemplacement > 0){
+
+            Set<RemplacementDto> remplacementDtos = new HashSet<>();
+            for(Remplacement remplacement:personnel.getRemplacements()){
+                remplacementDtos.add(convertRemplacementToDto(remplacement, depthRemplacement-1, 1));
+            }
+
+            personnelDto.setRemplacements(remplacementDtos);
         }
         return personnelDto;
     }

@@ -23,7 +23,7 @@ public class AbsenceController {
         );
         if (depthPersonnel > 0) {
             if (absence.getPersonnel()!= null) {
-                absenceDto.setPersonnel(convertPersonnelToDto(absence.getPersonnel(), 1, depthPersonnel-1));
+                absenceDto.setPersonnel(convertPersonnelToDto(absence.getPersonnel(), 1, depthPersonnel-1,1));
             }
         }
         return absenceDto;

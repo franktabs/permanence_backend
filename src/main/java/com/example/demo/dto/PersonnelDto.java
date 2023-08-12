@@ -38,8 +38,8 @@ public class PersonnelDto implements Serializable {
     private Boolean agent;
     @NotNull
     private DepartementDto departement;
-    private Set<Remplacement> remplacements;
-    private Set<AbsenceDto> absences;
+    private Set<RemplacementDto> absentList;
+    private Set<AbsenceDto> vacancies;
 
     public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
         this.id = id;
@@ -60,12 +60,12 @@ public class PersonnelDto implements Serializable {
         this.departement = departement;
     }
 
-    public void setRemplacements(Set<Remplacement> remplacements) {
-        this.remplacements = remplacements;
+    public void setRemplacements(Set<RemplacementDto> absentList) {
+        this.absentList = absentList;
     }
 
-    public void setAbsences(Set<AbsenceDto> absences) {
-        this.absences = absences;
+    public void setAbsences(Set<AbsenceDto> vacancies) {
+        this.vacancies = vacancies;
     }
 
     public Long getId() {
@@ -120,12 +120,12 @@ public class PersonnelDto implements Serializable {
         return departement;
     }
 
-    public Set<Remplacement> getRemplacements() {
-        return remplacements;
+    public Set<RemplacementDto> getRemplacements() {
+        return absentList;
     }
 
     public Set<AbsenceDto> getAbsences() {
-        return absences;
+        return vacancies;
     }
 
 
@@ -148,13 +148,13 @@ public class PersonnelDto implements Serializable {
                 Objects.equals(this.organizationId, entity.organizationId) &&
                 Objects.equals(this.agent, entity.agent) &&
                 Objects.equals(this.departement, entity.departement) &&
-                Objects.equals(this.remplacements, entity.remplacements) &&
-                Objects.equals(this.absences, entity.absences);
+                Objects.equals(this.absentList, entity.absentList) &&
+                Objects.equals(this.vacancies, entity.vacancies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, emailaddress, telephoneCisco, telephoneMobile, userId, sexe, fonction, service, libAge, organizationId, agent, departement, remplacements, absences);
+        return Objects.hash(id, firstname, emailaddress, telephoneCisco, telephoneMobile, userId, sexe, fonction, service, libAge, organizationId, agent, departement, absentList, vacancies);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class PersonnelDto implements Serializable {
                 "organizationId = " + organizationId + ", " +
                 "agent = " + agent + ", " +
                 "departement = " + departement + ", " +
-                "remplacements = " + remplacements + ", " +
-                "absences = " + absences + ")";
+                "absentList = " + absentList + ", " +
+                "vacancies = " + vacancies + ")";
     }
 }

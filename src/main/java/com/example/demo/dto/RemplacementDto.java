@@ -1,6 +1,5 @@
-package com.example.demo.controllers;
+package com.example.demo.dto;
 
-import com.example.demo.dto.PersonnelDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -29,7 +28,7 @@ public class RemplacementDto implements Serializable {
     public RemplacementDto() {
     }
 
-    public RemplacementDto(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end, @NotNull PersonnelDto personnel, @NotNull PersonnelDto remplaceur) {
+    public RemplacementDto(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end) {
         this.id = id;
         this.message = message;
         this.motif = motif;
@@ -37,8 +36,6 @@ public class RemplacementDto implements Serializable {
         this.submissionDate = submissionDate;
         this.start = start;
         this.end = end;
-        this.personnel = personnel;
-        this.remplaceur = remplaceur;
     }
 
     public Long getId() {
