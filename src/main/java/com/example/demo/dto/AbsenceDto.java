@@ -16,7 +16,7 @@ public class AbsenceDto implements Serializable {
     private String message;
     @Size(max = 45)
     private String motif;
-    private Boolean validate;
+    private Boolean validate = null;
     private LocalDate submissionDate;
     private LocalDate start;
     private LocalDate end;

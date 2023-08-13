@@ -40,6 +40,15 @@ public class PersonnelController {
         return ResponseEntity.status(HttpStatus.OK).body(personnelDtos);
     }
 
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonnelDto> getOnePersonnel(@PathVariable Long id){
+        Personnel personnel = personnelService.getOnePersonnel(id);
+        if(personnel==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1));
+    }
+
     @PostMapping()
     public ResponseEntity<?> creer(@Valid @RequestBody PersonnelDto personnelDto, BindingResult bindingResult) {
         try {

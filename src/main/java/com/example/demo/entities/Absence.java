@@ -23,7 +23,7 @@ public class Absence {
     private String motif;
 
     @Column(name = "validate")
-    private Boolean validate;
+    private Boolean validate = null;
 
     @Column(name = "submission_date")
     private LocalDate submissionDate;

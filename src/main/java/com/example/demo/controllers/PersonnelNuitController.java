@@ -24,7 +24,7 @@ public class PersonnelNuitController {
 
         if(depthPermanence > 0){
             if(personnelNuit.getPermanence()!=null){
-                personnelNuitDto.setPermanence(PermanenceController.convertPermanenceToDto(personnelNuit.getPermanence(), 1, depthPermanence-1));
+                personnelNuitDto.setPermanence(PermanenceController.convertPermanenceToDto(personnelNuit.getPermanence(), 1, depthPermanence-1, 1));
             }
         }
 

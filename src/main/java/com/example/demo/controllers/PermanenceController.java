@@ -2,14 +2,34 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.*;
 import com.example.demo.entities.*;
+import com.example.demo.services.PermanenceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static com.example.demo.controllers.AbsenceController.convertAbsenceToDto;
 import static com.example.demo.controllers.RemplacementController.convertRemplacementToDto;
-
+@RestController
+@CrossOrigin
+@RequestMapping("/permanence")
 public class PermanenceController {
+
+    @Autowired
+    private PermanenceService permanenceService;
+
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PermanenceDto> getPermanence(@PathVariable Long id) {
+        Permanence permanence = permanenceService.getPermanenceById(id);
+        if (permanence == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(convertPermanenceToDto(permanence, 1, 1, 1), HttpStatus.OK);
+    }
 
     public static PermanenceDto convertPermanenceToDto(Permanence permanence, int depthPersonnelJour, int depthPersonnelNuit, int depthMonth) {
         PermanenceDto permanenceDto = new PermanenceDto(

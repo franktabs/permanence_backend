@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonnelService {
@@ -21,5 +22,8 @@ public class PersonnelService {
         return  personnelRepository.save(personnel);
     }
 
-
+    public Personnel getOnePersonnel(Long id){
+        Optional<Personnel> optional =  personnelRepository.findById(id);
+        return optional.orElse(null);
+    }
 }
