@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "planning")
@@ -27,6 +29,18 @@ public class Planning {
 
     @Column(name = "isValid")
     private Boolean isValid;
+
+    @OneToMany(mappedBy = "planning", cascade = CascadeType.ALL
+    )
+    private Set<Month> months = new LinkedHashSet<>();
+
+    public Set<Month> getMonths() {
+        return months;
+    }
+
+    public void setMonths(Set<Month> months) {
+        this.months = months;
+    }
 
     public Planning() {
     }

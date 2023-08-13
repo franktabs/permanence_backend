@@ -1,11 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.AbsenceDto;
-import com.example.demo.dto.PersonnelDto;
-import com.example.demo.dto.RemplacementDto;
-import com.example.demo.entities.Absence;
-import com.example.demo.entities.Personnel;
-import com.example.demo.entities.Remplacement;
+import com.example.demo.dto.*;
+import com.example.demo.entities.*;
 import com.example.demo.services.PersonnelService;
 import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +35,7 @@ public class PersonnelController {
         List<Personnel> personnels = personnelService.getAllPerson();
         List<PersonnelDto> personnelDtos = new ArrayList<>();
         for (Personnel personnel : personnels) {
-            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1));
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.OK).body(personnelDtos);
     }
@@ -56,25 +52,23 @@ public class PersonnelController {
             }
             Personnel personnel = convertDtoToPersonnel(personnelDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1, 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1, 1, 1, 1, 1));
 
-        }
-        catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
-            System.out.println("\n\nerreur ici"+ message+"\n\n");
-            if(message.isEmpty()) {
+            System.out.println("\n\nerreur ici" + message + "\n\n");
+            if (message.isEmpty()) {
                 message.put("errors", e.getMostSpecificCause().getMessage());
             }
             return ResponseEntity.badRequest().body(message);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
         }
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement) {
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour) {
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -97,8 +91,11 @@ public class PersonnelController {
         if (depthAbsence > 0) {
 
             Set<AbsenceDto> absenceDtos = new HashSet<>();
-            for (Absence absence : personnel.getAbsences()) {
-                absenceDtos.add(convertAbsenceToDto(absence, depthAbsence - 1));
+            if (personnel.getAbsences() != null) {
+
+                for (Absence absence : personnel.getAbsences()) {
+                    absenceDtos.add(convertAbsenceToDto(absence, depthAbsence - 1));
+                }
             }
 
             personnelDto.setAbsences(absenceDtos);
@@ -106,11 +103,35 @@ public class PersonnelController {
         if (depthRemplacement > 0) {
 
             Set<RemplacementDto> remplacementDtos = new HashSet<>();
-            for (Remplacement remplacement : personnel.getRemplacements()) {
-                remplacementDtos.add(convertRemplacementToDto(remplacement, depthRemplacement - 1, 1));
+            if (personnel.getRemplacements() != null) {
+
+                for (Remplacement remplacement : personnel.getRemplacements()) {
+                    remplacementDtos.add(convertRemplacementToDto(remplacement, depthRemplacement - 1, 1));
+                }
             }
 
             personnelDto.setRemplacements(remplacementDtos);
+        }
+
+        if (depthPersonnelNuit > 0) {
+            Set<PersonnelNuitDto> personnelNuitDtos = new HashSet<>();
+            if (personnel.getPersonnelNuits() != null) {
+                for (PersonnelNuit personnelNuit : personnel.getPersonnelNuits()) {
+                    personnelNuitDtos.add(PersonnelNuitController.convertPersonnelNuitToDto(personnelNuit, depthPersonnelNuit - 1, 1));
+                }
+            }
+
+            personnelDto.setPersonnels_nuit(personnelNuitDtos);
+        }
+
+        if (depthPersonnelJour > 0) {
+            Set<PersonnelJourDto> personnelJourDtos = new HashSet<>();
+            if (personnel.getPersonnelJours() != null) {
+                for (PersonnelJour personnelJour : personnel.getPersonnelJours()) {
+                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, depthPersonnelNuit - 1, 1));
+                }
+            }
+            personnelDto.setPersonnels_jour(personnelJourDtos);
         }
         return personnelDto;
     }
@@ -150,6 +171,22 @@ public class PersonnelController {
             }
         }
         personnel.setRemplacements(remplacements);
+
+        Set<PersonnelJour> personnelJours =new HashSet<>();
+        if(personnelDto.getPersonnels_jour()!=null){
+            for(PersonnelJourDto personnelJourDto:personnelDto.getPersonnels_jour()){
+                personnelJours.add(PersonnelJourController.convertDtoToPersonnelJour(personnelJourDto));
+            }
+        }
+        personnel.setPersonnelJours(personnelJours);
+
+        Set<PersonnelNuit> personnelNuit =new HashSet<>();
+        if(personnelDto.getPersonnels_nuit()!=null){
+            for(PersonnelNuitDto personnelNuitDto:personnelDto.getPersonnels_nuit()){
+                personnelNuit.add(PersonnelNuitController.convertDtoToPersonnelNuit(personnelNuitDto));
+            }
+        }
+        personnel.setPersonnelNuits(personnelNuit);
 
         return personnel;
     }

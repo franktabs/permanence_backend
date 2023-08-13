@@ -3,13 +3,18 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "month")
 public class Month {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
     private Long id;
 
@@ -45,6 +50,17 @@ public class Month {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "planning_id", nullable = false)
     private Planning planning;
+
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private Set<Permanence> permanences = new LinkedHashSet<>();
+
+    public Set<Permanence> getPermanences() {
+        return permanences;
+    }
+
+    public void setPermanences(Set<Permanence> permanences) {
+        this.permanences = permanences;
+    }
 
     public Long getId() {
         return id;
@@ -102,4 +118,19 @@ public class Month {
         this.planning = planning;
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Month month = (Month) o;
+        return getId() != null && Objects.equals(getId(), month.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

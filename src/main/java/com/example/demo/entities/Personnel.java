@@ -61,6 +61,8 @@ public class Personnel {
     @Column(name = "agent")
     private Boolean agent;
 
+
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.ALL})
     @JoinColumn(name = "departement_id", nullable = false)
@@ -71,6 +73,28 @@ public class Personnel {
 
     @OneToMany(mappedBy = "personnel", cascade = {CascadeType.ALL})
     private Set<Absence> absences = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "personnel", cascade = CascadeType.ALL)
+    private Set<PersonnelJour> personnelJours = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "personnel", cascade = CascadeType.ALL)
+    private Set<PersonnelNuit> personnelNuits = new LinkedHashSet<>();
+
+    public Set<PersonnelNuit> getPersonnelNuits() {
+        return personnelNuits;
+    }
+
+    public void setPersonnelNuits(Set<PersonnelNuit> personnelNuits) {
+        this.personnelNuits = personnelNuits;
+    }
+
+    public Set<PersonnelJour> getPersonnelJours() {
+        return personnelJours;
+    }
+
+    public void setPersonnelJours(Set<PersonnelJour> personnelJours) {
+        this.personnelJours = personnelJours;
+    }
 
     public Set<Absence> getAbsences() {
         return absences;
