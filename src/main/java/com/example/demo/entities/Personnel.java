@@ -247,6 +247,21 @@ public class Personnel {
     }
 
     @Override
+    public String toString() {
+        return "Personnel{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", emailaddress='" + emailaddress + '\'' +
+                ", telephoneCisco='" + telephoneCisco + '\'' +
+                ", telephoneMobile='" + telephoneMobile + '\'' +
+                ", userId=" + userId +
+                ", sexe=" + sexe +
+                ", fonction='" + fonction + '\'' +
+                ", service='" + service + '\'' +
+                '}';
+    }
+
+    @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;

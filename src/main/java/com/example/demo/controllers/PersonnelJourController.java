@@ -32,11 +32,11 @@ public class PersonnelJourController {
 
 
     @Autowired
-    PersonnelJourService planningJourService;
+    PersonnelJourService personnelJourService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PersonnelJourDto>> allPersonnelJour() {
-        List<PersonnelJour> planningJours = planningJourService.getAllPersonnelJour();
+        List<PersonnelJour> planningJours = personnelJourService.getAllPersonnelJour();
         List<PersonnelJourDto> planningJourDtos = new ArrayList<>();
         for (PersonnelJour planningJour : planningJours) {
             planningJourDtos.add(convertPersonnelJourToDto(planningJour, 1, 1));
@@ -46,7 +46,7 @@ public class PersonnelJourController {
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonnelJourDto> getOnePersonnelJour(@PathVariable Long id){
-        PersonnelJour planningJour = planningJourService.getPersonnelJourById(id);
+        PersonnelJour planningJour = personnelJourService.getPersonnelJourById(id);
         if(planningJour==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -54,7 +54,7 @@ public class PersonnelJourController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> creer(@Valid @RequestBody PersonnelJourDto planningJourDto, BindingResult bindingResult) {
+    public ResponseEntity<?> creer(@Valid @RequestBody PersonnelJourDto personnelJourDto, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 Map<String, String> mapErrors = new HashMap<>();
@@ -63,9 +63,9 @@ public class PersonnelJourController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            PersonnelJour planningJour = convertDtoToPersonnelJour(planningJourDto);
+            PersonnelJour personnelJour = convertDtoToPersonnelJour(personnelJourDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelJourToDto(planningJourService.create(planningJour), 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelJourToDto(personnelJourService.create(personnelJour), 1, 1));
 
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -109,11 +109,11 @@ public class PersonnelJourController {
                 personnelJourDto.getResponsable()
         );
 
-        if(personnelJour.getPersonnel()!=null){
+        if(personnelJourDto.getPersonnel()!=null){
             personnelJour.setPersonnel(PersonnelController.convertDtoToPersonnel(personnelJourDto.getPersonnel()));
         }
 
-        if(personnelJour.getPermanence()!=null){
+        if(personnelJourDto.getPermanence()!=null){
             personnelJour.setPermanence(PermanenceController.convertDtoToPermanence(personnelJourDto.getPermanence()));
 
         }

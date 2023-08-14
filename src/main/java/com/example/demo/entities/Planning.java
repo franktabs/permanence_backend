@@ -30,9 +30,21 @@ public class Planning {
     @Column(name = "isValid")
     private Boolean isValid;
 
-    @OneToMany(mappedBy = "planning", cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    @OneToMany(mappedBy = "planning", cascade = {CascadeType.PERSIST}
     )
     private Set<Month> months = new LinkedHashSet<>();
+
+    @NotNull
+    @Column(name = "submission_date")
+    private LocalDate submissionDate;
+
+    public LocalDate getSubmissionDate() {
+        return submissionDate;
+    }
+
+    public void setSubmissionDate(LocalDate submissionDate) {
+        this.submissionDate = submissionDate;
+    }
 
     public Set<Month> getMonths() {
         return months;
@@ -44,12 +56,13 @@ public class Planning {
 
     public Planning() {
     }
-    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid) {
+    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid, @NotNull LocalDate submissionDate) {
         this.id = id;
         this.start = start;
         this.end = end;
         this.periode = periode;
         this.isValid = isValid;
+        this.submissionDate = submissionDate;
     }
 
     public Long getId() {

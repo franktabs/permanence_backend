@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entities.Planning;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * DTO for {@link com.example.demo.entities.Planning}
+ * DTO for {@link Planning}
  */
 public class PlanningDto implements Serializable {
     private Long id;
@@ -22,16 +23,19 @@ public class PlanningDto implements Serializable {
     private Integer periode;
     private Boolean isValid;
     private Set<MonthDto> months = new LinkedHashSet<>();
+    @NotNull
+    private LocalDate submissionDate;
 
     public PlanningDto() {
     }
 
-    public PlanningDto(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid) {
+    public PlanningDto(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid,@NotNull LocalDate submissionDate ) {
         this.id = id;
         this.start = start;
         this.end = end;
         this.periode = periode;
         this.isValid = isValid;
+        this.submissionDate=submissionDate;
     }
 
     public Long getId() {
@@ -115,5 +119,13 @@ public class PlanningDto implements Serializable {
                 "periode = " + periode + ", " +
                 "isValid = " + isValid + ", " +
                 "months = " + months + ")";
+    }
+
+    public LocalDate getSubmissionDate() {
+        return submissionDate;
+    }
+
+    public void setSubmissionDate(LocalDate submissionDate) {
+        this.submissionDate = submissionDate;
     }
 }

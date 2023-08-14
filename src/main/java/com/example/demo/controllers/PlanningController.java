@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin()
 @RequestMapping("/planning")
 public class PlanningController {
 
@@ -82,7 +82,8 @@ public class PlanningController {
                 planning.getStart(),
                 planning.getEnd(),
                 planning.getPeriode(),
-                planning.getIsValid()
+                planning.getIsValid(),
+                planning.getSubmissionDate()
         );
 
         if (depthMonth > 0) {
@@ -104,7 +105,8 @@ public class PlanningController {
                 planningDto.getStart(),
                 planningDto.getEnd(),
                 planningDto.getPeriode(),
-                planningDto.getIsValid()
+                planningDto.getIsValid(),
+                planningDto.getSubmissionDate()
         );
 
         Set<Month> months = new HashSet<>();

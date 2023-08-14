@@ -72,6 +72,16 @@ public class PersonnelJour {
     }
 
     @Override
+    public String toString() {
+        return "PersonnelJour{" +
+                "id=" + id +
+                ", personnel=" + personnel +
+                ", permanence=" + permanence +
+                ", responsable=" + responsable +
+                '}';
+    }
+
+    @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;

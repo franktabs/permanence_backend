@@ -126,7 +126,7 @@ public class PersonnelController {
             Set<PersonnelNuitDto> personnelNuitDtos = new HashSet<>();
             if (personnel.getPersonnelNuits() != null) {
                 for (PersonnelNuit personnelNuit : personnel.getPersonnelNuits()) {
-                    personnelNuitDtos.add(PersonnelNuitController.convertPersonnelNuitToDto(personnelNuit, depthPersonnelNuit - 1, 1));
+                    personnelNuitDtos.add(PersonnelNuitController.convertPersonnelNuitToDto(personnelNuit, 0, 0));
                 }
             }
 
@@ -137,7 +137,7 @@ public class PersonnelController {
             Set<PersonnelJourDto> personnelJourDtos = new HashSet<>();
             if (personnel.getPersonnelJours() != null) {
                 for (PersonnelJour personnelJour : personnel.getPersonnelJours()) {
-                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, depthPersonnelJour - 1, 1));
+                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, 0, 0));
                 }
             }
             personnelDto.setPersonnels_jour(personnelJourDtos);
@@ -147,7 +147,7 @@ public class PersonnelController {
             Set<MonthDto> monthDtos = new HashSet<>();
             if(personnel.getMonths_supervise()!=null){
                 for (Month month:personnel.getMonths_supervise()){
-                    monthDtos.add(MonthController.convertMonthToDto(month, 1, 1, depthMonthSupervise - 1));
+                    monthDtos.add(MonthController.convertMonthToDto(month, 0, 0, 0));
                 }
             }
 

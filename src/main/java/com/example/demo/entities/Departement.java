@@ -132,6 +132,18 @@ public class Departement {
     }
 
     @Override
+    public String toString() {
+        return "Departement{" +
+                "id=" + id +
+                ", organizationId=" + organizationId +
+                ", level=" + level +
+                ", type='" + type + '\'' +
+                ", treepath='" + treepath + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;

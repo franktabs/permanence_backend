@@ -16,6 +16,9 @@ public class DepartementController {
 
 
     public static DepartementDto convertDepartementToDto(Departement departement, int depthDirection, int depthPersonnel) {
+
+        System.out.println("\n\n aprres conversion \n"+departement.toString()+"\nn");
+
         DepartementDto dto = new DepartementDto(
                 departement.getId(),
                 departement.getOrganizationId(),

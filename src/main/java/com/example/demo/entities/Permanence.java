@@ -109,4 +109,14 @@ public class Permanence {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Permanence{" +
+                "id=" + id +
+                ", date=" + date +
+                ", type='" + type + '\'' +
+                ", month=" + month +
+                '}';
+    }
 }
