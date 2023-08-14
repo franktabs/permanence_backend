@@ -30,7 +30,7 @@ public class Planning {
     @Column(name = "isValid")
     private Boolean isValid;
 
-    @OneToMany(mappedBy = "planning", cascade = CascadeType.ALL
+    @OneToMany(mappedBy = "planning", cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     private Set<Month> months = new LinkedHashSet<>();
 

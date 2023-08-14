@@ -40,10 +40,10 @@ public class Permanence {
     @JoinColumn(name = "month_id", nullable = false)
     private Month month;
 
-    @OneToMany(mappedBy = "permanence", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "permanence", cascade = CascadeType.PERSIST)
     private Set<PersonnelJour> personnelJours = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "permanence", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "permanence", cascade = CascadeType.PERSIST)
     private Set<PersonnelNuit> personnelNuits = new LinkedHashSet<>();
 
     public Set<PersonnelNuit> getPersonnelNuits() {

@@ -8,6 +8,7 @@ import com.example.demo.entities.Direction;
 import com.example.demo.entities.Month;
 import com.example.demo.entities.Planning;
 import com.example.demo.repositories.PlanningRepository;
+import com.example.demo.services.PlanningService;
 import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,7 +28,7 @@ import java.util.*;
 public class PlanningController {
 
     @Autowired
-    PlanningRepository planningRepository;
+    PlanningService planningService;
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> creerOne(@Valid @RequestBody PlanningDto planningDto, BindingResult bindingResult) {
@@ -42,7 +43,7 @@ public class PlanningController {
             }
             Planning planning = convertDtoToPlanning(planningDto);
             System.out.println("\n\n Conversion termninée" + planning.toString() + " \n\n");
-            planning = planningRepository.save(planning);
+            planning = planningService.create(planning);
             return ResponseEntity.status(HttpStatus.CREATED).body(convertPlanningToDto(planning, 1));
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -59,7 +60,7 @@ public class PlanningController {
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PlanningDto>> getAll() {
-        List<Planning> plannings = planningRepository.findAll();
+        List<Planning> plannings = planningService.getAllPlanning();
         List<PlanningDto> planningDtos = new ArrayList<>();
         for (Planning planning : plannings) {
             planningDtos.add(convertPlanningToDto(planning, 1));
@@ -67,7 +68,14 @@ public class PlanningController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(planningDtos);
     }
 
-
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PlanningDto> getOnePlanning(@PathVariable Long id){
+        Planning planning = planningService.getPlanningById(id);
+        if(planning==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPlanningToDto(planning, 1));
+    }
     public static PlanningDto convertPlanningToDto(Planning planning, int depthMonth) {
         PlanningDto planningDto = new PlanningDto(
                 planning.getId(),
@@ -81,7 +89,7 @@ public class PlanningController {
             Set<MonthDto> monthDtos = new HashSet<>();
             if (planning.getMonths() != null) {
                 for (Month month : planning.getMonths()) {
-                    monthDtos.add(MonthController.convertMonthToDto(month, 1, depthMonth - 1));
+                    monthDtos.add(MonthController.convertMonthToDto(month, 1, depthMonth - 1, 1));
                 }
             }
             planningDto.setMonths(monthDtos);

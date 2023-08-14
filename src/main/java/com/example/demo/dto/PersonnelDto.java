@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.entities.Absence;
+import com.example.demo.entities.Personnel;
 import com.example.demo.entities.Remplacement;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * DTO for {@link com.example.demo.entities.Personnel}
+ * DTO for {@link Personnel}
  */
 public class PersonnelDto implements Serializable {
     private Long id;
@@ -44,6 +45,7 @@ public class PersonnelDto implements Serializable {
     private Set<PersonnelJourDto> personnels_jour;
 
     private Set<PersonnelNuitDto> personnels_nuit;
+    private Set<MonthDto> months_supervise;
 
     public PersonnelDto() {
     }
@@ -197,5 +199,13 @@ public class PersonnelDto implements Serializable {
                 "departement = " + departement + ", " +
                 "absentList = " + absentList + ", " +
                 "vacancies = " + vacancies + ")";
+    }
+
+    public void setMonths_supervise(Set<MonthDto> months_supervise) {
+        this.months_supervise = months_supervise;
+    }
+
+    public Set<MonthDto> getMonths_supervise() {
+        return months_supervise;
     }
 }

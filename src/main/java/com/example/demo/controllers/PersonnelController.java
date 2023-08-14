@@ -35,7 +35,7 @@ public class PersonnelController {
         List<Personnel> personnels = personnelService.getAllPerson();
         List<PersonnelDto> personnelDtos = new ArrayList<>();
         for (Personnel personnel : personnels) {
-            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1));
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1,1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.OK).body(personnelDtos);
     }
@@ -46,7 +46,7 @@ public class PersonnelController {
         if(personnel==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1,1, 1, 1, 1, 1));
     }
 
     @PostMapping()
@@ -61,7 +61,7 @@ public class PersonnelController {
             }
             Personnel personnel = convertDtoToPersonnel(personnelDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1, 1, 1, 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1,1, 1, 1, 1, 1));
 
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -77,7 +77,7 @@ public class PersonnelController {
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour) {
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise) {
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -137,11 +137,23 @@ public class PersonnelController {
             Set<PersonnelJourDto> personnelJourDtos = new HashSet<>();
             if (personnel.getPersonnelJours() != null) {
                 for (PersonnelJour personnelJour : personnel.getPersonnelJours()) {
-                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, depthPersonnelNuit - 1, 1));
+                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, depthPersonnelJour - 1, 1));
                 }
             }
             personnelDto.setPersonnels_jour(personnelJourDtos);
         }
+
+        if(depthMonthSupervise>0){
+            Set<MonthDto> monthDtos = new HashSet<>();
+            if(personnel.getMonths_supervise()!=null){
+                for (Month month:personnel.getMonths_supervise()){
+                    monthDtos.add(MonthController.convertMonthToDto(month, 1, 1, depthMonthSupervise - 1));
+                }
+            }
+
+            personnelDto.setMonths_supervise(monthDtos);
+        }
+
         return personnelDto;
     }
 
@@ -196,6 +208,14 @@ public class PersonnelController {
             }
         }
         personnel.setPersonnelNuits(personnelNuit);
+
+        Set<Month> months_supervise =new HashSet<>();
+        if(personnelDto.getMonths_supervise()!=null){
+            for(MonthDto monthDto:personnelDto.getMonths_supervise()){
+                months_supervise.add(MonthController.convertDtoToMonth(monthDto));
+            }
+        }
+        personnel.setMonths_supervise(months_supervise);
 
         return personnel;
     }

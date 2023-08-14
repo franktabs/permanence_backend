@@ -51,7 +51,7 @@ public class Month {
     @JoinColumn(name = "planning_id", nullable = false)
     private Planning planning;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "month", cascade = CascadeType.PERSIST)
     private Set<Permanence> permanences = new LinkedHashSet<>();
 
     public Set<Permanence> getPermanences() {

@@ -47,7 +47,7 @@ public class AbsenceController {
             }
             Absence absence = convertDtoToAbsence(absenceDto);
             System.out.println("\n\n Conversion termninée" + absence.toString() + " \n\n");
-            absence = absenceService.createAbsence(absence);
+            absence = absenceService.create(absence);
             return ResponseEntity.status(HttpStatus.CREATED).body(convertAbsenceToDto(absence, 1));
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -74,7 +74,7 @@ public class AbsenceController {
             }
             Absence absence = convertDtoToAbsence(absenceDto);
             System.out.println("\n\n Conversion termninée" + absence.toString() + " \n\n");
-            absence = absenceService.updateAbsence(absence, id);
+            absence = absenceService.update(absence, id);
             if(absence==null){
                 return ResponseEntity.notFound().build();
             }
@@ -104,7 +104,7 @@ public class AbsenceController {
         );
         if (depthPersonnel > 0) {
             if (absence.getPersonnel()!= null) {
-                absenceDto.setPersonnel(convertPersonnelToDto(absence.getPersonnel(), 1, depthPersonnel-1,1, 1, 1));
+                absenceDto.setPersonnel(convertPersonnelToDto(absence.getPersonnel(), 1, depthPersonnel-1,1, 1, 1,1));
             }
         }
         return absenceDto;

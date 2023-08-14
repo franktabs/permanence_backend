@@ -49,7 +49,7 @@ public class Direction {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "direction", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "direction", cascade = {CascadeType.PERSIST})
     private Set<Departement> departements = new LinkedHashSet<>();
 
     public Set<Departement> getDepartements() {

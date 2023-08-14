@@ -44,7 +44,7 @@ public class Departement {
     @JoinColumn(name = "direction_id", nullable = false)
     private Direction direction;
 
-    @OneToMany(mappedBy = "departement", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "departement", cascade = {CascadeType.PERSIST})
     private Set<Personnel> personnels = new LinkedHashSet<>();
 
     public Set<Personnel> getPersonnels() {

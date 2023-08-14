@@ -68,17 +68,29 @@ public class Personnel {
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
-    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.PERSIST})
     private Set<Remplacement> remplacements = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "personnel", cascade = {CascadeType.PERSIST})
     private Set<Absence> absences = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "personnel", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "personnel", cascade = CascadeType.PERSIST)
     private Set<PersonnelJour> personnelJours = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "personnel", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "personnel", cascade = CascadeType.PERSIST)
     private Set<PersonnelNuit> personnelNuits = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "superviseur", cascade = CascadeType.PERSIST)
+    private Set<Month> months_supervise = new LinkedHashSet<>();
+
+    public Set<Month> getMonths_supervise() {
+        return months_supervise;
+    }
+
+    public void setMonths_supervise(Set<Month> months_supervise) {
+        this.months_supervise = months_supervise;
+    }
 
     public Set<PersonnelNuit> getPersonnelNuits() {
         return personnelNuits;
