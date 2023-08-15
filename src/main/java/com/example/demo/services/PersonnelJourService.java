@@ -24,6 +24,15 @@ public class PersonnelJourService {
         return personnelJourRepository.save(personnelJourUpdate);
     }
 
+    public boolean delete(Long id){
+
+        if(!personnelJourRepository.existsById(id)){
+            return false;
+        }
+        personnelJourRepository.deleteById(id);
+        return true;
+    }
+
     public List<PersonnelJour> getAllPersonnelJour(){
         return personnelJourRepository.findAll();
     }

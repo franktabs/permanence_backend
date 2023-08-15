@@ -44,14 +44,25 @@ public class PersonnelJourController {
         return ResponseEntity.status(HttpStatus.OK).body(planningJourDtos);
     }
 
-    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonnelJourDto> getOnePersonnelJour(@PathVariable Long id){
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonnelJourDto> getOnePersonnelJour(@PathVariable Long id) {
         PersonnelJour planningJour = personnelJourService.getPersonnelJourById(id);
-        if(planningJour==null){
-            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (planningJour == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelJourToDto(planningJour, 1, 1));
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deletePersonnelJour(@PathVariable Long id) {
+        if (personnelJourService.delete(id)) {
+            return ResponseEntity.ok().body(Map.of("success", "Operation réussi"));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("errors", "echec de l'operation"));
+        }
+    }
+
+
 
     @PostMapping()
     public ResponseEntity<?> creer(@Valid @RequestBody PersonnelJourDto personnelJourDto, BindingResult bindingResult) {
@@ -81,21 +92,21 @@ public class PersonnelJourController {
     }
 
 
-    public static PersonnelJourDto convertPersonnelJourToDto(PersonnelJour personnelJour, int depthPersonnel, int depthPermanence){
+    public static PersonnelJourDto convertPersonnelJourToDto(PersonnelJour personnelJour, int depthPersonnel, int depthPermanence) {
         PersonnelJourDto personnelJourDto = new PersonnelJourDto(
                 personnelJour.getId(),
                 personnelJour.getResponsable()
         );
 
-        if(depthPersonnel>0){
-            if(personnelJour.getPersonnel()!=null){
-                personnelJourDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelJour.getPersonnel(), 1, 1,1, 1,depthPersonnel-1, 1));
+        if (depthPersonnel > 0) {
+            if (personnelJour.getPersonnel() != null) {
+                personnelJourDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelJour.getPersonnel(), 1, 1, 1, 1, depthPersonnel - 1, 1));
             }
         }
 
-        if(depthPermanence > 0){
-            if(personnelJour.getPermanence()!=null){
-                personnelJourDto.setPermanence(PermanenceController.convertPermanenceToDto(personnelJour.getPermanence(), depthPersonnel-1, 1, 1));
+        if (depthPermanence > 0) {
+            if (personnelJour.getPermanence() != null) {
+                personnelJourDto.setPermanence(PermanenceController.convertPermanenceToDto(personnelJour.getPermanence(), depthPersonnel - 1, 1, 1));
             }
         }
 
@@ -103,17 +114,17 @@ public class PersonnelJourController {
     }
 
 
-    public static PersonnelJour convertDtoToPersonnelJour(PersonnelJourDto personnelJourDto){
+    public static PersonnelJour convertDtoToPersonnelJour(PersonnelJourDto personnelJourDto) {
         PersonnelJour personnelJour = new PersonnelJour(
                 personnelJourDto.getId(),
                 personnelJourDto.getResponsable()
         );
 
-        if(personnelJourDto.getPersonnel()!=null){
+        if (personnelJourDto.getPersonnel() != null) {
             personnelJour.setPersonnel(PersonnelController.convertDtoToPersonnel(personnelJourDto.getPersonnel()));
         }
 
-        if(personnelJourDto.getPermanence()!=null){
+        if (personnelJourDto.getPermanence() != null) {
             personnelJour.setPermanence(PermanenceController.convertDtoToPermanence(personnelJourDto.getPermanence()));
 
         }

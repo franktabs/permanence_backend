@@ -32,4 +32,14 @@ public class PersonnelNuitService {
     public PersonnelNuit getPersonnelNuitById(Long id){
         return personnelNuitRepository.findById(id).orElse(null);
     }
+
+
+    public boolean delete(Long id){
+
+        if(!personnelNuitRepository.existsById(id)){
+            return false;
+        }
+        personnelNuitRepository.deleteById(id);
+        return true;
+    }
 }

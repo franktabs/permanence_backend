@@ -73,6 +73,35 @@ public class PermanenceController {
         }
     }
 
+    @PutMapping(path = "entirely/{id}")
+    public ResponseEntity<?> updateEntirely(@PathVariable Long id, @Valid @RequestBody PermanenceDto permanenceDto, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                Map<String, String> mapErrors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    mapErrors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(mapErrors);
+            }
+            Permanence permanence = convertDtoToPermanence(permanenceDto);
+            Permanence permanence1 = permanenceService.updateEntirely(id, permanence);
+            if(permanence1==null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("errors", "Une operation c'est mal produite"));
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPermanenceToDto(permanenceService.create(permanence), 1, 1, 1));
+
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici" + message + "\n\n");
+            if (message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
+    }
     public static PermanenceDto convertPermanenceToDto(Permanence permanence, int depthPersonnelJour, int depthPersonnelNuit, int depthMonth) {
         PermanenceDto permanenceDto = new PermanenceDto(
                 permanence.getId(),

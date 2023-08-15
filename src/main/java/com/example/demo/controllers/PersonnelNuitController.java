@@ -75,6 +75,14 @@ public class PersonnelNuitController {
         }
     }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deletePersonnelNuit(@PathVariable Long id) {
+        if (personnelNuitService.delete(id)) {
+            return ResponseEntity.ok().body(Map.of("success", "Operation réussi"));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("errors", "echec de l'operation"));
+        }
+    }
 
     public static PersonnelNuitDto convertPersonnelNuitToDto(PersonnelNuit personnelNuit, int depthPersonnel, int depthPermanence){
         PersonnelNuitDto personnelNuitDto = new PersonnelNuitDto(
