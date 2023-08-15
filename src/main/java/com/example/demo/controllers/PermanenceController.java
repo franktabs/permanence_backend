@@ -19,6 +19,7 @@ import java.util.*;
 
 import static com.example.demo.controllers.AbsenceController.convertAbsenceToDto;
 import static com.example.demo.controllers.RemplacementController.convertRemplacementToDto;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/permanence")
@@ -37,11 +38,11 @@ public class PermanenceController {
         return ResponseEntity.status(HttpStatus.OK).body(permanenceDtos);
     }
 
-    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PermanenceDto> getOnePermanence(@PathVariable Long id){
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PermanenceDto> getOnePermanence(@PathVariable Long id) {
         Permanence permanence = permanenceService.getPermanenceById(id);
-        if(permanence==null){
-            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (permanence == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertPermanenceToDto(permanence, 1, 1, 1));
     }
@@ -73,6 +74,7 @@ public class PermanenceController {
         }
     }
 
+/*
     @PutMapping(path = "entirely/{id}")
     public ResponseEntity<?> updateEntirely(@PathVariable Long id, @Valid @RequestBody PermanenceDto permanenceDto, BindingResult bindingResult) {
         try {
@@ -84,8 +86,9 @@ public class PermanenceController {
                 return ResponseEntity.badRequest().body(mapErrors);
             }
             Permanence permanence = convertDtoToPermanence(permanenceDto);
+            System.out.println("Conversion permanence " + permanence);
             Permanence permanence1 = permanenceService.updateEntirely(id, permanence);
-            if(permanence1==null){
+            if (permanence1 == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("errors", "Une operation c'est mal produite"));
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(convertPermanenceToDto(permanenceService.create(permanence), 1, 1, 1));
@@ -102,6 +105,19 @@ public class PermanenceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
         }
     }
+*/
+
+    @DeleteMapping(path = "entirely-personnel/{id}")
+    public ResponseEntity<?> deleteEntirelyPersonnel(@PathVariable Long id) {
+        System.out.println("Une operation s'est produite");
+        Permanence permanence = permanenceService.deleteEntirelyPersonnel(id);
+        if(permanence!=null){
+            return ResponseEntity.ok().body(convertPermanenceToDto(permanence, 1, 1, 1));
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("errors", "Une operation c'est mal produite"));
+        }
+    }
+
     public static PermanenceDto convertPermanenceToDto(Permanence permanence, int depthPersonnelJour, int depthPersonnelNuit, int depthMonth) {
         PermanenceDto permanenceDto = new PermanenceDto(
                 permanence.getId(),
@@ -123,15 +139,15 @@ public class PermanenceController {
             Set<PersonnelJourDto> personnelJourDtos = new HashSet<>();
             if (permanence.getPersonnelJours() != null) {
                 for (PersonnelJour personnelJour : permanence.getPersonnelJours()) {
-                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour,1,  depthPersonnelJour - 1));
+                    personnelJourDtos.add(PersonnelJourController.convertPersonnelJourToDto(personnelJour, 1, depthPersonnelJour - 1));
                 }
             }
             permanenceDto.setPersonnels_jour(personnelJourDtos);
         }
 
-        if(depthMonth>0){
-            if(permanence.getMonth()!=null){
-                permanenceDto.setMonth(MonthController.convertMonthToDto(permanence.getMonth(), depthMonth-1, 1, 1));
+        if (depthMonth > 0) {
+            if (permanence.getMonth() != null) {
+                permanenceDto.setMonth(MonthController.convertMonthToDto(permanence.getMonth(), depthMonth - 1, 1, 1));
             }
         }
 
@@ -139,30 +155,30 @@ public class PermanenceController {
         return permanenceDto;
     }
 
-    public static Permanence convertDtoToPermanence(PermanenceDto permanenceDto){
+    public static Permanence convertDtoToPermanence(PermanenceDto permanenceDto) {
         Permanence permanence = new Permanence(
                 permanenceDto.getId(),
                 permanenceDto.getDate(),
                 permanenceDto.getType()
         );
 
-        Set<PersonnelJour> personnelJours =new HashSet<>();
-        if(permanenceDto.getPersonnels_jour()!=null){
-            for(PersonnelJourDto personnelJourDto:permanenceDto.getPersonnels_jour()){
+        Set<PersonnelJour> personnelJours = new HashSet<>();
+        if (permanenceDto.getPersonnels_jour() != null) {
+            for (PersonnelJourDto personnelJourDto : permanenceDto.getPersonnels_jour()) {
                 personnelJours.add(PersonnelJourController.convertDtoToPersonnelJour(personnelJourDto));
             }
         }
         permanence.setPersonnelJours(personnelJours);
 
-        Set<PersonnelNuit> personnelNuit =new HashSet<>();
-        if(permanenceDto.getPersonnels_nuit()!=null){
-            for(PersonnelNuitDto personnelNuitDto:permanenceDto.getPersonnels_nuit()){
+        Set<PersonnelNuit> personnelNuit = new HashSet<>();
+        if (permanenceDto.getPersonnels_nuit() != null) {
+            for (PersonnelNuitDto personnelNuitDto : permanenceDto.getPersonnels_nuit()) {
                 personnelNuit.add(PersonnelNuitController.convertDtoToPersonnelNuit(personnelNuitDto));
             }
         }
         permanence.setPersonnelNuits(personnelNuit);
 
-        if(permanenceDto.getMonth()!=null){
+        if (permanenceDto.getMonth() != null) {
             permanence.setMonth(MonthController.convertDtoToMonth(permanenceDto.getMonth()));
         }
 

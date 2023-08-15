@@ -3,6 +3,9 @@ package com.example.demo.services;
 import com.example.demo.entities.PersonnelJour;
 import com.example.demo.repositories.PersonnelJourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jdbc.repository.query.Modifying;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +40,13 @@ public class PersonnelJourService {
         return personnelJourRepository.findAll();
     }
 
+    public void suppression(Long id){
+        personnelJourRepository.deletePersonnelJour(id);
+    }
+
     public PersonnelJour getPersonnelJourById(Long id){
         return personnelJourRepository.findById(id).orElse(null);
     }
+
+
 }

@@ -84,6 +84,7 @@ public class PersonnelNuitController {
         }
     }
 
+
     public static PersonnelNuitDto convertPersonnelNuitToDto(PersonnelNuit personnelNuit, int depthPersonnel, int depthPermanence){
         PersonnelNuitDto personnelNuitDto = new PersonnelNuitDto(
                 personnelNuit.getId(),

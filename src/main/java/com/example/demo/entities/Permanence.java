@@ -117,6 +117,8 @@ public class Permanence {
                 ", date=" + date +
                 ", type='" + type + '\'' +
                 ", month=" + month +
+                ", personnelJours=" + personnelJours +
+                ", personnelNuits=" + personnelNuits +
                 '}';
     }
 }

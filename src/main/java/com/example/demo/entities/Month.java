@@ -133,4 +133,15 @@ public class Month {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Month{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", numero=" + numero +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }

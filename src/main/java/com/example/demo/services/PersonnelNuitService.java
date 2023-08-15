@@ -42,4 +42,8 @@ public class PersonnelNuitService {
         personnelNuitRepository.deleteById(id);
         return true;
     }
+
+    public void suppression(Long id){
+        personnelNuitRepository.deletePersonnelNuit(id);
+    }
 }
