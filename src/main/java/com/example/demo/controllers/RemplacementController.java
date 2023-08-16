@@ -96,12 +96,12 @@ public class RemplacementController {
         );
         if(depthPersonnel>0){
             if(remplacement.getPersonnel()!=null){
-                remplacementDto.setPersonnel(convertPersonnelToDto(remplacement.getPersonnel(), 1, 1, depthPersonnel -1, 1, 1, 1));
+                remplacementDto.setPersonnel(convertPersonnelToDto(remplacement.getPersonnel(), 1, 1, depthPersonnel -1, 1, 1, 1, 1));
             }
         }
         if(depthRemplaceur>0){
             if(remplacement.getRemplaceur()!=null){
-                remplacementDto.setRemplaceur(convertPersonnelToDto(remplacement.getRemplaceur(), 1, 1, depthRemplaceur-1, 1, 1, 1));
+                remplacementDto.setRemplaceur(convertPersonnelToDto(remplacement.getRemplaceur(), 1, 1, depthRemplaceur-1, 1, 1, 1, 1));
             }
         }
 

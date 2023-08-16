@@ -84,6 +84,17 @@ public class Personnel {
     @OneToMany(mappedBy = "superviseur", cascade = CascadeType.PERSIST)
     private Set<Month> months_supervise = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "personnels", cascade = CascadeType.PERSIST)
+    private Set<Role> roles = new LinkedHashSet<>();
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public Set<Month> getMonths_supervise() {
         return months_supervise;
     }

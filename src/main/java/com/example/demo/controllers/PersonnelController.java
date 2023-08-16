@@ -35,7 +35,7 @@ public class PersonnelController {
         List<Personnel> personnels = personnelService.getAllPerson();
         List<PersonnelDto> personnelDtos = new ArrayList<>();
         for (Personnel personnel : personnels) {
-            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1,1, 1, 1));
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1,1, 1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.OK).body(personnelDtos);
     }
@@ -46,7 +46,7 @@ public class PersonnelController {
         if(personnel==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1,1, 1, 1, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1,1, 1, 1, 1, 1, 1));
     }
 
     @PostMapping()
@@ -61,7 +61,7 @@ public class PersonnelController {
             }
             Personnel personnel = convertDtoToPersonnel(personnelDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1,1, 1, 1, 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1,1, 1, 1, 1, 1, 1));
 
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -77,7 +77,7 @@ public class PersonnelController {
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise) {
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole) {
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -154,6 +154,19 @@ public class PersonnelController {
             personnelDto.setMonths_supervise(monthDtos);
         }
 
+        if (depthRole > 0) {
+
+            Set<RoleDto> roleDtos = new HashSet<>();
+            if (personnel.getRoles() != null) {
+
+                for (Role role : personnel.getRoles()) {
+                    roleDtos.add(RoleController.convertRoleToDto(role, depthRole - 1));
+                }
+            }
+
+            personnelDto.setRoles(roleDtos);
+        }
+
         return personnelDto;
     }
 
@@ -216,6 +229,14 @@ public class PersonnelController {
             }
         }
         personnel.setMonths_supervise(months_supervise);
+
+        Set<Role> roles = new HashSet<>();
+        if (personnelDto.getVacancies() != null) {
+            for (RoleDto roleDto : personnelDto.getRoles()) {
+                roles.add(RoleController.convertDtoToRole(roleDto));
+            }
+        }
+        personnel.setRoles(roles);
 
         return personnel;
     }

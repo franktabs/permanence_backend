@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "role")
 public class Role {
@@ -14,8 +17,31 @@ public class Role {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "nom", nullable = false)
-    private String nom;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @ManyToMany
+    @JoinTable(name = "role_personnels",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "personnels_id"))
+
+    private Set<Personnel> personnels = new LinkedHashSet<>();
+
+    public Set<Personnel> getPersonnels() {
+        return personnels;
+    }
+
+    public void setPersonnels(Set<Personnel> personnels) {
+        this.personnels = personnels;
+    }
+
+    public Role() {
+    }
+
+    public Role(Long id, @NotNull String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -25,12 +51,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
