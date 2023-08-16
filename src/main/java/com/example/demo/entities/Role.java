@@ -21,9 +21,9 @@ public class Role {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "role_personnels",
+    @JoinTable(name = "role_personnel",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "personnels_id"))
+            inverseJoinColumns = @JoinColumn(name = "personnel_id"))
 
     private Set<Personnel> personnels = new LinkedHashSet<>();
 
