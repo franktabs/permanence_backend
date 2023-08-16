@@ -41,6 +41,13 @@ public class RemplacementController {
         return ResponseEntity.status(HttpStatus.OK).body(remplacementDtos);
     }
 
+    @PutMapping(path = "{id}")
+    public ResponseEntity<?> update_validate(@PathVariable Long id, @RequestBody RemplacementDto remplacementDto){
+        Remplacement remplacement = convertDtoToRemplacement(remplacementDto);
+        Remplacement remplacement1 = remplacementService.update(id, remplacement);
+        return ResponseEntity.status(HttpStatus.OK).body(convertRemplacementToDto(remplacement1, 1, 1));
+    }
+
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RemplacementDto> getOneRemplacement(@PathVariable Long id){
         Remplacement remplacement = remplacementService.getRemplacementById(id);
