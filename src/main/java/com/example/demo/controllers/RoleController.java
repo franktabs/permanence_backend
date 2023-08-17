@@ -86,6 +86,25 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).body(convertRoleToDto(role, 1));
     }
 
+    @PutMapping(path = "{id}/add-personnel/{id2}")
+    public ResponseEntity<RoleDto> addPersonnel(@PathVariable Long id, @PathVariable Long id2){
+        Role role = roleService.addPersonnel(id, id2);
+        if(role==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertRoleToDto(role, 1));
+    }
+
+    @PutMapping(path = "{id}/add-personnels")
+    public ResponseEntity<RoleDto> addPersonnels(@PathVariable Long id, @RequestBody RoleDto roleDto){
+        Role role = convertDtoToRole(roleDto);
+        role = roleService.addPersonnels(id, role);
+        if(role==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertRoleToDto(role, 1));
+    }
+
     public static RoleDto convertRoleToDto(Role role, int depthPersonnel) {
         RoleDto roleDto = new RoleDto(
                 role.getId(),

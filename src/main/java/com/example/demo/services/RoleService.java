@@ -19,26 +19,60 @@ public class RoleService {
     @Autowired
     PersonnelRepository personnelRepository;
 
-    public List<Role> getAllRole(){
+    public List<Role> getAllRole() {
         return roleRepository.findAll();
     }
 
-    public Role getRoleById(Long id){
+    public Role getRoleById(Long id) {
         return roleRepository.findById(id).orElse(null);
     }
 
-    public Role create(Role role){
+    public Role create(Role role) {
         return roleRepository.save(role);
     }
 
 
-    public Role deletePersonnel(Long id, Long id2){
+    public Role deletePersonnel(Long id, Long id2) {
         Role role = roleRepository.findById(id).orElse(null);
         Personnel personnel = personnelRepository.findById(id2).orElse(null);
-        if(role==null || personnel==null){
+        if (role == null || personnel == null) {
             return null;
         }
         role.getPersonnels().remove(personnel);
         return roleRepository.save(role);
     }
+
+    public Role addPersonnel(Long id, Long id2) {
+        Role role = roleRepository.findById(id).orElse(null);
+        Personnel personnel = personnelRepository.findById(id2).orElse(null);
+        if (role == null || personnel == null) {
+            return null;
+        }
+        if(role.getPersonnels().contains(personnel)){
+            return role;
+        }
+        role.getPersonnels().add(personnel);
+        return roleRepository.save(role);
+    }
+
+    public Role addPersonnels(Long id, Role role){
+        Role roleInBD = roleRepository.findById(id).orElse(null);
+        if (roleInBD == null || role.getId()!=id) {
+            return null;
+        }
+        boolean add = false;
+        for(Personnel personnel : role.getPersonnels()){
+            Personnel personnelInBD = personnelRepository.findById(personnel.getId()).orElse(null);
+            if(personnelInBD!=null && !roleInBD.getPersonnels().contains(personnelInBD)){
+                add=true;
+                roleInBD.getPersonnels().add(personnelInBD);
+            }
+        }
+        if(add){
+            return roleRepository.save(roleInBD);
+        }else{
+            return roleInBD;
+        }
+    }
+
 }
