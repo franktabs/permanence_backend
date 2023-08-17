@@ -231,7 +231,7 @@ public class PersonnelController {
         personnel.setMonths_supervise(months_supervise);
 
         Set<Role> roles = new HashSet<>();
-        if (personnelDto.getVacancies() != null) {
+        if (personnelDto.getRoles() != null) {
             for (RoleDto roleDto : personnelDto.getRoles()) {
                 roles.add(RoleController.convertDtoToRole(roleDto));
             }
