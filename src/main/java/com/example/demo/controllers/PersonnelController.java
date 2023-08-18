@@ -35,18 +35,18 @@ public class PersonnelController {
         List<Personnel> personnels = personnelService.getAllPerson();
         List<PersonnelDto> personnelDtos = new ArrayList<>();
         for (Personnel personnel : personnels) {
-            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1,1, 1, 1, 1));
+            personnelDtos.add(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.OK).body(personnelDtos);
     }
 
-    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonnelDto> getOnePersonnel(@PathVariable Long id){
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonnelDto> getOnePersonnel(@PathVariable Long id) {
         Personnel personnel = personnelService.getOnePersonnel(id);
-        if(personnel==null){
-            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (personnel == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1,1, 1, 1, 1, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
     @PostMapping()
@@ -61,7 +61,7 @@ public class PersonnelController {
             }
             Personnel personnel = convertDtoToPersonnel(personnelDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1,1, 1, 1, 1, 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertPersonnelToDto(personnelService.creer(personnel), 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -77,7 +77,7 @@ public class PersonnelController {
     }
 
 
-    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole) {
+    public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole, int depthNotification, int depthAnnonce) {
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
                 personnel.getFirstname(),
@@ -143,10 +143,10 @@ public class PersonnelController {
             personnelDto.setPersonnels_jour(personnelJourDtos);
         }
 
-        if(depthMonthSupervise>0){
+        if (depthMonthSupervise > 0) {
             Set<MonthDto> monthDtos = new HashSet<>();
-            if(personnel.getMonths_supervise()!=null){
-                for (Month month:personnel.getMonths_supervise()){
+            if (personnel.getMonths_supervise() != null) {
+                for (Month month : personnel.getMonths_supervise()) {
                     monthDtos.add(MonthController.convertMonthToDto(month, 0, 0, 0));
                 }
             }
@@ -165,6 +165,29 @@ public class PersonnelController {
             }
 
             personnelDto.setRoles(roleDtos);
+        }
+
+        if (depthNotification > 0) {
+            Set<NotificationDto> notificationDtos = new HashSet<>();
+            if (personnel.getNotifications() != null) {
+
+                for (Notification notification : personnel.getNotifications()) {
+                    notificationDtos.add(NotificationController.convertNotificationToDto(notification, depthNotification - 1, 1));
+                }
+            }
+
+            personnelDto.setNotifications(notificationDtos);
+        }
+        if (depthAnnonce > 0) {
+            Set<AnnonceDto> annonceDtos = new HashSet<>();
+            if (personnel.getAnnonces() != null) {
+
+                for (Annonce annonce : personnel.getAnnonces()) {
+                    annonceDtos.add(AnnonceController.convertAnnonceToDto(annonce, depthAnnonce-1, 1));
+                }
+            }
+
+            personnelDto.setAnnonces(annonceDtos);
         }
 
         return personnelDto;
@@ -206,25 +229,25 @@ public class PersonnelController {
         }
         personnel.setRemplacements(remplacements);
 
-        Set<PersonnelJour> personnelJours =new HashSet<>();
-        if(personnelDto.getPersonnels_jour()!=null){
-            for(PersonnelJourDto personnelJourDto:personnelDto.getPersonnels_jour()){
+        Set<PersonnelJour> personnelJours = new HashSet<>();
+        if (personnelDto.getPersonnels_jour() != null) {
+            for (PersonnelJourDto personnelJourDto : personnelDto.getPersonnels_jour()) {
                 personnelJours.add(PersonnelJourController.convertDtoToPersonnelJour(personnelJourDto));
             }
         }
         personnel.setPersonnelJours(personnelJours);
 
-        Set<PersonnelNuit> personnelNuit =new HashSet<>();
-        if(personnelDto.getPersonnels_nuit()!=null){
-            for(PersonnelNuitDto personnelNuitDto:personnelDto.getPersonnels_nuit()){
+        Set<PersonnelNuit> personnelNuit = new HashSet<>();
+        if (personnelDto.getPersonnels_nuit() != null) {
+            for (PersonnelNuitDto personnelNuitDto : personnelDto.getPersonnels_nuit()) {
                 personnelNuit.add(PersonnelNuitController.convertDtoToPersonnelNuit(personnelNuitDto));
             }
         }
         personnel.setPersonnelNuits(personnelNuit);
 
-        Set<Month> months_supervise =new HashSet<>();
-        if(personnelDto.getMonths_supervise()!=null){
-            for(MonthDto monthDto:personnelDto.getMonths_supervise()){
+        Set<Month> months_supervise = new HashSet<>();
+        if (personnelDto.getMonths_supervise() != null) {
+            for (MonthDto monthDto : personnelDto.getMonths_supervise()) {
                 months_supervise.add(MonthController.convertDtoToMonth(monthDto));
             }
         }
@@ -237,6 +260,22 @@ public class PersonnelController {
             }
         }
         personnel.setRoles(roles);
+
+        Set<Notification> notifications = new HashSet<>();
+        if (personnelDto.getNotifications() != null) {
+            for (NotificationDto notificationDto : personnelDto.getNotifications()) {
+                notifications.add(NotificationController.convertDtoToNotification(notificationDto));
+            }
+        }
+        personnel.setNotifications(notifications);
+
+        Set<Annonce> annonces = new HashSet<>();
+        if (personnelDto.getAnnonces() != null) {
+            for (AnnonceDto annonceDto : personnelDto.getAnnonces()) {
+                annonces.add(AnnonceController.convertDtoToAnnonce(annonceDto));
+            }
+        }
+        personnel.setAnnonces(annonces);
 
         return personnel;
     }

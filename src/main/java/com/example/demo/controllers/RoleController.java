@@ -115,7 +115,7 @@ public class RoleController {
             Set<PersonnelDto> personnelDtos = new HashSet<>();
             if (role.getPersonnels() != null) {
                 for (Personnel personnel : role.getPersonnels()) {
-                    personnelDtos.add(PersonnelController.convertPersonnelToDto(personnel, 1, 1, 1, 1, 1, 1, depthPersonnel-1));
+                    personnelDtos.add(PersonnelController.convertPersonnelToDto(personnel, 0, 0, 0, 0, 0, 0, depthPersonnel-1, 0, 0));
                 }
             }
 

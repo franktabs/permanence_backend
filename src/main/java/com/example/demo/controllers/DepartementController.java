@@ -38,7 +38,7 @@ public class DepartementController {
 
             Set<PersonnelDto> personnelDtos = new HashSet<>();
             for (Personnel personnel : departement.getPersonnels()) {
-                personnelDtos.add(convertPersonnelToDto(personnel, depthPersonnel - 1, 1,1, 1,1, 1, 1));
+                personnelDtos.add(convertPersonnelToDto(personnel, depthPersonnel - 1, 1,1, 1,1, 1, 1, 0, 0));
             }
 
             dto.setPersonnels(personnelDtos);

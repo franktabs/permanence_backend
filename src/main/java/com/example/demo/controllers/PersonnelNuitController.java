@@ -93,7 +93,7 @@ public class PersonnelNuitController {
 
         if(depthPersonnel>0){
             if(personnelNuit.getPersonnel()!=null){
-               personnelNuitDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelNuit.getPersonnel(), 1,1, 1, depthPersonnel-1, 1, 1, 1));
+               personnelNuitDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelNuit.getPersonnel(), 1,1, 1, depthPersonnel-1, 1, 1, 1, 0, 0));
             }
         }
 

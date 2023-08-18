@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -49,6 +50,22 @@ public class PersonnelDto implements Serializable {
 
     private Set<RoleDto> roles;
 
+    private Set<RemplacementDto> remplacements = new LinkedHashSet<>();
+    private Set<AbsenceDto> absences = new LinkedHashSet<>();
+    private Set<PersonnelJourDto> personnelJours = new LinkedHashSet<>();
+    private Set<PersonnelNuitDto> personnelNuits = new LinkedHashSet<>();
+    private Set<NotificationDto> notifications = new LinkedHashSet<>();
+
+    private Set<AnnonceDto> annonces;
+
+    public Set<AnnonceDto> getAnnonces() {
+        return annonces;
+    }
+
+    public void setAnnonces(Set<AnnonceDto> annonces) {
+        this.annonces = annonces;
+    }
+
     public PersonnelDto() {
     }
     public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
@@ -65,6 +82,7 @@ public class PersonnelDto implements Serializable {
         this.organizationId = organizationId;
         this.agent = agent;
     }
+
 
     public Set<PersonnelJourDto> getPersonnels_jour() {
         return personnels_jour;
@@ -161,6 +179,10 @@ public class PersonnelDto implements Serializable {
     }
 
 
+    public void setNotifications(Set<NotificationDto> notifications) {
+        this.notifications = notifications;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -214,5 +236,25 @@ public class PersonnelDto implements Serializable {
 
     public Set<MonthDto> getMonths_supervise() {
         return months_supervise;
+    }
+
+    public Set<RemplacementDto> getRemplacements() {
+        return remplacements;
+    }
+
+    public Set<AbsenceDto> getAbsences() {
+        return absences;
+    }
+
+    public Set<PersonnelJourDto> getPersonnelJours() {
+        return personnelJours;
+    }
+
+    public Set<PersonnelNuitDto> getPersonnelNuits() {
+        return personnelNuits;
+    }
+
+    public Set<NotificationDto> getNotifications() {
+        return notifications;
     }
 }

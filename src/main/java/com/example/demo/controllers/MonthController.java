@@ -103,7 +103,7 @@ public class MonthController {
 
         if(depthSuperviseur>0){
             if(month.getSuperviseur()!=null){
-                monthDto.setSuperviseur(PersonnelController.convertPersonnelToDto(month.getSuperviseur(), 1, 1, 1, 1, 1, depthSuperviseur-1, 1));
+                monthDto.setSuperviseur(PersonnelController.convertPersonnelToDto(month.getSuperviseur(), 1, 1, 1, 1, 1, depthSuperviseur-1, 1, 0, 0));
             }
         }
 

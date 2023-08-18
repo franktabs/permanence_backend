@@ -100,7 +100,7 @@ public class PersonnelJourController {
 
         if (depthPersonnel > 0) {
             if (personnelJour.getPersonnel() != null) {
-                personnelJourDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelJour.getPersonnel(), 1, 1, 1, 1, depthPersonnel - 1, 1, 1));
+                personnelJourDto.setPersonnel(PersonnelController.convertPersonnelToDto(personnelJour.getPersonnel(), 1, 1, 1, 1, depthPersonnel - 1, 1, 1, 0, 0));
             }
         }
 
