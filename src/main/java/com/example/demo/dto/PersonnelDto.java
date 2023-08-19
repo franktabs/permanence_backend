@@ -1,8 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.entities.Absence;
 import com.example.demo.entities.Personnel;
-import com.example.demo.entities.Remplacement;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -54,16 +52,16 @@ public class PersonnelDto implements Serializable {
     private Set<AbsenceDto> absences = new LinkedHashSet<>();
     private Set<PersonnelJourDto> personnelJours = new LinkedHashSet<>();
     private Set<PersonnelNuitDto> personnelNuits = new LinkedHashSet<>();
-    private Set<NotificationDto> notifications = new LinkedHashSet<>();
+    private Set<AnnonceDto> annonces = new LinkedHashSet<>();
 
-    private Set<AnnonceDto> annonces;
+    private Set<NotificationDto> notifications;
 
-    public Set<AnnonceDto> getAnnonces() {
-        return annonces;
+    public Set<NotificationDto> getNotifications() {
+        return notifications;
     }
 
-    public void setAnnonces(Set<AnnonceDto> annonces) {
-        this.annonces = annonces;
+    public void setNotifications(Set<NotificationDto> notifications) {
+        this.notifications = notifications;
     }
 
     public PersonnelDto() {
@@ -179,8 +177,8 @@ public class PersonnelDto implements Serializable {
     }
 
 
-    public void setNotifications(Set<NotificationDto> notifications) {
-        this.notifications = notifications;
+    public void setAnnonces(Set<AnnonceDto> annonces) {
+        this.annonces = annonces;
     }
 
     @Override
@@ -254,7 +252,7 @@ public class PersonnelDto implements Serializable {
         return personnelNuits;
     }
 
-    public Set<NotificationDto> getNotifications() {
-        return notifications;
+    public Set<AnnonceDto> getAnnonces() {
+        return annonces;
     }
 }

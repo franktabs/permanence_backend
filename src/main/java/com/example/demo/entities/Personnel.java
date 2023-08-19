@@ -64,7 +64,7 @@ public class Personnel {
 
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
@@ -87,19 +87,11 @@ public class Personnel {
     @ManyToMany(mappedBy = "personnels", cascade = CascadeType.PERSIST)
     private Set<Role> roles = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "recepteur", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private Set<Annonce> annonces = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "emetteur", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "recepteur", cascade = CascadeType.PERSIST)
     private Set<Notification> notifications = new LinkedHashSet<>();
 
-    public Set<Notification> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Set<Notification> notifications) {
-        this.notifications = notifications;
-    }
+    @OneToMany(mappedBy = "emetteur", cascade = CascadeType.PERSIST)
+    private Set<Annonce> annonces = new LinkedHashSet<>();
 
     public Set<Annonce> getAnnonces() {
         return annonces;
@@ -107,6 +99,14 @@ public class Personnel {
 
     public void setAnnonces(Set<Annonce> annonces) {
         this.annonces = annonces;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public Set<Role> getRoles() {

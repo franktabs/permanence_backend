@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.NotificationDto;
 import com.example.demo.dto.AnnonceDto;
+import com.example.demo.entities.Notification;
 import com.example.demo.entities.Annonce;
 import com.example.demo.services.AnnonceService;
 import com.example.demo.utils.StringExtract;
@@ -14,10 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -27,9 +26,10 @@ public class AnnonceController {
     @Autowired
     AnnonceService annonceService;
 
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AnnonceDto>> allAnnonce() {
-        List<Annonce> annonces = annonceService.getAllAnnonce();
+    public ResponseEntity<List<AnnonceDto>> allNotification() {
+        List<Annonce> annonces = annonceService.getAllNotification();
         List<AnnonceDto> annonceDtos = new ArrayList<>();
         for (Annonce annonce : annonces) {
             annonceDtos.add(convertAnnonceToDto(annonce, 1, 1));
@@ -38,12 +38,12 @@ public class AnnonceController {
     }
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AnnonceDto> getOneAnnonce(@PathVariable Long id){
-        Annonce annonce = annonceService.getAnnonceById(id);
-        if(annonce==null){
+    public ResponseEntity<AnnonceDto> getOneNotification(@PathVariable Long id){
+        Annonce annonce = annonceService.getNotificationById(id);
+        if(annonce ==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertAnnonceToDto(annonce, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertAnnonceToDto(annonce, 1,  1));
     }
 
     @PostMapping()
@@ -73,46 +73,55 @@ public class AnnonceController {
         }
     }
 
-    public static AnnonceDto convertAnnonceToDto(Annonce annonce, int depthRecepteur, int depthNotification){
 
+    public static AnnonceDto convertAnnonceToDto(Annonce annonce, int depthEmetteur, int depthNotification){
         AnnonceDto annonceDto = new AnnonceDto(
                 annonce.getId(),
-                annonce.getIsViewed(),
-                annonce.getIsDeleted()
+                annonce.getType(),
+                annonce.getMessage(),
+                annonce.getSubmissionDate()
         );
 
-        if(depthRecepteur > 0){
-            if(annonce.getRecepteur()!=null){
-                annonceDto.setRecepteur(PersonnelController.convertPersonnelToDto(annonce.getRecepteur(), 0, 0, 0, 0, 0, 0, 0, 0, depthRecepteur-1));
+        if (depthNotification > 0) {
+            Set<NotificationDto> notificationDtos = new HashSet<>();
+            if (annonce.getNotifications() != null) {
+                for (Notification notification : annonce.getNotifications()) {
+                    notificationDtos.add(NotificationController.convertNotificationToDto(notification, 1,  depthNotification - 1));
+                }
             }
+
+            annonceDto.setAnnonces(notificationDtos);
         }
 
-        if(depthNotification>0){
-            if(annonce.getNotification()!=null){
-                annonceDto.setNotification(NotificationController.convertNotificationToDto(annonce.getNotification(), 0, depthNotification-1));
+        if(depthEmetteur > 0){
+            if(annonce.getEmetteur()!=null){
+                annonceDto.setEmetteur(PersonnelController.convertPersonnelToDto(annonce.getEmetteur(), 0, 0, 0, 0, 0, 0, 0, depthEmetteur-1, 0));
             }
         }
 
         return annonceDto;
     }
 
-
-    public static Annonce convertDtoToAnnonce(AnnonceDto annonceDto){
+    public static Annonce convertDtoToAnnonce(AnnonceDto annonceDto) {
         Annonce annonce = new Annonce(
                 annonceDto.getId(),
-                annonceDto.getIsViewed(),
-                annonceDto.getIsDeleted()
+                annonceDto.getType(),
+                annonceDto.getMessage(),
+                annonceDto.getSubmissionDate()
         );
 
-        if(annonceDto.getRecepteur()!=null){
-            annonce.setRecepteur(PersonnelController.convertDtoToPersonnel(annonceDto.getRecepteur()));
+        Set<Notification> notifications = new HashSet<>();
+        if(annonceDto.getAnnonces()!=null){
+            for(NotificationDto notificationDto : annonceDto.getAnnonces()){
+                notifications.add(NotificationController.convertDtoToNotification(notificationDto));
+            }
         }
+        annonce.setNotifications(notifications);
 
-        if(annonceDto.getNotification()!=null){
-            annonce.setNotification(NotificationController.convertDtoToNotification(annonceDto.getNotification()));
+        if(annonceDto.getEmetteur()!=null){
+            annonce.setEmetteur(PersonnelController.convertDtoToPersonnel(annonceDto.getEmetteur()));
         }
 
         return annonce;
-
     }
 }

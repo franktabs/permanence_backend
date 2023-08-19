@@ -1,29 +1,37 @@
 package com.example.demo.dto;
 
+import com.example.demo.entities.Annonce;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * DTO for {@link com.example.demo.entities.Annonce}
+ * DTO for {@link Annonce}
  */
 public class AnnonceDto implements Serializable {
     private Long id;
+    @Size(max = 45)
+    private String type;
+    @Size(max = 255)
+    private String message;
+    private Instant submissionDate;
     @NotNull
-    private NotificationDto notification;
-    @NotNull
-    private PersonnelDto recepteur;
-    private Boolean isViewed;
-    private Boolean isDeleted;
+    private PersonnelDto emetteur;
+    private Set<NotificationDto> annonces = new LinkedHashSet<>();
 
     public AnnonceDto() {
     }
 
-    public AnnonceDto(Long id, Boolean isViewed, Boolean isDeleted) {
+    public AnnonceDto(Long id, String type, String message, Instant submissionDate) {
         this.id = id;
-        this.isViewed = isViewed;
-        this.isDeleted = isDeleted;
+        this.type = type;
+        this.message = message;
+        this.submissionDate = submissionDate;
     }
 
     public Long getId() {
@@ -35,39 +43,48 @@ public class AnnonceDto implements Serializable {
         return this;
     }
 
-    public NotificationDto getNotification() {
-        return notification;
+    public String getType() {
+        return type;
     }
 
-    public AnnonceDto setNotification(NotificationDto notification) {
-        this.notification = notification;
+    public AnnonceDto setType(String type) {
+        this.type = type;
         return this;
     }
 
-    public PersonnelDto getRecepteur() {
-        return recepteur;
+    public String getMessage() {
+        return message;
     }
 
-    public AnnonceDto setRecepteur(PersonnelDto recepteur) {
-        this.recepteur = recepteur;
+    public AnnonceDto setMessage(String message) {
+        this.message = message;
         return this;
     }
 
-    public Boolean getIsViewed() {
-        return isViewed;
+    public Instant getSubmissionDate() {
+        return submissionDate;
     }
 
-    public AnnonceDto setIsViewed(Boolean isViewed) {
-        this.isViewed = isViewed;
+    public AnnonceDto setSubmissionDate(Instant submissionDate) {
+        this.submissionDate = submissionDate;
         return this;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public PersonnelDto getEmetteur() {
+        return emetteur;
     }
 
-    public AnnonceDto setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public AnnonceDto setEmetteur(PersonnelDto emetteur) {
+        this.emetteur = emetteur;
+        return this;
+    }
+
+    public Set<NotificationDto> getAnnonces() {
+        return annonces;
+    }
+
+    public AnnonceDto setAnnonces(Set<NotificationDto> annonces) {
+        this.annonces = annonces;
         return this;
     }
 
@@ -77,24 +94,26 @@ public class AnnonceDto implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AnnonceDto entity = (AnnonceDto) o;
         return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.notification, entity.notification) &&
-                Objects.equals(this.recepteur, entity.recepteur) &&
-                Objects.equals(this.isViewed, entity.isViewed) &&
-                Objects.equals(this.isDeleted, entity.isDeleted);
+                Objects.equals(this.type, entity.type) &&
+                Objects.equals(this.message, entity.message) &&
+                Objects.equals(this.submissionDate, entity.submissionDate) &&
+                Objects.equals(this.emetteur, entity.emetteur) &&
+                Objects.equals(this.annonces, entity.annonces);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, notification, recepteur, isViewed, isDeleted);
+        return Objects.hash(id, type, message, submissionDate, emetteur, annonces);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
-                "notification = " + notification + ", " +
-                "recepteur = " + recepteur + ", " +
-                "isViewed = " + isViewed + ", " +
-                "isDeleted = " + isDeleted + ")";
+                "type = " + type + ", " +
+                "message = " + message + ", " +
+                "submissionDate = " + submissionDate + ", " +
+                "emetteur = " + emetteur + ", " +
+                "annonces = " + annonces + ")";
     }
 }

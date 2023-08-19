@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+
 import com.example.demo.entities.Annonce;
 import com.example.demo.repositories.AnnonceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,16 @@ public class AnnonceService {
 
     public Annonce update(Annonce annonceUpdate, Long id){
         Annonce annonce1 = annonceRepository.findById(id).orElse(null);
-        if(annonce1==null) return null;
+        if(annonce1 ==null) return null;
         if(!annonce1.getId().equals(annonceUpdate.getId())) return null;
         return annonceRepository.save(annonceUpdate);
     }
 
-    public List<Annonce> getAllAnnonce(){
+    public List<Annonce> getAllNotification(){
         return annonceRepository.findAll();
     }
 
-    public Annonce getAnnonceById(Long id){
+    public Annonce getNotificationById(Long id){
         return annonceRepository.findById(id).orElse(null);
     }
 }

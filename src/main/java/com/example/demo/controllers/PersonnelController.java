@@ -167,6 +167,17 @@ public class PersonnelController {
             personnelDto.setRoles(roleDtos);
         }
 
+        if (depthAnnonce > 0) {
+            Set<AnnonceDto> annonceDtos = new HashSet<>();
+            if (personnel.getAnnonces() != null) {
+
+                for (Annonce annonce : personnel.getAnnonces()) {
+                    annonceDtos.add(AnnonceController.convertAnnonceToDto(annonce, depthAnnonce - 1, 1));
+                }
+            }
+
+            personnelDto.setAnnonces(annonceDtos);
+        }
         if (depthNotification > 0) {
             Set<NotificationDto> notificationDtos = new HashSet<>();
             if (personnel.getNotifications() != null) {
@@ -177,17 +188,6 @@ public class PersonnelController {
             }
 
             personnelDto.setNotifications(notificationDtos);
-        }
-        if (depthAnnonce > 0) {
-            Set<AnnonceDto> annonceDtos = new HashSet<>();
-            if (personnel.getAnnonces() != null) {
-
-                for (Annonce annonce : personnel.getAnnonces()) {
-                    annonceDtos.add(AnnonceController.convertAnnonceToDto(annonce, depthAnnonce-1, 1));
-                }
-            }
-
-            personnelDto.setAnnonces(annonceDtos);
         }
 
         return personnelDto;
@@ -261,14 +261,6 @@ public class PersonnelController {
         }
         personnel.setRoles(roles);
 
-        Set<Notification> notifications = new HashSet<>();
-        if (personnelDto.getNotifications() != null) {
-            for (NotificationDto notificationDto : personnelDto.getNotifications()) {
-                notifications.add(NotificationController.convertDtoToNotification(notificationDto));
-            }
-        }
-        personnel.setNotifications(notifications);
-
         Set<Annonce> annonces = new HashSet<>();
         if (personnelDto.getAnnonces() != null) {
             for (AnnonceDto annonceDto : personnelDto.getAnnonces()) {
@@ -276,6 +268,14 @@ public class PersonnelController {
             }
         }
         personnel.setAnnonces(annonces);
+
+        Set<Notification> notifications = new HashSet<>();
+        if (personnelDto.getNotifications() != null) {
+            for (NotificationDto notificationDto : personnelDto.getNotifications()) {
+                notifications.add(NotificationController.convertDtoToNotification(notificationDto));
+            }
+        }
+        personnel.setNotifications(notifications);
 
         return personnel;
     }

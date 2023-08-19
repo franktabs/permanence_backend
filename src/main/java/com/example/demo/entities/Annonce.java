@@ -2,9 +2,11 @@ package com.example.demo.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.proxy.HibernateProxy;
+import jakarta.validation.constraints.Size;
 
-import java.util.Objects;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "annonce")
@@ -14,27 +16,39 @@ public class Annonce {
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
     private Long id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "notification_id", nullable = false)
-    private Notification notification;
+    @Size(max = 45)
+    @Column(name = "type", length = 45)
+    private String type;
+
+    @Size(max = 255)
+    @Column(name = "message")
+    private String message;
+
+    @Column(name = "submission_date")
+    private Instant submissionDate;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "recepteur", nullable = false)
-    private Personnel recepteur;
+    @JoinColumn(name = "emetteur", nullable = false)
+    private Personnel emetteur;
 
-    @Column(name = "is_viewed")
-    private Boolean isViewed;
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.PERSIST)
+    private Set<Notification> notifications = new LinkedHashSet<>();
 
-    @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
     public Annonce(){}
-    public Annonce(Long id, Boolean isViewed, Boolean isDeleted) {
+    public Annonce(Long id, String type, String message, Instant submissionDate) {
         this.id = id;
-        this.isViewed = isViewed;
-        this.isDeleted = isDeleted;
+        this.type = type;
+        this.message = message;
+        this.submissionDate = submissionDate;
     }
 
     public Long getId() {
@@ -45,51 +59,36 @@ public class Annonce {
         this.id = id;
     }
 
-    public Notification getNotification() {
-        return notification;
+    public String getType() {
+        return type;
     }
 
-    public void setNotification(Notification notification) {
-        this.notification = notification;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Personnel getRecepteur() {
-        return recepteur;
+    public String getMessage() {
+        return message;
     }
 
-    public void setRecepteur(Personnel recepteur) {
-        this.recepteur = recepteur;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public Boolean getIsViewed() {
-        return isViewed;
+    public Instant getSubmissionDate() {
+        return submissionDate;
     }
 
-    public void setIsViewed(Boolean isViewed) {
-        this.isViewed = isViewed;
+    public void setSubmissionDate(Instant submissionDate) {
+        this.submissionDate = submissionDate;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public Personnel getEmetteur() {
+        return emetteur;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setEmetteur(Personnel emetteur) {
+        this.emetteur = emetteur;
     }
 
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        Annonce annonce = (Annonce) o;
-        return getId() != null && Objects.equals(getId(), annonce.getId());
-    }
-
-    @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-    }
 }
