@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PersonnelJourService {
@@ -48,5 +49,9 @@ public class PersonnelJourService {
         return personnelJourRepository.findById(id).orElse(null);
     }
 
+
+    public List<PersonnelJour> getPersonnelOfPersonnelJour(Long idPersonnel){
+        return personnelJourRepository.findByPersonnel_Id(idPersonnel);
+    }
 
 }

@@ -47,6 +47,12 @@ public class PermanenceController {
         return ResponseEntity.status(HttpStatus.OK).body(convertPermanenceToDto(permanence, 1, 1, 1));
     }
 
+    @GetMapping(path = "personnel/{id}")
+    public ResponseEntity<List<PermanenceDto>> getPermaneceByPersonnelId(@PathVariable Long id){
+        List<PermanenceDto> permanenceDtos = permanenceService.findPermanenceByPersonnelId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(permanenceDtos);
+    }
+
     @PostMapping()
     public ResponseEntity<?> creer(@Valid @RequestBody PermanenceDto permanenceDto, BindingResult bindingResult) {
         try {

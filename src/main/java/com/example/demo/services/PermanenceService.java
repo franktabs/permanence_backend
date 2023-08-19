@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.PermanenceController;
+import com.example.demo.dto.PermanenceDto;
 import com.example.demo.entities.Permanence;
 import com.example.demo.entities.Permanence;
 import com.example.demo.entities.PersonnelJour;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -68,6 +71,21 @@ public class PermanenceService {
         }
         return permanenceRepository.findById(id).orElse(null);
     }
+
+    public List<PermanenceDto> findPermanenceByPersonnelId(Long id){
+
+        List<Permanence> permanences =  permanenceRepository.findByPersonnelJours_Personnel_IdOrPersonnelNuits_Personnel_Id(id, id);
+        List<PermanenceDto> permanenceDtos = new ArrayList<>();
+        if(permanences!=null){
+            for (Permanence permanence:permanences){
+                PermanenceDto permanenceDto = PermanenceController.convertPermanenceToDto(permanence, 1, 1, 0);
+                permanenceDtos.add(permanenceDto);
+            }
+        }
+        return permanenceDtos;
+    }
+
+
 
 /*    public Permanence updateEntirely(Long id, Permanence permanence){
         Permanence permanence1 = permanenceRepository.findById(id).orElse(null);

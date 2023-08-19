@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.entities.PersonnelJour;
 import com.example.demo.entities.PersonnelNuit;
 import com.example.demo.repositories.PersonnelNuitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,9 @@ public class PersonnelNuitService {
 
     public void suppression(Long id){
         personnelNuitRepository.deletePersonnelNuit(id);
+    }
+
+    public List<PersonnelNuit> getPersonnelOfPersonnelNuit(Long idPersonnel){
+        return personnelNuitRepository.findByPersonnel_Id(idPersonnel);
     }
 }
