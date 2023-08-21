@@ -1,8 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.AbsenceDto;
+import com.example.demo.dto.AbsenceDto;
 import com.example.demo.dto.PersonnelDto;
 import com.example.demo.dto.PlanningDto;
+import com.example.demo.entities.Absence;
 import com.example.demo.entities.Absence;
 import com.example.demo.entities.Personnel;
 import com.example.demo.entities.Planning;
@@ -19,7 +21,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
@@ -33,6 +37,53 @@ public class AbsenceController {
 
     @Autowired
     private AbsenceService absenceService;
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AbsenceDto>> allAbsence() {
+        List<Absence> absences = absenceService.getAllAbsence();
+        List<AbsenceDto> absenceDtos = new ArrayList<>();
+        for (Absence absence : absences) {
+            absenceDtos.add(convertAbsenceToDto(absence, 1));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(absenceDtos);
+    }
+
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AbsenceDto> getOneAbsence(@PathVariable Long id){
+        Absence absence = absenceService.getAbsenceById(id);
+        if(absence==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertAbsenceToDto(absence, 1));
+    }
+
+/*    @PostMapping()
+    public ResponseEntity<?> creer(@Valid @RequestBody AbsenceDto absenceDto, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                Map<String, String> mapErrors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    mapErrors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(mapErrors);
+            }
+            Absence absence = convertDtoToAbsence(absenceDto);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertAbsenceToDto(absenceService.create(absence), 1, 1, 1));
+
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici" + message + "\n\n");
+            if (message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
+    }*/
+
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> creerOne(@Valid @RequestBody AbsenceDto absenceDto, BindingResult bindingResult) {

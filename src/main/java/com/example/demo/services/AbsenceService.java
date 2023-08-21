@@ -21,10 +21,18 @@ public class AbsenceService {
 
 
     public Absence update(Absence absenceUpdate, Long id){
-        Absence absence1 = absenceRepository.findById(id).orElse(null);
-        if(absence1==null) return null;
-        if(!absence1.getId().equals(absenceUpdate.getId())) return null;
-        return absenceRepository.save(absenceUpdate);
+        Absence absence = absenceRepository.findById(id).orElse(null);
+        if(absence==null) return null;
+        if(!absence.getId().equals(absenceUpdate.getId())) return null;
+        absence.setEnd(absenceUpdate.getEnd());
+        absence.setMessage(absenceUpdate.getMessage());
+        absence.setMotif(absenceUpdate.getMotif());
+        absence.setStart(absenceUpdate.getStart());
+        absence.setType(absenceUpdate.getType());
+        absence.setValidate(absenceUpdate.getValidate());
+        absence.setSubmissionDate(absenceUpdate.getSubmissionDate());
+
+        return absenceRepository.save(absence);
     }
 
     public List<Absence> getAllAbsence(){
