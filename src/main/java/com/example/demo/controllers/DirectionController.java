@@ -49,7 +49,7 @@ public class DirectionController {
             Direction direction = convertDtoToDirection(directionDto);
             System.out.println("\n\n Conversion termninée"+ direction.toString()+" \n\n");
             direction = directionService.sauvegarder(direction);
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertDirectionToDTO(direction, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertDirectionToDto(direction, 1));
         }
         catch (DataIntegrityViolationException e){
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -71,12 +71,12 @@ public class DirectionController {
         List<Direction> directions = directionService.getAllDirection();
         List<DirectionDto> directionDtos = new ArrayList<>();
         for (Direction direction : directions) {
-            directionDtos.add(convertDirectionToDTO(direction, 1));
+            directionDtos.add(convertDirectionToDto(direction, 1));
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionDtos);
     }
 
-    public static DirectionDto convertDirectionToDTO(Direction direction, int depthDepartement) {
+    public static DirectionDto convertDirectionToDto(Direction direction, int depthDepartement) {
         DirectionDto directionDto = new DirectionDto(
                 direction.getId(),
                 direction.getOrganizationId(),
