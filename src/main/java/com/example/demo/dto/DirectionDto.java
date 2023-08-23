@@ -18,7 +18,7 @@ public class DirectionDto implements Serializable {
     private  String type_;
     @Size(max = 255)
     private  String treepath;
-    private  Integer parentorganizationId;
+    private  Long parentorganizationId;
     @NotNull
     @Size(max = 255)
     private  String name;
@@ -29,12 +29,12 @@ public class DirectionDto implements Serializable {
 
     public DirectionDto() {
     }
-    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, Set<DepartementDto> departements) {
+    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name, Set<DepartementDto> departements) {
         this(id,organizationId,level,type_,treepath,parentorganizationId,name);
         this.departements = departements;
     }
 
-    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name) {
+    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
@@ -76,7 +76,7 @@ public class DirectionDto implements Serializable {
         return treepath;
     }
 
-    public Integer getParentorganizationId() {
+    public Long getParentorganizationId() {
         return parentorganizationId;
     }
 

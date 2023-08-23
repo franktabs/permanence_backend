@@ -32,7 +32,7 @@ public class Departement {
     private String treepath;
 
     @Column(name = "parentorganizationId")
-    private Integer parentorganizationId;
+    private Long parentorganizationId;
 
     @Size(max = 255)
     @NotNull
@@ -95,17 +95,17 @@ public class Departement {
         this.treepath = treepath;
     }
 
-    public Integer getParentorganizationId() {
+    public Long getParentorganizationId() {
         return parentorganizationId;
     }
 
-    public void setParentorganizationId(Integer parentorganizationId) {
+    public void setParentorganizationId(Long parentorganizationId) {
         this.parentorganizationId = parentorganizationId;
     }
 
     public Departement() {
     }
-    public Departement(Long id, Long organizationId, Long level, String type, String treepath, Integer parentorganizationId, @NotNull String name) {
+    public Departement(Long id, Long organizationId, Long level, String type, String treepath, Long parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;

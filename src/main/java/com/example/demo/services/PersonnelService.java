@@ -1,6 +1,9 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.PersonnelController;
+import com.example.demo.dto.PersonnelDto;
 import com.example.demo.entities.Personnel;
+import com.example.demo.enumeration.Config;
 import com.example.demo.repositories.PersonnelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +28,21 @@ public class PersonnelService {
     public Personnel getOnePersonnel(Long id){
         Optional<Personnel> optional =  personnelRepository.findById(id);
         return optional.orElse(null);
+    }
+
+    public void configPersonnel(List<PersonnelDto> personnelDtos, Config config){
+        if(config==Config.RECREATE){
+            personnelRepository.deleteAll();
+        }
+        for(PersonnelDto personnelDto : personnelDtos){
+            Personnel newPersonnel = PersonnelController.convertDtoToPersonnel(personnelDto);
+            Personnel personnel = personnelRepository.findByUserId(newPersonnel.getUserId());
+            if(personnel==null){
+                creer(newPersonnel);
+            }else{
+
+
+            }
+        }
     }
 }

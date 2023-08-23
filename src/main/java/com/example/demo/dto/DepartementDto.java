@@ -18,7 +18,7 @@ public class DepartementDto implements Serializable {
     private String type_;
     @Size(max = 255)
     private String treepath;
-    private Integer parentorganizationId;
+    private Long parentorganizationId;
     @NotNull
     @Size(max = 255)
     private String name;
@@ -26,7 +26,7 @@ public class DepartementDto implements Serializable {
     private DirectionDto direction;
     private Set<PersonnelDto> personnels;
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
@@ -36,7 +36,7 @@ public class DepartementDto implements Serializable {
         this.name = name;
     }
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name, @NotNull DirectionDto direction) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
@@ -47,7 +47,7 @@ public class DepartementDto implements Serializable {
         this.direction = direction;
     }
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, Set<PersonnelDto> personnels) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name, Set<PersonnelDto> personnels) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
@@ -60,7 +60,7 @@ public class DepartementDto implements Serializable {
 
     public DepartementDto(){}
 
-    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, @NotNull DirectionDto direction, Set<PersonnelDto> personnels) {
+    public DepartementDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name, @NotNull DirectionDto direction, Set<PersonnelDto> personnels) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
@@ -92,7 +92,7 @@ public class DepartementDto implements Serializable {
         return treepath;
     }
 
-    public Integer getParentorganizationId() {
+    public Long getParentorganizationId() {
         return parentorganizationId;
     }
 
