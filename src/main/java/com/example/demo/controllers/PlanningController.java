@@ -76,6 +76,14 @@ public class PlanningController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertPlanningToDto(planning, 1));
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deletePlanning(@PathVariable Long id){
+        boolean isDelete = planningService.delete(id);
+        if(isDelete) return ResponseEntity.ok().body(Map.of("operation", "success"));
+        return ResponseEntity.badRequest().body(Map.of("id", "introuvable"));
+    }
+
     public static PlanningDto convertPlanningToDto(Planning planning, int depthMonth) {
         PlanningDto planningDto = new PlanningDto(
                 planning.getId(),

@@ -3,6 +3,7 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -36,13 +37,13 @@ public class Planning {
 
     @NotNull
     @Column(name = "submission_date")
-    private LocalDate submissionDate;
+    private Instant submissionDate;
 
-    public LocalDate getSubmissionDate() {
+    public Instant getSubmissionDate() {
         return submissionDate;
     }
 
-    public void setSubmissionDate(LocalDate submissionDate) {
+    public void setSubmissionDate(Instant submissionDate) {
         this.submissionDate = submissionDate;
     }
 
@@ -56,7 +57,7 @@ public class Planning {
 
     public Planning() {
     }
-    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid, @NotNull LocalDate submissionDate) {
+    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid, @NotNull Instant submissionDate) {
         this.id = id;
         this.start = start;
         this.end = end;

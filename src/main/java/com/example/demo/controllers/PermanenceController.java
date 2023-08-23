@@ -48,7 +48,7 @@ public class PermanenceController {
     }
 
     @GetMapping(path = "personnel/{id}")
-    public ResponseEntity<List<PermanenceDto>> getPermaneceByPersonnelId(@PathVariable Long id){
+    public ResponseEntity<List<PermanenceDto>> getPermanenceByPersonnelId(@PathVariable Long id){
         List<PermanenceDto> permanenceDtos = permanenceService.findPermanenceByPersonnelId(id);
         return ResponseEntity.status(HttpStatus.OK).body(permanenceDtos);
     }

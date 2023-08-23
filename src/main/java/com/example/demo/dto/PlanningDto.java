@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -24,12 +25,12 @@ public class PlanningDto implements Serializable {
     private Boolean isValid;
     private Set<MonthDto> months = new LinkedHashSet<>();
     @NotNull
-    private LocalDate submissionDate;
+    private Instant submissionDate;
 
     public PlanningDto() {
     }
 
-    public PlanningDto(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid,@NotNull LocalDate submissionDate ) {
+    public PlanningDto(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid,@NotNull Instant submissionDate ) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -121,11 +122,11 @@ public class PlanningDto implements Serializable {
                 "months = " + months + ")";
     }
 
-    public LocalDate getSubmissionDate() {
+    public Instant getSubmissionDate() {
         return submissionDate;
     }
 
-    public void setSubmissionDate(LocalDate submissionDate) {
+    public void setSubmissionDate(Instant submissionDate) {
         this.submissionDate = submissionDate;
     }
 }

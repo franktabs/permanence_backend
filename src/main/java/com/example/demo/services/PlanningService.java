@@ -25,6 +25,13 @@ public class PlanningService {
         return planningRepository.save(planningUpdate);
     }
 
+    public boolean delete(Long id){
+        Planning planning = planningRepository.findById(id).orElse(null);
+        if(planning==null) return false;
+        planningRepository.deleteById(id);
+        return true;
+    }
+
     public List<Planning> getAllPlanning(){
         return planningRepository.findAll();
     }
