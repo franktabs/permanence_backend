@@ -83,7 +83,7 @@ public class ParameterController {
 
         if(depthDirection > 0){
             if(parameter.getDirection()!=null){
-                parameterDto.setDirection(DirectionController.convertDirectionToDto(parameter.getDirection(), 0));
+                parameterDto.setDirection(DirectionController.convertDirectionToDto(parameter.getDirection(), 0, depthDirection-1));
             }
         }
 

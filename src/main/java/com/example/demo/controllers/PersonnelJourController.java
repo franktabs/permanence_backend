@@ -95,7 +95,8 @@ public class PersonnelJourController {
     public static PersonnelJourDto convertPersonnelJourToDto(PersonnelJour personnelJour, int depthPersonnel, int depthPermanence) {
         PersonnelJourDto personnelJourDto = new PersonnelJourDto(
                 personnelJour.getId(),
-                personnelJour.getResponsable()
+                personnelJour.getResponsable(),
+                personnelJour.getIsSubstitute()
         );
 
         if (depthPersonnel > 0) {
@@ -117,7 +118,8 @@ public class PersonnelJourController {
     public static PersonnelJour convertDtoToPersonnelJour(PersonnelJourDto personnelJourDto) {
         PersonnelJour personnelJour = new PersonnelJour(
                 personnelJourDto.getId(),
-                personnelJourDto.getResponsable()
+                personnelJourDto.getResponsable(),
+                personnelJourDto.getIsSubstitute()
         );
 
         if (personnelJourDto.getPersonnel() != null) {

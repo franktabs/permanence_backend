@@ -52,6 +52,17 @@ public class Direction {
     @OneToMany(mappedBy = "direction", cascade = {CascadeType.PERSIST})
     private Set<Departement> departements = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "direction", cascade = CascadeType.PERSIST)
+    private Set<Parameter> parameters = new LinkedHashSet<>();
+
+    public Set<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Set<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
     public Set<Departement> getDepartements() {
         return departements;
     }

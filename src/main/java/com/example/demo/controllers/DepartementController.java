@@ -29,7 +29,7 @@ public class DepartementController {
         );
         if (depthDirection > 0) {
             if (departement.getDirection() != null) {
-                dto.setDirection(convertDirectionToDto(departement.getDirection(), depthDirection - 1));
+                dto.setDirection(convertDirectionToDto(departement.getDirection(), depthDirection - 1, 1));
             }
 
         }

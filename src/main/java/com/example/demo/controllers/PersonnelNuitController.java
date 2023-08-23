@@ -88,7 +88,8 @@ public class PersonnelNuitController {
     public static PersonnelNuitDto convertPersonnelNuitToDto(PersonnelNuit personnelNuit, int depthPersonnel, int depthPermanence){
         PersonnelNuitDto personnelNuitDto = new PersonnelNuitDto(
                 personnelNuit.getId(),
-                personnelNuit.getResponsable()
+                personnelNuit.getResponsable(),
+                personnelNuit.getIsSubstitute()
         );
 
         if(depthPersonnel>0){
@@ -109,7 +110,8 @@ public class PersonnelNuitController {
     public static PersonnelNuit convertDtoToPersonnelNuit(PersonnelNuitDto personnelNuitDto){
         PersonnelNuit personnelNuit = new PersonnelNuit(
                 personnelNuitDto.getId(),
-                personnelNuitDto.getResponsable()
+                personnelNuitDto.getResponsable(),
+                personnelNuitDto.getIsSubstitute()
         );
 
         if(personnelNuitDto.getPersonnel()!=null){

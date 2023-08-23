@@ -16,15 +16,22 @@ public class PersonnelJourDto implements Serializable {
     private PermanenceDto permanence;
     private boolean responsable = false;
 
+    private boolean isSubstitute = false;
+
+
+
+
     public PersonnelJourDto() {}
     public PersonnelJourDto(Long id) {
         this.id = id;
     }
 
-    public PersonnelJourDto(Long id,  boolean responsable) {
+    public PersonnelJourDto(Long id,  boolean responsable, boolean isSubstitute) {
         this.id = id;
         this.responsable = responsable;
+        this.isSubstitute = isSubstitute;
     }
+
 
     public Long getId() {
         return id;
@@ -85,5 +92,14 @@ public class PersonnelJourDto implements Serializable {
                 "personnel = " + personnel + ", " +
                 "permanence = " + permanence + ", " +
                 "responsable = " + responsable + ")";
+    }
+
+    public boolean getIsSubstitute() {
+        return isSubstitute;
+    }
+
+    public PersonnelJourDto setIsSubstitute(boolean isSubstitute) {
+        this.isSubstitute = isSubstitute;
+        return this;
     }
 }

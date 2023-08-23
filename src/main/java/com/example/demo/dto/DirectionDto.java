@@ -24,6 +24,9 @@ public class DirectionDto implements Serializable {
     private  String name;
     private  Set<DepartementDto> departements;
 
+    private Set<ParameterDto> parameters;
+
+
     public DirectionDto() {
     }
     public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Integer parentorganizationId, @NotNull String name, Set<DepartementDto> departements) {
@@ -39,6 +42,14 @@ public class DirectionDto implements Serializable {
         this.treepath = treepath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
+    }
+
+    public Set<ParameterDto> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Set<ParameterDto> parameters) {
+        this.parameters = parameters;
     }
 
     public void setDepartements(Set<DepartementDto> departements) {

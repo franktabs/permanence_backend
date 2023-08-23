@@ -2,9 +2,11 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
+import com.example.demo.dto.ParameterDto;
 import com.example.demo.dto.PersonnelDto;
 import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
+import com.example.demo.entities.Parameter;
 import com.example.demo.entities.Personnel;
 import com.example.demo.services.DirectionService;
 import com.example.demo.utils.StringExtract;
@@ -21,6 +23,7 @@ import java.util.*;
 
 import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
 import static com.example.demo.controllers.DepartementController.convertDtoToDepartement;
+import static com.example.demo.controllers.ParameterController.convertParameterToDto;
 
 @RestController
 @CrossOrigin
@@ -49,7 +52,7 @@ public class DirectionController {
             Direction direction = convertDtoToDirection(directionDto);
             System.out.println("\n\n Conversion termninée"+ direction.toString()+" \n\n");
             direction = directionService.sauvegarder(direction);
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertDirectionToDto(direction, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertDirectionToDto(direction, 1, 1));
         }
         catch (DataIntegrityViolationException e){
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -71,12 +74,12 @@ public class DirectionController {
         List<Direction> directions = directionService.getAllDirection();
         List<DirectionDto> directionDtos = new ArrayList<>();
         for (Direction direction : directions) {
-            directionDtos.add(convertDirectionToDto(direction, 1));
+            directionDtos.add(convertDirectionToDto(direction, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionDtos);
     }
 
-    public static DirectionDto convertDirectionToDto(Direction direction, int depthDepartement) {
+    public static DirectionDto convertDirectionToDto(Direction direction, int depthDepartement, int depthParameter) {
         DirectionDto directionDto = new DirectionDto(
                 direction.getId(),
                 direction.getOrganizationId(),
@@ -96,6 +99,17 @@ public class DirectionController {
 
             directionDto.setDepartements(departementDto);
         }
+
+        if (depthParameter > 0) {
+
+            Set<ParameterDto> parameterDto = new HashSet<>();
+            for (Parameter parameter : direction.getParameters()) {
+                parameterDto.add(convertParameterToDto(parameter, depthParameter - 1));
+            }
+
+            directionDto.setParameters(parameterDto);
+        }
+
         return directionDto;
 
 

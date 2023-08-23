@@ -28,6 +28,18 @@ public class PersonnelJour {
     @Column(name = "responsable", nullable = false)
     private boolean responsable = false;
 
+    @NotNull
+    @Column(name = "is_substitute", nullable = false)
+    private boolean isSubstitute = false;
+
+    public boolean getIsSubstitute() {
+        return isSubstitute;
+    }
+
+    public void setIsSubstitute(boolean isSubstitute) {
+        this.isSubstitute = isSubstitute;
+    }
+
     public Long getId() {
         return id;
     }
@@ -62,9 +74,10 @@ public class PersonnelJour {
 
     public PersonnelJour(){}
 
-    public PersonnelJour(Long id, @NotNull boolean responsable) {
+    public PersonnelJour(Long id, @NotNull boolean responsable, @NotNull boolean isSubstitute) {
         this.id = id;
         this.responsable = responsable;
+        this.isSubstitute=isSubstitute;
     }
 
     public PersonnelJour(Long id) {

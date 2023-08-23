@@ -16,12 +16,15 @@ public class PersonnelNuitDto implements Serializable {
     private PermanenceDto permanence;
     private boolean responsable = false;
 
+    private boolean isSubstitute = false;
+
     public PersonnelNuitDto() {
     }
 
-    public PersonnelNuitDto(Long id, boolean responsable) {
+    public PersonnelNuitDto(Long id, boolean responsable, boolean isSubstitute) {
         this.id = id;
         this.responsable = responsable;
+        this.isSubstitute = isSubstitute;
     }
     public PersonnelNuitDto(Long id) {
         this.id = id;
@@ -60,6 +63,15 @@ public class PersonnelNuitDto implements Serializable {
 
     public PersonnelNuitDto setResponsable(boolean responsable) {
         this.responsable = responsable;
+        return this;
+    }
+
+    public boolean getIsSubstitute() {
+        return isSubstitute;
+    }
+
+    public PersonnelNuitDto setIsSubstitute(boolean isSubstitute) {
+        this.isSubstitute = isSubstitute;
         return this;
     }
 
