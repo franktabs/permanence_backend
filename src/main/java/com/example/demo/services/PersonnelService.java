@@ -40,7 +40,18 @@ public class PersonnelService {
             if(personnel==null){
                 creer(newPersonnel);
             }else{
+                newPersonnel.setId(personnel.getId());
+                newPersonnel.setPersonnelJours(personnel.getPersonnelJours());
+                newPersonnel.setPersonnelNuits(personnel.getPersonnelNuits());
+                newPersonnel.setNotifications(personnel.getNotifications());
+                newPersonnel.setAnnonces(personnel.getAnnonces());
+                newPersonnel.setDepartement(personnel.getDepartement());
+                newPersonnel.setAbsences(personnel.getAbsences());
+                newPersonnel.setRemplacements(personnel.getRemplacements());
+                newPersonnel.setRoles(personnel.getRoles());
+                newPersonnel.setMonths_supervise(personnel.getMonths_supervise());
 
+                creer(newPersonnel);
 
             }
         }
