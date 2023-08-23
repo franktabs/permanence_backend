@@ -60,6 +60,10 @@ public class DirectionDto implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getOrganizationId() {
         return organizationId;
     }

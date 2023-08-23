@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.*;
 import com.example.demo.entities.*;
+import com.example.demo.enumeration.Config;
 import com.example.demo.services.PersonnelService;
 import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,60 @@ public class PersonnelController {
         }
     }
 
+
+    @PostMapping(path = "/config-actualise")
+    public ResponseEntity<?> configActualise(@Valid @RequestBody List<PersonnelDto> personnelDtos, BindingResult bindingResult) {
+        try{
+            if (bindingResult.hasErrors()) {
+                Map<String, String> mapErrors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    mapErrors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(mapErrors);
+            }
+            int ligne = personnelService.configPersonnel(personnelDtos, Config.MISE_A_JOUR);
+            return ResponseEntity.ok().body(Map.of("traited", ligne));
+        }
+        catch (DataIntegrityViolationException e){
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici"+ message+"\n\n");
+            if(message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
+    }
+
+    @PostMapping(path = "/config-recreate")
+    public ResponseEntity<?> configRecreate(@Valid @RequestBody List<PersonnelDto> personnelDtos, BindingResult bindingResult) {
+        try{
+            if (bindingResult.hasErrors()) {
+                Map<String, String> mapErrors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    mapErrors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(mapErrors);
+            }
+            int ligne = personnelService.configPersonnel(personnelDtos, Config.RECREATE);
+            return ResponseEntity.ok().body(Map.of("traited", ligne));
+        }
+        catch (DataIntegrityViolationException e){
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici"+ message+"\n\n");
+            if(message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
+    }
 
     public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole, int depthNotification, int depthAnnonce) {
         PersonnelDto personnelDto = new PersonnelDto(

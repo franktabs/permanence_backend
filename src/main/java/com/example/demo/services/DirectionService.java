@@ -44,12 +44,14 @@ public class DirectionService {
         return directions1;
     }
 
-    public void configDirection(List<DirectionDto> directionDtos, Config config) {
+    public int configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> OrganizationIdDirections = new HashSet<>();
         if (config == Config.RECREATE) {
             directionRepository.deleteAll();
         }
+        int nombreTraited = 0;
         for (DirectionDto directionDto : directionDtos) {
+            directionDto.setId(null);
             if (directionDto.getName().toUpperCase().contains("DIRECTION")) {
                 Direction newDirection = DirectionController.convertDtoToDirection(directionDto);
                 OrganizationIdDirections.add(directionDto.getOrganizationId());
@@ -62,6 +64,7 @@ public class DirectionService {
                     newDirection.setParameters(direction.getParameters());
                     this.creer(newDirection);
                 }
+                nombreTraited++;
 
             } else if (OrganizationIdDirections.contains(directionDto.getParentorganizationId())) {
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getParentorganizationId());
@@ -76,9 +79,11 @@ public class DirectionService {
                 );
                 departement.setDirection(direction);
                 departementRepository.save(departement);
+                nombreTraited++;
             }
-        }
 
+        }
+        return nombreTraited;
     }
 
 

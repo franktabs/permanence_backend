@@ -30,15 +30,18 @@ public class PersonnelService {
         return optional.orElse(null);
     }
 
-    public void configPersonnel(List<PersonnelDto> personnelDtos, Config config){
+    public int configPersonnel(List<PersonnelDto> personnelDtos, Config config){
         if(config==Config.RECREATE){
             personnelRepository.deleteAll();
         }
+        int nombreTraited = 0;
         for(PersonnelDto personnelDto : personnelDtos){
+            personnelDto.setId(null);
             Personnel newPersonnel = PersonnelController.convertDtoToPersonnel(personnelDto);
             Personnel personnel = personnelRepository.findByUserId(newPersonnel.getUserId());
             if(personnel==null){
                 creer(newPersonnel);
+                nombreTraited++;
             }else{
                 newPersonnel.setId(personnel.getId());
                 newPersonnel.setPersonnelJours(personnel.getPersonnelJours());
@@ -52,8 +55,10 @@ public class PersonnelService {
                 newPersonnel.setMonths_supervise(personnel.getMonths_supervise());
 
                 creer(newPersonnel);
+                nombreTraited++;
 
             }
         }
+        return nombreTraited;
     }
 }
