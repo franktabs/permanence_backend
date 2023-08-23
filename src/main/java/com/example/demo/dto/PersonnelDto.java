@@ -36,6 +36,9 @@ public class PersonnelDto implements Serializable {
     private String libAge;
     private Integer organizationId;
     private Boolean agent;
+
+    private String screenname;
+
     @NotNull
     private DepartementDto departement;
     private Set<RemplacementDto> absentList;
@@ -66,7 +69,7 @@ public class PersonnelDto implements Serializable {
 
     public PersonnelDto() {
     }
-    public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
+    public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent, String screenname) {
         this.id = id;
         this.firstname = firstname;
         this.emailaddress = emailaddress;
@@ -79,6 +82,7 @@ public class PersonnelDto implements Serializable {
         this.libAge = libAge;
         this.organizationId = organizationId;
         this.agent = agent;
+        this.screenname=screenname;
     }
 
 
@@ -92,6 +96,10 @@ public class PersonnelDto implements Serializable {
 
     public Set<PersonnelNuitDto> getPersonnels_nuit() {
         return personnels_nuit;
+    }
+
+    public void setScreenname(String screenname) {
+        this.screenname = screenname;
     }
 
     public void setPersonnels_nuit(Set<PersonnelNuitDto> personnels_nuit) {
@@ -254,5 +262,9 @@ public class PersonnelDto implements Serializable {
 
     public Set<AnnonceDto> getAnnonces() {
         return annonces;
+    }
+
+    public String getScreenname() {
+        return screenname;
     }
 }

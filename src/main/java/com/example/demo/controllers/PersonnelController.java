@@ -90,7 +90,8 @@ public class PersonnelController {
                 personnel.getService(),
                 personnel.getLibAge(),
                 personnel.getOrganizationId(),
-                personnel.getAgent()
+                personnel.getAgent(),
+                personnel.getScreenname()
         );
         if (depthDepartement > 0) {
             if (personnel.getDepartement() != null) {
@@ -206,7 +207,8 @@ public class PersonnelController {
                 personnelDto.getService(),
                 personnelDto.getLibAge(),
                 personnelDto.getOrganizationId(),
-                personnelDto.getAgent()
+                personnelDto.getAgent(),
+                personnelDto.getScreenname()
         );
         if (personnelDto.getDepartement() != null) {
             personnel.setDepartement(DepartementController.convertDtoToDepartement(personnelDto.getDepartement()));

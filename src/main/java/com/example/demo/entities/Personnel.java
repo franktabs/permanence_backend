@@ -63,6 +63,7 @@ public class Personnel {
 
 
 
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "departement_id", nullable = false)
@@ -92,6 +93,18 @@ public class Personnel {
 
     @OneToMany(mappedBy = "emetteur", cascade = CascadeType.PERSIST)
     private Set<Annonce> annonces = new LinkedHashSet<>();
+
+    @Size(max = 255)
+    @Column(name = "screenname")
+    private String screenname;
+
+    public String getScreenname() {
+        return screenname;
+    }
+
+    public void setScreenname(String screenname) {
+        this.screenname = screenname;
+    }
 
     public Set<Annonce> getAnnonces() {
         return annonces;
@@ -264,7 +277,7 @@ public class Personnel {
     public Personnel() {
     }
 
-    public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent) {
+    public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent, String screenname) {
         this.id = id;
         this.firstname = firstname;
         this.emailaddress = emailaddress;
@@ -277,6 +290,7 @@ public class Personnel {
         this.libAge = libAge;
         this.organizationId = organizationId;
         this.agent = agent;
+        this.screenname = screenname;
     }
 
     @Override
