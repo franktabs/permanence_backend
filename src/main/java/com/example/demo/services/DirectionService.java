@@ -8,6 +8,7 @@ import com.example.demo.entities.Direction;
 import com.example.demo.enumeration.Config;
 import com.example.demo.repositories.DepartementRepository;
 import com.example.demo.repositories.DirectionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import java.util.Set;
 @Service
 public class DirectionService {
 
-
+    @Autowired
     private DirectionRepository directionRepository;
+
+    @Autowired
     private DepartementRepository departementRepository;
 
     public DirectionService(DirectionRepository directionRepository) {
@@ -45,16 +48,18 @@ public class DirectionService {
     }
 
     public int configDirection(List<DirectionDto> directionDtos, Config config) {
-        Set<Long> OrganizationIdDirections = new HashSet<>();
+        Set<Long> organizationIdDirections = new HashSet<>();
         if (config == Config.RECREATE) {
             directionRepository.deleteAll();
         }
         int nombreTraited = 0;
         for (DirectionDto directionDto : directionDtos) {
+            System.out.println("organisationId est "+directionDto.getOrganizationId());
             directionDto.setId(null);
             if (directionDto.getName().toUpperCase().contains("DIRECTION")) {
                 Direction newDirection = DirectionController.convertDtoToDirection(directionDto);
-                OrganizationIdDirections.add(directionDto.getOrganizationId());
+                organizationIdDirections.add(directionDto.getOrganizationId());
+                System.out.println("Valeur de l'organisation"+organizationIdDirections);
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getOrganizationId());
                 if (direction == null) {
                     this.creer(newDirection);
@@ -66,14 +71,15 @@ public class DirectionService {
                 }
                 nombreTraited++;
 
-            } else if (OrganizationIdDirections.contains(directionDto.getParentorganizationId())) {
+            } else if (organizationIdDirections.contains(directionDto.getParentorganizationId())) {
+                System.out.println("Creation departement");
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getParentorganizationId());
                 Departement departement = new Departement(
                         directionDto.getId(),
                         directionDto.getOrganizationId(),
                         directionDto.getLevel(),
                         directionDto.getType_(),
-                        directionDto.getTreepath(),
+                        directionDto.getTreePath(),
                         directionDto.getParentorganizationId(),
                         directionDto.getName()
                 );

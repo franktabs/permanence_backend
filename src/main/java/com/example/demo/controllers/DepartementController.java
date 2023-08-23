@@ -51,7 +51,7 @@ public class DepartementController {
                 departementDto.getOrganizationId(),
                 departementDto.getLevel(),
                 departementDto.getType_(),
-                departementDto.getTreepath(),
+                departementDto.getTreePath(),
                 departementDto.getParentorganizationId(),
                 departementDto.getName()
         );

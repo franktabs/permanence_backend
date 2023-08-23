@@ -17,7 +17,7 @@ public class DirectionDto implements Serializable {
     @Size(max = 45)
     private  String type_;
     @Size(max = 255)
-    private  String treepath;
+    private  String treePath;
     private  Long parentorganizationId;
     @NotNull
     @Size(max = 255)
@@ -29,17 +29,17 @@ public class DirectionDto implements Serializable {
 
     public DirectionDto() {
     }
-    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name, Set<DepartementDto> departements) {
-        this(id,organizationId,level,type_,treepath,parentorganizationId,name);
+    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treePath, Long parentorganizationId, @NotNull String name, Set<DepartementDto> departements) {
+        this(id,organizationId,level,type_,treePath,parentorganizationId,name);
         this.departements = departements;
     }
 
-    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treepath, Long parentorganizationId, @NotNull String name) {
+    public DirectionDto(Long id, Long organizationId, Long level, String type_, String treePath, Long parentorganizationId, @NotNull String name) {
         this.id = id;
         this.organizationId = organizationId;
         this.level = level;
         this.type_ = type_;
-        this.treepath = treepath;
+        this.treePath = treePath;
         this.parentorganizationId = parentorganizationId;
         this.name = name;
     }
@@ -76,8 +76,8 @@ public class DirectionDto implements Serializable {
         return type_;
     }
 
-    public String getTreepath() {
-        return treepath;
+    public String getTreePath() {
+        return treePath;
     }
 
     public Long getParentorganizationId() {
@@ -101,7 +101,7 @@ public class DirectionDto implements Serializable {
                 Objects.equals(this.organizationId, entity.organizationId) &&
                 Objects.equals(this.level, entity.level) &&
                 Objects.equals(this.type_, entity.type_) &&
-                Objects.equals(this.treepath, entity.treepath) &&
+                Objects.equals(this.treePath, entity.treePath) &&
                 Objects.equals(this.parentorganizationId, entity.parentorganizationId) &&
                 Objects.equals(this.name, entity.name) &&
                 Objects.equals(this.departements, entity.departements);
@@ -109,7 +109,7 @@ public class DirectionDto implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, organizationId, level, type_, treepath, parentorganizationId, name, departements);
+        return Objects.hash(id, organizationId, level, type_, treePath, parentorganizationId, name, departements);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class DirectionDto implements Serializable {
                 "organizationId = " + organizationId + ", " +
                 "level = " + level + ", " +
                 "type_ = " + type_ + ", " +
-                "treepath = " + treepath + ", " +
+                "treePath = " + treePath + ", " +
                 "parentorganizationId = " + parentorganizationId + ", " +
                 "name = " + name + ", " +
                 "departements = " + departements + ")";

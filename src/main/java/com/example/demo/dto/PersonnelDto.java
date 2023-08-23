@@ -25,7 +25,7 @@ public class PersonnelDto implements Serializable {
     @Size(max = 45)
     private String telephoneMobile;
     @NotNull
-    private Integer userId;
+    private Long userId;
     @NotNull
     private Character sexe;
     @Size(max = 255)
@@ -34,7 +34,7 @@ public class PersonnelDto implements Serializable {
     private String service;
     @Size(max = 255)
     private String libAge;
-    private Integer organizationId;
+    private Long organizationId;
     private Boolean agent;
 
     private String screenname;
@@ -69,7 +69,7 @@ public class PersonnelDto implements Serializable {
 
     public PersonnelDto() {
     }
-    public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent, String screenname) {
+    public PersonnelDto(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Long userId, @NotNull Character sexe, String fonction, String service, String libAge, Long organizationId, Boolean agent, String screenname) {
         this.id = id;
         this.firstname = firstname;
         this.emailaddress = emailaddress;
@@ -144,7 +144,7 @@ public class PersonnelDto implements Serializable {
         return telephoneMobile;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -164,7 +164,7 @@ public class PersonnelDto implements Serializable {
         return libAge;
     }
 
-    public Integer getOrganizationId() {
+    public Long getOrganizationId() {
         return organizationId;
     }
 

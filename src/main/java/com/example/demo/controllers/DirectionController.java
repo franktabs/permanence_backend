@@ -178,7 +178,7 @@ public class DirectionController {
                 directionDto.getOrganizationId(),
                 directionDto.getLevel(),
                 directionDto.getType_(),
-                directionDto.getTreepath(),
+                directionDto.getTreePath(),
                 directionDto.getParentorganizationId(),
                 directionDto.getName()
 

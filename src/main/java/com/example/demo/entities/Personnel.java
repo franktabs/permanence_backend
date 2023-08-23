@@ -37,7 +37,7 @@ public class Personnel {
 
     @NotNull
     @Column(name = "userId", nullable = false)
-    private Integer userId;
+    private Long userId;
 
     @NotNull
     @Column(name = "sexe", nullable = false)
@@ -56,7 +56,7 @@ public class Personnel {
     private String libAge;
 
     @Column(name = "organizationId")
-    private Integer organizationId;
+    private Long organizationId;
 
     @Column(name = "agent")
     private Boolean agent;
@@ -210,11 +210,11 @@ public class Personnel {
         this.telephoneMobile = telephoneMobile;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -250,11 +250,11 @@ public class Personnel {
         this.libAge = libAge;
     }
 
-    public Integer getOrganizationId() {
+    public Long getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Integer organizationId) {
+    public void setOrganizationId(Long organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -277,7 +277,7 @@ public class Personnel {
     public Personnel() {
     }
 
-    public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Integer userId, @NotNull Character sexe, String fonction, String service, String libAge, Integer organizationId, Boolean agent, String screenname) {
+    public Personnel(Long id, @NotNull String firstname, @NotNull String emailaddress, String telephoneCisco, String telephoneMobile, @NotNull Long userId, @NotNull Character sexe, String fonction, String service, String libAge, Long organizationId, Boolean agent, String screenname) {
         this.id = id;
         this.firstname = firstname;
         this.emailaddress = emailaddress;
