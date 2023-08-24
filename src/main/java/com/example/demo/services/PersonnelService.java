@@ -36,12 +36,25 @@ public class PersonnelService {
         return optional.orElse(null);
     }
 
+    public Personnel getByUserId(Long id){
+        return personnelRepository.findByUserId(id);
+    }
+
     public List<PersonnelDto> configPersonnel(List<PersonnelDto> personnelDtos, Config config){
 
         List<PersonnelDto> personnelDtosSave = new ArrayList<>();
         List<Long> idList = new ArrayList<>();
         for(PersonnelDto personnelDto : personnelDtos){
             personnelDto.setId(null);
+            personnelDto.setPersonnels_jour(null);
+            personnelDto.setPersonnels_nuit(null);
+            personnelDto.setNotifications(null);
+            personnelDto.setAnnonces(null);
+            personnelDto.setAbsences(null);
+            personnelDto.setRemplacements(null);
+            personnelDto.setRoles(null);
+            personnelDto.setMonths_supervise(null);
+
             Personnel newPersonnel = PersonnelController.convertDtoToPersonnel(personnelDto);
 
             Departement departement = departementRepository.findByOrganizationId(newPersonnel.getOrganizationId());
@@ -52,7 +65,7 @@ public class PersonnelService {
                 if(personnel==null){
                     Personnel register  = creer(newPersonnel);
                     idList.add(register.getId());
-                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 0, 0, 0, 0, 0, 0, 0, 0));
                 }else{
                     newPersonnel.setId(personnel.getId());
                     newPersonnel.setPersonnelJours(personnel.getPersonnelJours());
@@ -67,7 +80,7 @@ public class PersonnelService {
 
                     Personnel register  = creer(newPersonnel);
                     idList.add(register.getId());
-                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 0, 0, 0, 0, 0, 0, 0, 0));
 
                 }
             }

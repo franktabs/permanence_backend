@@ -55,12 +55,16 @@ public class DirectionService {
         List<Long> idListDepartement = new ArrayList<>();
 
         for (DirectionDto directionDto : directionDtos) {
-            System.out.println("organisationId est "+directionDto.getOrganizationId());
+            System.out.println("organisationId est " + directionDto.getOrganizationId());
             directionDto.setId(null);
             if (directionDto.getName().toUpperCase().contains("DIRECTION")) {
+
+                directionDto.setDepartements(null);
+                directionDto.setParameters(null);
+
                 Direction newDirection = DirectionController.convertDtoToDirection(directionDto);
                 organizationIdDirections.add(directionDto.getOrganizationId());
-                System.out.println("Valeur de l'organisation"+organizationIdDirections);
+                System.out.println("Valeur de l'organisation" + organizationIdDirections);
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getOrganizationId());
                 if (direction == null) {
                     Direction register = this.creer(newDirection);
@@ -78,34 +82,52 @@ public class DirectionService {
 
             } else if (organizationIdDirections.contains(directionDto.getParentorganizationId())) {
                 System.out.println("Creation departement");
-                Direction direction = directionRepository.findByOrganizationId(directionDto.getParentorganizationId());
-                Departement departement = new Departement(
-                        directionDto.getId(),
-                        directionDto.getOrganizationId(),
-                        directionDto.getLevel(),
-                        directionDto.getType_(),
-                        directionDto.getTreePath(),
-                        directionDto.getParentorganizationId(),
-                        directionDto.getName()
-                );
-                departement.setDirection(direction);
 
-                Departement register = departementRepository.save(departement);
-                idListDepartement.add(register.getId());
-                organisations.add(DepartementController.convertDepartementToDto(register, 1, 1));
+                Departement departementBD = departementRepository.findByOrganizationId(directionDto.getOrganizationId());
+                if (departementBD == null) {
+
+                    Direction direction = directionRepository.findByOrganizationId(directionDto.getParentorganizationId());
+
+                    Departement departement = new Departement(
+                            directionDto.getId(),
+                            directionDto.getOrganizationId(),
+                            directionDto.getLevel(),
+                            directionDto.getType_(),
+                            directionDto.getTreePath(),
+                            directionDto.getParentorganizationId(),
+                            directionDto.getName()
+                    );
+                    departement.setDirection(direction);
+
+                    Departement register = departementRepository.save(departement);
+                    idListDepartement.add(register.getId());
+                    organisations.add(DepartementController.convertDepartementToDto(register, 1, 1));
+                }
+                else {
+                    departementBD.setOrganizationId(directionDto.getOrganizationId());
+                    departementBD.setLevel(directionDto.getLevel());
+                    departementBD.setType(directionDto.getType_());
+                    departementBD.setTreepath(directionDto.getTreePath());
+                    departementBD.setParentorganizationId(directionDto.getParentorganizationId());
+                    departementBD.setName(directionDto.getName());
+
+                    Departement register = departementRepository.save(departementBD);
+                    idListDepartement.add(register.getId());
+                    organisations.add(DepartementController.convertDepartementToDto(register, 1, 1));
+                }
             }
 
         }
         if (config == Config.RECREATE) {
             List<Direction> directionList = directionRepository.findAll();
             List<Departement> departementList = departementRepository.findAll();
-            for (Direction direction:directionList){
-                if(!idListDirection.contains(direction.getId())){
+            for (Direction direction : directionList) {
+                if (!idListDirection.contains(direction.getId())) {
                     directionRepository.deleteDirection(direction.getId());
                 }
             }
-            for (Departement departement:departementList){
-                if(!idListDepartement.contains(departement.getId())){
+            for (Departement departement : departementList) {
+                if (!idListDepartement.contains(departement.getId())) {
                     departementRepository.deleteDepartement(departement.getId());
                 }
             }

@@ -1,8 +1,12 @@
 package com.example.demo.entities;
 
-import jakarta.persistence.*;
+/*import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Size;*/
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

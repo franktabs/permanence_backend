@@ -40,7 +40,7 @@ public class ParameterController {
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ParameterDto> getOneParameter(@PathVariable Long id){
         Parameter parameter = parameterService.getParameterById(id);
-        if(parameter==null){
+        if(parameter ==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertParameterToDto(parameter, 1));
@@ -103,7 +103,7 @@ public class ParameterController {
             parameter.setDirection(DirectionController.convertDtoToDirection(parameterDto.getDirection()));
         }
 
-        return  parameter;
+        return parameter;
     }
 
 

@@ -1,8 +1,12 @@
 package com.example.demo.dto;
 
 import com.example.demo.entities.Personnel;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+/*import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;*/
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;

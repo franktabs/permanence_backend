@@ -20,7 +20,7 @@ public class ParameterService {
 
     public Parameter update(Parameter parameterUpdate, Long id){
         Parameter parameter1 = parameterRepository.findById(id).orElse(null);
-        if(parameter1==null) return null;
+        if(parameter1 ==null) return null;
         if(!parameter1.getId().equals(parameterUpdate.getId())) return null;
         return parameterRepository.save(parameterUpdate);
     }
