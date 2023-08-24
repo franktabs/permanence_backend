@@ -1,11 +1,12 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.DepartementController;
 import com.example.demo.controllers.DirectionController;
-import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
 import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
 import com.example.demo.enumeration.Config;
+import com.example.demo.interfaces.IOrganisationDto;
 import com.example.demo.repositories.DepartementRepository;
 import com.example.demo.repositories.DirectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +48,12 @@ public class DirectionService {
         return directions1;
     }
 
-    public int configDirection(List<DirectionDto> directionDtos, Config config) {
+    public List<IOrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> organizationIdDirections = new HashSet<>();
-        if (config == Config.RECREATE) {
-            directionRepository.deleteAll();
-        }
-        int nombreTraited = 0;
+        List<IOrganisationDto> organisations = new ArrayList<>();
+        List<Long> idListDirection = new ArrayList<>();
+        List<Long> idListDepartement = new ArrayList<>();
+
         for (DirectionDto directionDto : directionDtos) {
             System.out.println("organisationId est "+directionDto.getOrganizationId());
             directionDto.setId(null);
@@ -62,14 +63,18 @@ public class DirectionService {
                 System.out.println("Valeur de l'organisation"+organizationIdDirections);
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getOrganizationId());
                 if (direction == null) {
-                    this.creer(newDirection);
+                    Direction register = this.creer(newDirection);
+                    idListDirection.add(register.getId());
+                    organisations.add(DirectionController.convertDirectionToDto(register, 1, 0));
                 } else {
                     newDirection.setId(direction.getId());
                     newDirection.setDepartements(direction.getDepartements());
                     newDirection.setParameters(direction.getParameters());
-                    this.creer(newDirection);
+
+                    Direction register = this.creer(newDirection);
+                    idListDirection.add(register.getId());
+                    organisations.add(DirectionController.convertDirectionToDto(register, 1, 0));
                 }
-                nombreTraited++;
 
             } else if (organizationIdDirections.contains(directionDto.getParentorganizationId())) {
                 System.out.println("Creation departement");
@@ -84,16 +89,32 @@ public class DirectionService {
                         directionDto.getName()
                 );
                 departement.setDirection(direction);
-                departementRepository.save(departement);
-                nombreTraited++;
+
+                Departement register = departementRepository.save(departement);
+                idListDepartement.add(register.getId());
+                organisations.add(DepartementController.convertDepartementToDto(register, 1, 1));
             }
 
         }
-        return nombreTraited;
+        if (config == Config.RECREATE) {
+            List<Direction> directionList = directionRepository.findAll();
+            List<Departement> departementList = departementRepository.findAll();
+            for (Direction direction:directionList){
+                if(!idListDirection.contains(direction.getId())){
+                    directionRepository.deleteDirection(direction.getId());
+                }
+            }
+            for (Departement departement:departementList){
+                if(!idListDepartement.contains(departement.getId())){
+                    departementRepository.deleteDepartement(departement.getId());
+                }
+            }
+        }
+        return organisations;
     }
 
 
-    public void creer(Direction direction) {
-        this.directionRepository.save(direction);
+    public Direction creer(Direction direction) {
+        return this.directionRepository.save(direction);
     }
 }

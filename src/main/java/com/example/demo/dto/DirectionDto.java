@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.interfaces.IOrganisationDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 /**
  * DTO for {@link com.example.demo.entities.Direction}
  */
-public class DirectionDto implements Serializable {
+public class DirectionDto implements Serializable, IOrganisationDto {
     private  Long id;
     private  Long organizationId;
     private  Long level;

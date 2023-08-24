@@ -10,6 +10,7 @@ import com.example.demo.repositories.PersonnelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +36,10 @@ public class PersonnelService {
         return optional.orElse(null);
     }
 
-    public int configPersonnel(List<PersonnelDto> personnelDtos, Config config){
-        if(config==Config.RECREATE){
-            personnelRepository.deleteAll();
-        }
-        int nombreTraited = 0;
+    public List<PersonnelDto> configPersonnel(List<PersonnelDto> personnelDtos, Config config){
+
+        List<PersonnelDto> personnelDtosSave = new ArrayList<>();
+        List<Long> idList = new ArrayList<>();
         for(PersonnelDto personnelDto : personnelDtos){
             personnelDto.setId(null);
             Personnel newPersonnel = PersonnelController.convertDtoToPersonnel(personnelDto);
@@ -50,8 +50,9 @@ public class PersonnelService {
                 newPersonnel.setDepartement(departement);
                 Personnel personnel = personnelRepository.findByUserId(newPersonnel.getUserId());
                 if(personnel==null){
-                    creer(newPersonnel);
-                    nombreTraited++;
+                    Personnel register  = creer(newPersonnel);
+                    idList.add(register.getId());
+                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 1, 1, 1, 1, 1, 1, 1, 1));
                 }else{
                     newPersonnel.setId(personnel.getId());
                     newPersonnel.setPersonnelJours(personnel.getPersonnelJours());
@@ -64,12 +65,22 @@ public class PersonnelService {
                     newPersonnel.setRoles(personnel.getRoles());
                     newPersonnel.setMonths_supervise(personnel.getMonths_supervise());
 
-                    creer(newPersonnel);
-                    nombreTraited++;
+                    Personnel register  = creer(newPersonnel);
+                    idList.add(register.getId());
+                    personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+
                 }
             }
 
         }
-        return nombreTraited;
+        if(config==Config.RECREATE){
+            List<Personnel> personnelList = personnelRepository.findAll();
+            for (Personnel personnel:personnelList){
+                if(!idList.contains(personnel.getId())){
+                    personnelRepository.deletePersonnel(personnel.getId());
+                }
+            }
+        }
+        return personnelDtosSave;
     }
 }

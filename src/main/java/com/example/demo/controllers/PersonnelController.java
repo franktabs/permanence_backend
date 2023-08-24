@@ -88,8 +88,8 @@ public class PersonnelController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            int ligne = personnelService.configPersonnel(personnelDtos, Config.MISE_A_JOUR);
-            return ResponseEntity.ok().body(Map.of("traited", ligne));
+            List<PersonnelDto> ligne = personnelService.configPersonnel(personnelDtos, Config.MISE_A_JOUR);
+            return ResponseEntity.ok().body(ligne);
         }
         catch (DataIntegrityViolationException e){
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -115,8 +115,8 @@ public class PersonnelController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            int ligne = personnelService.configPersonnel(personnelDtos, Config.RECREATE);
-            return ResponseEntity.ok().body(Map.of("traited", ligne));
+            List<PersonnelDto> ligne = personnelService.configPersonnel(personnelDtos, Config.RECREATE);
+            return ResponseEntity.ok().body( ligne);
         }
         catch (DataIntegrityViolationException e){
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -131,7 +131,6 @@ public class PersonnelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
         }
     }
-
     public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole, int depthNotification, int depthAnnonce) {
         PersonnelDto personnelDto = new PersonnelDto(
                 personnel.getId(),
