@@ -72,7 +72,10 @@ public class PersonnelService {
                     newPersonnel.setPersonnelNuits(personnel.getPersonnelNuits());
                     newPersonnel.setNotifications(personnel.getNotifications());
                     newPersonnel.setAnnonces(personnel.getAnnonces());
+                    if(newPersonnel.getDepartement()==null){
+
                     newPersonnel.setDepartement(personnel.getDepartement());
+                    }
                     newPersonnel.setAbsences(personnel.getAbsences());
                     newPersonnel.setRemplacements(personnel.getRemplacements());
                     newPersonnel.setRoles(personnel.getRoles());

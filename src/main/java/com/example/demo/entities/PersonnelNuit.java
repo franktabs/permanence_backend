@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "personnel_nuit")
-public class PersonnelNuit {
+public class PersonnelNuit implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")

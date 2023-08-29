@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "personnel")
-public class Personnel {
+public class Personnel implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")

@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "notification")
-public class Notification {
+public class Notification implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")

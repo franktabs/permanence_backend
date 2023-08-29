@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "annonce")
-public class Annonce {
+public class Annonce implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
