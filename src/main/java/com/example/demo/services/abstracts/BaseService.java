@@ -45,6 +45,7 @@ public abstract class BaseService< J extends Model , T extends ModelRepository<J
         if(!repository.existsById(id)){
             return false;
         }
+
         repository.deleteModel(id);
         return true;
     }
