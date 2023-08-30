@@ -108,7 +108,7 @@ public class DirectionService extends BaseService<Direction, DirectionRepository
             }
             for (Departement departement : departementList) {
                 if (!idListDepartement.contains(departement.getId())) {
-                    departementRepository.deleteDepartement(departement.getId());
+                    departementRepository.deleteModel(departement.getId());
                 }
             }
         }

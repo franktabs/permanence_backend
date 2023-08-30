@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface AbsenceRepository extends ModelRepository<Absence, Long> {
 
-    @Override
+
     @Transactional
     @Modifying
     @Query("delete from Absence a where a.id = ?1")
     int deleteModel(Long id);
+
+
 }

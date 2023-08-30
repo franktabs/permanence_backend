@@ -15,6 +15,6 @@ public interface DepartementRepository extends ModelRepository<Departement, Long
     @Transactional
     @Modifying
     @Query("delete from Departement d where d.id = ?1")
-    int deleteDepartement(Long id);
+    int deleteModel(Long id);
 
 }

@@ -37,7 +37,7 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
         List<J> models = service.getAllModel();
         List<D> modelDtos = new ArrayList<>();
         for (J model : models) {
-            modelDtos.add(convertModelToDto(model, 1, 1, 1));
+            modelDtos.add(convertModelToDto(model, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.OK).body(modelDtos);
     }
@@ -59,7 +59,7 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
         if(model==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertModelToDto(model, 1, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertModelToDto(model, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
     @PostMapping()

@@ -27,7 +27,7 @@ import static com.example.demo.controllers.RemplacementController.convertRemplac
 public class PersonnelController extends PersonnelConvertController {
 
     @Autowired
-    PersonnelService personnelService;
+    PersonnelService personnelService ;
 
     @Autowired
     Validator validator;
@@ -35,7 +35,7 @@ public class PersonnelController extends PersonnelConvertController {
 
     @GetMapping(path = "/userId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonnelDto> getPersonnelByUserId(@PathVariable Long id) {
-        Personnel personnel = personnelService.getModelById(id);
+        Personnel personnel = personnelService.getByUserId(id);
         if (personnel == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

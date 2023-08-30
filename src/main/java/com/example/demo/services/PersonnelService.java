@@ -26,6 +26,10 @@ public class PersonnelService extends BaseService<Personnel, PersonnelRepository
     @Autowired
     DepartementRepository departementRepository;
 
+    public Personnel getByUserId(Long id){
+        return personnelRepository.findByUserId(id);
+    }
+
     public List<PersonnelDto> configPersonnel(List<PersonnelDto> personnelDtos, Config config){
 
         List<PersonnelDto> personnelDtosSave = new ArrayList<>();
