@@ -68,6 +68,7 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
             if (bindingResult.hasErrors()) {
                 return actionError(bindingResult);
             }
+            System.out.println("\n\nAvant sauvegarde actionSuccess =>"+modelDto);
             return actionSuccess(modelDto);
 
         } catch (DataIntegrityViolationException e) {

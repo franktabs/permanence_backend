@@ -17,6 +17,7 @@ public abstract class BaseService< J extends Model , T extends ModelRepository<J
 
     @Override
     public J create(J model){
+        System.out.println("\n\nmodel en enregistrer => "+model );
         return repository.save(model);
     }
 

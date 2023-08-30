@@ -10,12 +10,12 @@ import com.example.demo.services.PersonnelJourService;
 public class PersonnelJourConvertController extends ModelBaseConvertController<PersonnelJour, PersonnelJourDto, PersonnelJourService> {
     @Override
     public PersonnelJourDto convertModelToDto(PersonnelJour model, int... depth) {
-        return null;
+        return convertPersonnelJourToDto(model, depth[0], depth[1]);
     }
 
     @Override
     public PersonnelJour convertDtoToModel(PersonnelJourDto modelDto) {
-        return null;
+        return convertDtoToPersonnelJour(modelDto);
     }
 
     public static PersonnelJourDto convertPersonnelJourToDto(PersonnelJour personnelJour, int depthPersonnel, int depthPermanence) {

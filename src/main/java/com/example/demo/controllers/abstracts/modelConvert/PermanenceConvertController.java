@@ -96,6 +96,6 @@ public class PermanenceConvertController extends ModelBaseConvertController<Perm
 
     @Override
     public Permanence convertDtoToModel(PermanenceDto modelDto) {
-        return null;
+        return convertDtoToPermanence(modelDto);
     }
 }
