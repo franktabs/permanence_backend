@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.dto.interfaces.ModelDto;
 import com.example.demo.entities.Parameter;
 /*import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
@@ -14,8 +15,8 @@ import java.util.Objects;
 /**
  * DTO for {@link Parameter}
  */
-public class ParameterDto implements Serializable {
-    private Integer id;
+public class ParameterDto implements Serializable, ModelDto {
+    private Long id;
     @NotNull
     @Size(max = 45)
     private String code;
@@ -30,7 +31,7 @@ public class ParameterDto implements Serializable {
     public ParameterDto() {
     }
 
-    public ParameterDto(Integer id, @NotNull String code, @NotNull String libelle, String valeur) {
+    public ParameterDto(Long id, @NotNull String code, @NotNull String libelle, String valeur) {
         this.id = id;
         this.code = code;
         this.libelle = libelle;
@@ -38,11 +39,11 @@ public class ParameterDto implements Serializable {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public ParameterDto setId(Integer id) {
+    public ParameterDto setId(Long id) {
         this.id = id;
         return this;
     }

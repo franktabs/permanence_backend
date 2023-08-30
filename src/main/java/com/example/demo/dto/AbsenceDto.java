@@ -3,6 +3,8 @@ package com.example.demo.dto;
 /*import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
 
+import com.example.demo.dto.interfaces.ModelDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import java.util.Objects;
 /**
  * DTO for {@link com.example.demo.entities.Absence}
  */
-public class AbsenceDto implements Serializable {
+public class AbsenceDto implements Serializable, ModelDto {
     private Long id;
     @Size(max = 255)
     private String message;

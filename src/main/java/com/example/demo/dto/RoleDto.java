@@ -2,6 +2,8 @@ package com.example.demo.dto;
 
 /*import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
+import com.example.demo.dto.interfaces.ModelDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import java.util.Set;
 /**
  * DTO for {@link com.example.demo.entities.Role}
  */
-public class RoleDto implements Serializable {
+public class RoleDto implements Serializable, ModelDto {
     private Long id;
     @NotNull
     @Size(max = 255)

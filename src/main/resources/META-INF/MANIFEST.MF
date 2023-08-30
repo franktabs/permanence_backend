@@ -1,0 +1,46 @@
+Manifest-Version: 1.0
+Main-Class: com.example.demo.DemoApplication
+Class-Path: spring-aspects-5.3.29.jar tomcat-embed-el-9.0.78.jar spring-
+ boot-starter-data-jpa-2.7.14.jar spring-boot-autoconfigure-2.7.14.jar s
+ pring-hateoas-1.5.5.jar txw2-2.3.8.jar hibernate-commons-annotations-5.
+ 1.2.Final.jar log4j-api-2.17.2.jar spring-boot-starter-aop-2.7.14.jar a
+ ntlr-2.7.7.jar jackson-module-jaxb-annotations-2.13.5.jar asm-tree-7.1.
+ jar checker-qual-3.5.0.jar jersey-bean-validation-2.35.jar jackson-data
+ bind-2.13.5.jar jandex-2.4.2.Final.jar jackson-datatype-jdk8-2.13.5.jar
+  spring-context-5.3.29.jar class-model-2.6.1.jar asm-util-7.1.jar jerse
+ y-client-2.35.jar spring-data-jdbc-2.4.14.jar json-path-2.7.0.jar sprin
+ g-boot-starter-logging-2.7.14.jar spring-boot-starter-validation-2.7.14
+ .jar jersey-container-servlet-2.35.jar istack-commons-runtime-3.0.12.ja
+ r jackson-module-parameter-names-2.13.5.jar jersey-common-2.35.jar spri
+ ng-boot-starter-jdbc-2.7.14.jar accessors-smart-2.4.11.jar byte-buddy-1
+ .12.23.jar hk2-api-2.6.1.jar jersey-container-servlet-core-2.35.jar spr
+ ing-bridge-2.6.1.jar validation-api-2.0.1.Final.jar hk2-runlevel-2.6.1.
+ jar spring-boot-starter-2.7.14.jar jackson-annotations-2.13.5.jar logba
+ ck-classic-1.2.12.jar spring-orm-5.3.29.jar aspectjweaver-1.9.7.jar jso
+ n-smart-2.4.11.jar spring-boot-starter-data-jdbc-2.7.14.jar evo-inflect
+ or-1.3.jar jackson-datatype-jsr310-2.13.5.jar spring-beans-5.3.29.jar m
+ ysql-connector-j-8.0.33.jar jackson-core-2.13.5.jar hk2-2.6.1.jar sprin
+ g-core-5.3.29.jar jul-to-slf4j-1.7.36.jar spring-boot-starter-data-rest
+ -2.7.14.jar hk2-core-2.6.1.jar jersey-media-json-jackson-2.35.jar jakar
+ ta.activation-api-1.2.2.jar log4j-to-slf4j-2.17.2.jar javassist-3.25.0-
+ GA.jar hibernate-validator-6.2.5.Final.jar spring-boot-2.7.14.jar jakar
+ ta.transaction-api-1.3.3.jar osgi-resource-locator-1.0.3.jar spring-plu
+ gin-core-2.0.0.RELEASE.jar hk2-locator-2.6.1.jar hk2-utils-2.6.1.jar ja
+ karta.persistence-api-2.2.3.jar jakarta.xml.bind-api-2.3.3.jar spring-j
+ cl-5.3.29.jar HikariCP-4.0.3.jar spring-data-rest-core-3.7.14.jar sprin
+ g-jdbc-5.3.29.jar jaxb-runtime-2.3.8.jar logback-core-1.2.12.jar jersey
+ -spring5-2.35.jar spring-data-relational-2.4.14.jar jersey-hk2-2.35.jar
+  jersey-server-2.35.jar jakarta.ws.rs-api-2.1.6.jar postgresql-42.3.8.j
+ ar spring-expression-5.3.29.jar spring-session-core-2.7.2.jar slf4j-api
+ -1.7.36.jar spring-data-rest-webmvc-3.7.14.jar snakeyaml-1.30.jar sprin
+ g-boot-starter-jersey-2.7.14.jar jakarta.annotation-api-1.3.5.jar sprin
+ g-boot-starter-tomcat-2.7.14.jar asm-commons-7.1.jar spring-boot-starte
+ r-web-2.7.14.jar jakarta.inject-2.6.1.jar tomcat-embed-core-9.0.78.jar 
+ spring-tx-5.3.29.jar spring-boot-starter-json-2.7.14.jar aopalliance-re
+ packaged-2.6.1.jar hibernate-core-5.6.15.Final.jar jakarta.activation-1
+ .2.2.jar asm-7.1.jar jersey-entity-filtering-2.35.jar classmate-1.5.1.j
+ ar spring-aop-5.3.29.jar asm-analysis-7.1.jar spring-data-jpa-2.7.14.ja
+ r tomcat-embed-websocket-9.0.78.jar jboss-logging-3.4.3.Final.jar sprin
+ g-web-5.3.29.jar jakarta.validation-api-2.0.2.jar spring-data-commons-2
+ .7.14.jar spring-webmvc-5.3.29.jar
+

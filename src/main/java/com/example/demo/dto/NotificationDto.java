@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.dto.interfaces.ModelDto;
 import com.example.demo.entities.Notification;
 /*import jakarta.validation.constraints.NotNull;*/
 
@@ -13,7 +14,7 @@ import java.util.Objects;
 /**
  * DTO for {@link Notification}
  */
-public class NotificationDto implements Serializable {
+public class NotificationDto implements Serializable, ModelDto {
     private Long id;
     @NotNull
     private AnnonceDto annonce;

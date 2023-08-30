@@ -3,6 +3,8 @@ package com.example.demo.entities;
 /*import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
+import com.example.demo.entities.interfaces.Model;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +14,7 @@ public class Parameter implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 45)
     @NotNull
@@ -34,18 +36,18 @@ public class Parameter implements Model {
     private Direction direction;
 
     public Parameter(){}
-    public Parameter(Integer id, @NotNull String code, @NotNull String libelle, String valeur) {
+    public Parameter(Long id, @NotNull String code, @NotNull String libelle, String valeur) {
         this.id = id;
         this.code = code;
         this.libelle = libelle;
         this.valeur = valeur;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

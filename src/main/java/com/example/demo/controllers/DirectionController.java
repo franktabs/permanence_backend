@@ -7,7 +7,7 @@ import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
 import com.example.demo.entities.Parameter;
 import com.example.demo.enumeration.Config;
-import com.example.demo.interfaces.IOrganisationDto;
+import com.example.demo.dto.interfaces.OrganisationDto;
 import com.example.demo.services.DirectionService;
 import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class DirectionController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            List<IOrganisationDto> ligne = directionService.configDirection(directionDtos, Config.MISE_A_JOUR);
+            List<OrganisationDto> ligne = directionService.configDirection(directionDtos, Config.MISE_A_JOUR);
             return ResponseEntity.ok().body(ligne);
         }
         catch (DataIntegrityViolationException e){
@@ -73,7 +73,7 @@ public class DirectionController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            List<IOrganisationDto> ligne = directionService.configDirection(directionDtos, Config.RECREATE);
+            List<OrganisationDto> ligne = directionService.configDirection(directionDtos, Config.RECREATE);
             return ResponseEntity.ok().body(ligne);
         }
         catch (DataIntegrityViolationException e){

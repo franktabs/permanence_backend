@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.dto.interfaces.ModelDto;
 import com.example.demo.entities.Month;
 /*import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
@@ -16,7 +17,7 @@ import java.util.Set;
 /**
  * DTO for {@link com.example.demo.entities.Permanence}
  */
-public class PermanenceDto implements Serializable {
+public class PermanenceDto implements Serializable, ModelDto {
     private Long id;
     @NotNull
     private LocalDate date;

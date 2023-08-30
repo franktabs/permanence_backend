@@ -6,7 +6,7 @@ import com.example.demo.dto.DirectionDto;
 import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
 import com.example.demo.enumeration.Config;
-import com.example.demo.interfaces.IOrganisationDto;
+import com.example.demo.dto.interfaces.OrganisationDto;
 import com.example.demo.repositories.DepartementRepository;
 import com.example.demo.repositories.DirectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +48,9 @@ public class DirectionService {
         return directions1;
     }
 
-    public List<IOrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
+    public List<OrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> organizationIdDirections = new HashSet<>();
-        List<IOrganisationDto> organisations = new ArrayList<>();
+        List<OrganisationDto> organisations = new ArrayList<>();
         List<Long> idListDirection = new ArrayList<>();
         List<Long> idListDepartement = new ArrayList<>();
 

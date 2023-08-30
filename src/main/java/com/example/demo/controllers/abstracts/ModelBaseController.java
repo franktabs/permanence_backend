@@ -1,14 +1,15 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.abstracts;
 
-import com.example.demo.dto.MonthDto;
-import com.example.demo.entities.Month;
-import com.example.demo.services.MonthService;
+import com.example.demo.dto.interfaces.ModelDto;
+import com.example.demo.entities.interfaces.Model;
+import com.example.demo.services.abstracts.ModelService;
 import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,31 +23,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ModelController {
+@Service
+public abstract class ModelBaseController<J extends Model, D extends ModelDto, T extends ModelService<J> > extends ModelController {
     @Autowired
-    MonthService monthService;
+    T service;
+
+    public abstract D convertModelToDto(J model, int ...depth);
+
+    public abstract J convertDtoToModel(D modelDto);
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MonthDto>> allMonth() {
-        List<Month> months = monthService.getAllMonth();
-        List<MonthDto> monthDtos = new ArrayList<>();
-        for (Month month : months) {
-            monthDtos.add(convertMonthToDto(month, 1, 1, 1));
+    public ResponseEntity<List<D>> allModel() {
+
+        List<J> models = service.getAllModel();
+        List<D> modelDtos = new ArrayList<>();
+        for (J model : models) {
+            modelDtos.add(convertModelToDto(model, 1, 1, 1));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(monthDtos);
+        return ResponseEntity.status(HttpStatus.OK).body(modelDtos);
     }
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MonthDto> getOneMonth(@PathVariable Long id){
-        Month month = monthService.getMonthById(id);
-        if(month==null){
+    public ResponseEntity<D> getOneModel(@PathVariable Long id){
+        J model = service.getModelById(id);
+        if(model==null){
             return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(convertMonthToDto(month, 1, 1, 1));
+        return ResponseEntity.status(HttpStatus.OK).body(convertModelToDto(model, 1, 1, 1));
     }
 
     @PostMapping()
-    public ResponseEntity<?> creer(@Valid @RequestBody MonthDto monthDto, BindingResult bindingResult) {
+    public ResponseEntity<?> creer(@Valid @RequestBody D modelDto, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 Map<String, String> mapErrors = new HashMap<>();
@@ -55,9 +62,9 @@ public abstract class ModelController {
                 }
                 return ResponseEntity.badRequest().body(mapErrors);
             }
-            Month month = convertDtoToMonth(monthDto);
+            J model = convertDtoToModel(modelDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertMonthToDto(monthService.create(month), 1, 1, 1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertModelToDto(service.create(model), 1, 1, 1));
 
         } catch (DataIntegrityViolationException e) {
             Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
@@ -68,7 +75,7 @@ public abstract class ModelController {
             return ResponseEntity.badRequest().body(message);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur s'est produit");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.controllers.abstracts.MonthConvertController;
 import com.example.demo.dto.MonthDto;
 import com.example.demo.dto.PermanenceDto;
 import com.example.demo.dto.PersonnelDto;
@@ -24,9 +25,9 @@ import java.util.*;
 @RestController
 @CrossOrigin
 @RequestMapping(path = "month")
-public class MonthController {
+public class MonthController extends MonthConvertController {
 
-    @Autowired
+   /* @Autowired
     MonthService monthService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -136,7 +137,7 @@ public class MonthController {
         }
 
         return month;
-    }
+    }*/
 
 
 }

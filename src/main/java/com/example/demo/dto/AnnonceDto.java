@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.dto.interfaces.ModelDto;
 import com.example.demo.entities.Annonce;
 /*import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
@@ -17,7 +18,7 @@ import java.util.Set;
 /**
  * DTO for {@link Annonce}
  */
-public class AnnonceDto implements Serializable {
+public class AnnonceDto implements Serializable, ModelDto {
     private Long id;
     @Size(max = 45)
     private String type;
