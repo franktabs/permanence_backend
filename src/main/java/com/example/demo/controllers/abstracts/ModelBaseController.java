@@ -26,7 +26,7 @@ import java.util.Map;
 @Service
 public abstract class ModelBaseController<J extends Model, D extends ModelDto, T extends ModelService<J> > extends ModelController {
     @Autowired
-    T service;
+    public T service;
 
     public abstract D convertModelToDto(J model, int ...depth);
 
@@ -43,6 +43,17 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
         return ResponseEntity.status(HttpStatus.OK).body(modelDtos);
     }
 
+
+
+    public ResponseEntity<D> actionSuccess(D modelDto){
+        J model = convertDtoToModel(modelDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertModelToDto(service.create(model), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    }
+
+
+
+
+
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<D> getOneModel(@PathVariable Long id){
         J model = service.getModelById(id);
@@ -56,26 +67,14 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
     public ResponseEntity<?> creer(@Valid @RequestBody D modelDto, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
-                Map<String, String> mapErrors = new HashMap<>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    mapErrors.put(error.getField(), error.getDefaultMessage());
-                }
-                return ResponseEntity.badRequest().body(mapErrors);
+                return actionError(bindingResult);
             }
-            J model = convertDtoToModel(modelDto);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertModelToDto(service.create(model), 1, 1, 1));
+            return actionSuccess(modelDto);
 
         } catch (DataIntegrityViolationException e) {
-            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
-            System.out.println("\n\nerreur ici" + message + "\n\n");
-            if (message.isEmpty()) {
-                message.put("errors", e.getMostSpecificCause().getMessage());
-            }
-            return ResponseEntity.badRequest().body(message);
+            return catchMessageDataIntegrity(e);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur s'est produit");
+            return catchMessageException(e);
         }
     }
 }

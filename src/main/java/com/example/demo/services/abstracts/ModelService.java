@@ -14,4 +14,6 @@ public interface  ModelService<J extends Model> {
     public List<J> getAllModel();
 
     public J getModelById(Long id);
+
+
 }

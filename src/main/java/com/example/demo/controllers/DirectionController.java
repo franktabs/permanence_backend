@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.controllers.abstracts.DirectionConvertController;
 import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
 import com.example.demo.dto.ParameterDto;
@@ -28,13 +29,10 @@ import static com.example.demo.controllers.ParameterController.convertParameterT
 @RestController
 @CrossOrigin
 @RequestMapping(path = "direction")
-public class DirectionController {
+public class DirectionController extends DirectionConvertController {
 
-    @Autowired
-    DirectionService directionService;
 
-    @Autowired
-    Validator validator;
+    DirectionService directionService = service;
 
     @PostMapping(path = "/config-actualise")
     public ResponseEntity<?> configActualise(@Valid @RequestBody List<DirectionDto> directionDtos, BindingResult bindingResult) {
@@ -67,33 +65,23 @@ public class DirectionController {
     public ResponseEntity<?> configRecreate(@Valid @RequestBody List<DirectionDto> directionDtos, BindingResult bindingResult) {
         try{
             if (bindingResult.hasErrors()) {
-                Map<String, String> mapErrors = new HashMap<>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    mapErrors.put(error.getField(), error.getDefaultMessage());
-                }
-                return ResponseEntity.badRequest().body(mapErrors);
+                return actionError(bindingResult);
             }
-            List<OrganisationDto> ligne = directionService.configDirection(directionDtos, Config.RECREATE);
-            return ResponseEntity.ok().body(ligne);
+            List<OrganisationDto> listDirection = directionService.configDirection(directionDtos, Config.RECREATE);
+            return ResponseEntity.ok().body(listDirection);
         }
         catch (DataIntegrityViolationException e){
-            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
-            System.out.println("\n\nerreur ici"+ message+"\n\n");
-            if(message.isEmpty()) {
-                message.put("errors", e.getMostSpecificCause().getMessage());
-            }
-            return ResponseEntity.badRequest().body(message);
+            return catchMessageDataIntegrity(e);
         }
         catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+            return catchMessageException(e);
         }
     }
 
-    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+/*    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> creerOne(@Valid @RequestBody DirectionDto directionDto, BindingResult bindingResult) {
-        /*Errors errors = new BeanPropertyBindingResult(direction, "direction");
-        validator.validate(direction, errors);*/
+        *//*Errors errors = new BeanPropertyBindingResult(direction, "direction");
+        validator.validate(direction, errors);*//*
 
         try{
             if (bindingResult.hasErrors()) {
@@ -131,9 +119,9 @@ public class DirectionController {
             directionDtos.add(convertDirectionToDto(direction, 1, 1));
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(directionDtos);
-    }
+    }*/
 
-    public static DirectionDto convertDirectionToDto(Direction direction, int depthDepartement, int depthParameter) {
+/*    public static DirectionDto convertDirectionToDto(Direction direction, int depthDepartement, int depthParameter) {
         DirectionDto directionDto = new DirectionDto(
                 direction.getId(),
                 direction.getOrganizationId(),
@@ -189,7 +177,7 @@ public class DirectionController {
         }
         direction.setDepartements(departements);
         return direction;
-    }
+    }*/
 
 
 }

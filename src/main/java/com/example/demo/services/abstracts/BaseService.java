@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class BaseService< J extends Model , T extends JpaRepository<J, Long> > implements ModelService<J> {
 
     @Autowired
-    T repository;
+    public T repository;
 
 
     @Override
@@ -37,4 +37,6 @@ public abstract class BaseService< J extends Model , T extends JpaRepository<J, 
     public J getModelById(Long id){
         return repository.findById(id).orElse(null);
     }
+
+
 }

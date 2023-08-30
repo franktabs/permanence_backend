@@ -9,6 +9,7 @@ import com.example.demo.enumeration.Config;
 import com.example.demo.dto.interfaces.OrganisationDto;
 import com.example.demo.repositories.DepartementRepository;
 import com.example.demo.repositories.DirectionRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,35 +19,32 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class DirectionService {
+public class DirectionService extends BaseService<Direction, DirectionRepository> {
 
-    @Autowired
-    private DirectionRepository directionRepository;
+
+    public DirectionRepository directionRepository = this.repository;
 
     @Autowired
     private DepartementRepository departementRepository;
 
-    public DirectionService(DirectionRepository directionRepository) {
-        this.directionRepository = directionRepository;
-    }
 
-    public List<Direction> getAllDirection() {
+/*    public List<Direction> getAllDirection() {
         List<Direction> directions = directionRepository.findAll();
         return directions;
-    }
+    }*/
 
-    public Direction sauvegarder(Direction direction) {
+    /*public Direction sauvegarder(Direction direction) {
         return directionRepository.save(direction);
-    }
+    }*/
 
-    public List<Direction> sauvergarderListe(List<Direction> directions) {
+/*    public List<Direction> sauvergarderListe(List<Direction> directions) {
         List<Direction> directions1 = new ArrayList<>();
 
         for (Direction direction : directions) {
             directions1.add(this.directionRepository.save(direction));
         }
         return directions1;
-    }
+    }*/
 
     public List<OrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> organizationIdDirections = new HashSet<>();
@@ -67,7 +65,7 @@ public class DirectionService {
                 System.out.println("Valeur de l'organisation" + organizationIdDirections);
                 Direction direction = directionRepository.findByOrganizationId(directionDto.getOrganizationId());
                 if (direction == null) {
-                    Direction register = this.creer(newDirection);
+                    Direction register = this.create(newDirection);
                     idListDirection.add(register.getId());
                     organisations.add(DirectionController.convertDirectionToDto(register, 1, 0));
                 } else {
@@ -75,7 +73,7 @@ public class DirectionService {
                     newDirection.setDepartements(direction.getDepartements());
                     newDirection.setParameters(direction.getParameters());
 
-                    Direction register = this.creer(newDirection);
+                    Direction register = this.create(newDirection);
                     idListDirection.add(register.getId());
                     organisations.add(DirectionController.convertDirectionToDto(register, 1, 0));
                 }
@@ -136,7 +134,7 @@ public class DirectionService {
     }
 
 
-    public Direction creer(Direction direction) {
+/*    public Direction creer(Direction direction) {
         return this.directionRepository.save(direction);
-    }
+    }*/
 }
