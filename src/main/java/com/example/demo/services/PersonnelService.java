@@ -3,10 +3,13 @@ package com.example.demo.services;
 import com.example.demo.controllers.PersonnelController;
 import com.example.demo.dto.PersonnelDto;
 import com.example.demo.entities.Departement;
+import com.example.demo.entities.Month;
 import com.example.demo.entities.Personnel;
 import com.example.demo.enumeration.Config;
 import com.example.demo.repositories.DepartementRepository;
+import com.example.demo.repositories.MonthRepository;
 import com.example.demo.repositories.PersonnelRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +18,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonnelService {
+public class PersonnelService extends BaseService<Personnel, PersonnelRepository> {
 
     @Autowired
     PersonnelRepository personnelRepository;
 
     @Autowired
     DepartementRepository departementRepository;
-
-    public List<Personnel> getAllPerson(){
-        return personnelRepository.findAll();
-    }
-
-    public Personnel creer(Personnel personnel){
-        return  personnelRepository.save(personnel);
-    }
-
-    public Personnel getOnePersonnel(Long id){
-        Optional<Personnel> optional =  personnelRepository.findById(id);
-        return optional.orElse(null);
-    }
-
-    public Personnel getByUserId(Long id){
-        return personnelRepository.findByUserId(id);
-    }
 
     public List<PersonnelDto> configPersonnel(List<PersonnelDto> personnelDtos, Config config){
 
@@ -63,7 +49,7 @@ public class PersonnelService {
                 newPersonnel.setDepartement(departement);
                 Personnel personnel = personnelRepository.findByUserId(newPersonnel.getUserId());
                 if(personnel==null){
-                    Personnel register  = creer(newPersonnel);
+                    Personnel register  = create(newPersonnel);
                     idList.add(register.getId());
                     personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 0, 0, 0, 0, 0, 0, 0, 0));
                 }else{
@@ -81,7 +67,7 @@ public class PersonnelService {
                     newPersonnel.setRoles(personnel.getRoles());
                     newPersonnel.setMonths_supervise(personnel.getMonths_supervise());
 
-                    Personnel register  = creer(newPersonnel);
+                    Personnel register  = create(newPersonnel);
                     idList.add(register.getId());
                     personnelDtosSave.add(PersonnelController.convertPersonnelToDto(register, 1, 0, 0, 0, 0, 0, 0, 0, 0));
 
@@ -93,7 +79,7 @@ public class PersonnelService {
             List<Personnel> personnelList = personnelRepository.findAll();
             for (Personnel personnel:personnelList){
                 if(!idList.contains(personnel.getId())){
-                    personnelRepository.deletePersonnel(personnel.getId());
+                    personnelRepository.deleteModel(personnel.getId());
                 }
             }
         }

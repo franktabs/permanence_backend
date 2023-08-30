@@ -15,5 +15,6 @@ public interface  ModelService<J extends Model> {
 
     public J getModelById(Long id);
 
+    public boolean delete(Long id);
 
 }

@@ -22,29 +22,11 @@ import java.util.Set;
 public class DirectionService extends BaseService<Direction, DirectionRepository> {
 
 
-    public DirectionRepository directionRepository = this.repository;
+    @Autowired
+    public DirectionRepository directionRepository;
 
     @Autowired
     private DepartementRepository departementRepository;
-
-
-/*    public List<Direction> getAllDirection() {
-        List<Direction> directions = directionRepository.findAll();
-        return directions;
-    }*/
-
-    /*public Direction sauvegarder(Direction direction) {
-        return directionRepository.save(direction);
-    }*/
-
-/*    public List<Direction> sauvergarderListe(List<Direction> directions) {
-        List<Direction> directions1 = new ArrayList<>();
-
-        for (Direction direction : directions) {
-            directions1.add(this.directionRepository.save(direction));
-        }
-        return directions1;
-    }*/
 
     public List<OrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> organizationIdDirections = new HashSet<>();
@@ -132,6 +114,27 @@ public class DirectionService extends BaseService<Direction, DirectionRepository
         }
         return organisations;
     }
+
+
+/*    public List<Direction> getAllDirection() {
+        List<Direction> directions = directionRepository.findAll();
+        return directions;
+    }*/
+
+    /*public Direction sauvegarder(Direction direction) {
+        return directionRepository.save(direction);
+    }*/
+
+/*    public List<Direction> sauvergarderListe(List<Direction> directions) {
+        List<Direction> directions1 = new ArrayList<>();
+
+        for (Direction direction : directions) {
+            directions1.add(this.directionRepository.save(direction));
+        }
+        return directions1;
+    }*/
+
+
 
 
 /*    public Direction creer(Direction direction) {

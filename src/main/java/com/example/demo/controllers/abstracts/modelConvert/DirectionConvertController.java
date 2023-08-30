@@ -1,5 +1,6 @@
-package com.example.demo.controllers.abstracts;
+package com.example.demo.controllers.abstracts.modelConvert;
 
+import com.example.demo.controllers.abstracts.ModelBaseConvertController;
 import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
 import com.example.demo.dto.ParameterDto;

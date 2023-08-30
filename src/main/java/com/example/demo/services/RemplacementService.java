@@ -1,22 +1,21 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.RemplacementDto;
+import com.example.demo.entities.Month;
 import com.example.demo.entities.Remplacement;
+import com.example.demo.repositories.MonthRepository;
 import com.example.demo.repositories.RemplacementRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RemplacementService {
+public class RemplacementService extends BaseService<Remplacement, RemplacementRepository> {
 
     @Autowired
     RemplacementRepository remplacementRepository;
-
-    public Remplacement create(Remplacement remplacement){
-        return remplacementRepository.save(remplacement);
-    }
 
     public Remplacement update(Long id, Remplacement update_remplacement){
         Remplacement remplacement = remplacementRepository.findById(id).orElse(null);
@@ -36,11 +35,4 @@ public class RemplacementService {
         return remplacementRepository.save(remplacementUpdate);
     }*/
 
-    public List<Remplacement> getAllRemplacement(){
-        return remplacementRepository.findAll();
-    }
-
-    public Remplacement getRemplacementById(Long id){
-        return remplacementRepository.findById(id).orElse(null);
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.services.abstracts;
 
 import com.example.demo.entities.interfaces.Model;
+import com.example.demo.repositories.abstracts.ModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public abstract class BaseService< J extends Model , T extends JpaRepository<J, Long> > implements ModelService<J> {
+public abstract class BaseService< J extends Model , T extends ModelRepository<J, Long>> implements ModelService<J> {
 
     @Autowired
     public T repository;
@@ -36,6 +37,16 @@ public abstract class BaseService< J extends Model , T extends JpaRepository<J, 
     @Override
     public J getModelById(Long id){
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public boolean delete(Long id){
+
+        if(!repository.existsById(id)){
+            return false;
+        }
+        repository.deleteModel(id);
+        return true;
     }
 
 

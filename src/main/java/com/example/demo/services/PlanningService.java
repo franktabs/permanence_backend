@@ -1,42 +1,16 @@
 package com.example.demo.services;
 
+import com.example.demo.entities.Month;
 import com.example.demo.entities.Planning;
+import com.example.demo.repositories.MonthRepository;
 import com.example.demo.repositories.PlanningRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PlanningService {
+public class PlanningService extends BaseService<Planning, PlanningRepository> {
 
-    @Autowired
-    PlanningRepository planningRepository;
-
-    public Planning create(Planning planning){
-        return planningRepository.save(planning);
-    }
-
-
-    public Planning update(Planning planningUpdate, Long id){
-        Planning planning1 = planningRepository.findById(id).orElse(null);
-        if(planning1==null) return null;
-        if(!planning1.getId().equals(planningUpdate.getId())) return null;
-        return planningRepository.save(planningUpdate);
-    }
-
-    public boolean delete(Long id){
-        Planning planning = planningRepository.findById(id).orElse(null);
-        if(planning==null) return false;
-        planningRepository.deleteById(id);
-        return true;
-    }
-
-    public List<Planning> getAllPlanning(){
-        return planningRepository.findAll();
-    }
-
-    public Planning getPlanningById(Long id){
-        return planningRepository.findById(id).orElse(null);
-    }
 }

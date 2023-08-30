@@ -2,13 +2,13 @@ package com.example.demo.services;
 
 import com.example.demo.controllers.PermanenceController;
 import com.example.demo.dto.PermanenceDto;
+import com.example.demo.entities.*;
 import com.example.demo.entities.Permanence;
-import com.example.demo.entities.Permanence;
-import com.example.demo.entities.PersonnelJour;
-import com.example.demo.entities.PersonnelNuit;
+import com.example.demo.repositories.MonthRepository;
 import com.example.demo.repositories.PermanenceRepository;
 import com.example.demo.repositories.PersonnelJourRepository;
 import com.example.demo.repositories.PersonnelNuitRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class PermanenceService {
+public class PermanenceService extends BaseService<Permanence, PermanenceRepository> {
     @Autowired
     private PermanenceRepository permanenceRepository;
 
@@ -27,25 +27,6 @@ public class PermanenceService {
 
     @Autowired PersonnelNuitService personnelNuitService;
 
-    public Permanence create(Permanence permanence){
-        return permanenceRepository.save(permanence);
-    }
-
-
-    public Permanence update(Permanence permanenceUpdate, Long id){
-        Permanence permanence1 = permanenceRepository.findById(id).orElse(null);
-        if(permanence1==null) return null;
-        if(!permanence1.getId().equals(permanenceUpdate.getId())) return null;
-        return permanenceRepository.save(permanenceUpdate);
-    }
-
-    public List<Permanence> getAllPermanence(){
-        return permanenceRepository.findAll();
-    }
-
-    public Permanence getPermanenceById(Long id){
-        return permanenceRepository.findById(id).orElse(null);
-    }
 
     @Transactional
     public Permanence deleteEntirelyPersonnel(Long id){
@@ -57,7 +38,7 @@ public class PermanenceService {
             System.out.println("\nSuppression en cours ");
             for(PersonnelJour personnelJour:personnelJours){
             System.out.println("\nSuppression en cours de personnelJour");
-                personnelJourService.suppression(personnelJour.getId());
+                personnelJourService.delete(personnelJour.getId());
             }
         }
         if(personnelNuits!=null){
@@ -66,7 +47,7 @@ public class PermanenceService {
             for(PersonnelNuit personnelNuit:personnelNuits){
                 System.out.println("\nSuppression en cours de personnelNuit");
 
-                personnelNuitService.suppression(personnelNuit.getId());
+                personnelNuitService.delete(personnelNuit.getId());
             }
         }
         return permanenceRepository.findById(id).orElse(null);

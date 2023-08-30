@@ -2,7 +2,10 @@ package com.example.demo.services;
 
 import com.example.demo.entities.Absence;
 import com.example.demo.entities.Absence;
+import com.example.demo.entities.Month;
 import com.example.demo.repositories.AbsenceRepository;
+import com.example.demo.repositories.MonthRepository;
+import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AbsenceService {
+public class AbsenceService extends BaseService<Absence, AbsenceRepository> {
 
     @Autowired
     private AbsenceRepository absenceRepository;
-
-    public Absence create(Absence absence){
-        return absenceRepository.save(absence);
-    }
-
-
+    
     public Absence update(Absence absenceUpdate, Long id){
         Absence absence = absenceRepository.findById(id).orElse(null);
         if(absence==null) return null;
@@ -35,11 +33,4 @@ public class AbsenceService {
         return absenceRepository.save(absence);
     }
 
-    public List<Absence> getAllAbsence(){
-        return absenceRepository.findAll();
-    }
-
-    public Absence getAbsenceById(Long id){
-        return absenceRepository.findById(id).orElse(null);
-    }
 }

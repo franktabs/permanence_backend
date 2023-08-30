@@ -1,12 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.abstracts.DirectionConvertController;
-import com.example.demo.dto.DepartementDto;
+import com.example.demo.controllers.abstracts.modelConvert.DirectionConvertController;
 import com.example.demo.dto.DirectionDto;
-import com.example.demo.dto.ParameterDto;
-import com.example.demo.entities.Departement;
-import com.example.demo.entities.Direction;
-import com.example.demo.entities.Parameter;
 import com.example.demo.enumeration.Config;
 import com.example.demo.dto.interfaces.OrganisationDto;
 import com.example.demo.services.DirectionService;
@@ -14,7 +9,6 @@ import com.example.demo.utils.StringExtract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
@@ -22,42 +16,29 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
-import static com.example.demo.controllers.DepartementController.convertDepartementToDto;
-import static com.example.demo.controllers.DepartementController.convertDtoToDepartement;
-import static com.example.demo.controllers.ParameterController.convertParameterToDto;
-
 @RestController
 @CrossOrigin
 @RequestMapping(path = "direction")
 public class DirectionController extends DirectionConvertController {
 
 
-    DirectionService directionService = service;
+    @Autowired
+    DirectionService directionService;
 
     @PostMapping(path = "/config-actualise")
     public ResponseEntity<?> configActualise(@Valid @RequestBody List<DirectionDto> directionDtos, BindingResult bindingResult) {
         try{
             if (bindingResult.hasErrors()) {
-                Map<String, String> mapErrors = new HashMap<>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    mapErrors.put(error.getField(), error.getDefaultMessage());
-                }
-                return ResponseEntity.badRequest().body(mapErrors);
+                return actionError(bindingResult);
             }
             List<OrganisationDto> ligne = directionService.configDirection(directionDtos, Config.MISE_A_JOUR);
             return ResponseEntity.ok().body(ligne);
         }
         catch (DataIntegrityViolationException e){
-            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
-            System.out.println("\n\nerreur ici"+ message+"\n\n");
-            if(message.isEmpty()) {
-                message.put("errors", e.getMostSpecificCause().getMessage());
-            }
-            return ResponseEntity.badRequest().body(message);
+            return catchMessageDataIntegrity(e);
         }
         catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+            return catchMessageException(e);
         }
     }
 

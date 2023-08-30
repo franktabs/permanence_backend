@@ -1,6 +1,8 @@
 package com.example.demo.controllers.abstracts;
 
+import com.example.demo.dto.AbsenceDto;
 import com.example.demo.dto.interfaces.ModelDto;
+import com.example.demo.entities.Absence;
 import com.example.demo.entities.interfaces.Model;
 import com.example.demo.services.abstracts.ModelService;
 import com.example.demo.utils.StringExtract;
@@ -12,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -75,6 +74,35 @@ public abstract class ModelBaseController<J extends Model, D extends ModelDto, T
             return catchMessageDataIntegrity(e);
         } catch (Exception e) {
             return catchMessageException(e);
+        }
+    }
+
+    @PutMapping(path = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateOne(@Valid @RequestBody D modelDto, BindingResult bindingResult, @PathVariable Long id) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return actionError(bindingResult);
+            }
+            J model = convertDtoToModel(modelDto);
+            System.out.println("\n\n Conversion termninée" + model.toString() + " \n\n");
+            model = service.update(model, id);
+            if(model==null){
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertModelToDto(model, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1));
+        } catch (DataIntegrityViolationException e) {
+            return catchMessageDataIntegrity(e);
+        } catch (Exception e) {
+            return catchMessageException(e);
+        }
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deletePersonnelJour(@PathVariable Long id) {
+        if (service.delete(id)) {
+            return ResponseEntity.ok().body(Map.of("success", "Operation réussi"));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("errors", "echec de l'operation"));
         }
     }
 }
