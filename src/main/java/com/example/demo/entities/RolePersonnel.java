@@ -19,31 +19,22 @@ import java.util.Objects;
         @Index(name = "fk_personnel_has_role_personnel1_idx", columnList = "personnel_id"),
         @Index(name = "fk_personnel_has_role_role1_idx", columnList = "role_id")
 })
+@IdClass(RolePersonnelPK.class)
 public class RolePersonnel implements Model {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT not null")
-    private Long id;
 
+    @Id
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
+    @Id
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Personnel getPersonnel() {
         return personnel;
@@ -75,5 +66,10 @@ public class RolePersonnel implements Model {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    @Override
+    public Long getId() {
+        return null;
     }
 }

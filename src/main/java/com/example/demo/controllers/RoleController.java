@@ -59,7 +59,7 @@ public class RoleController extends RoleConvertController {
         return ResponseEntity.status(HttpStatus.OK).body(convertRoleToDto(role, 1));
     }
 
-    @PostMapping(path = "giveAll/{userId}")
+    @PutMapping(path = "giveAll/{userId}")
     public ResponseEntity<PersonnelDto> giveAllRoles(@PathVariable Long userId){
         Personnel personnel = roleService.giveAllRoles(userId);
         if(personnel==null){

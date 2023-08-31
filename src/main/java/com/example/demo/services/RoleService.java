@@ -23,6 +23,9 @@ public class RoleService extends BaseService<Role, RoleRepository> {
     @Autowired
     PersonnelRepository personnelRepository;
 
+    @Autowired
+    PersonnelService personnelService;
+
 
     public Personnel giveAllRoles(Long userId){
         Personnel personnel = personnelRepository.findByUserId(userId);
@@ -30,9 +33,13 @@ public class RoleService extends BaseService<Role, RoleRepository> {
             return null;
         }
         Set<Role> roleList = new HashSet<>(roleRepository.findAll());
-        personnel.setRoles(roleList);
-        personnelRepository.save(personnel);
-        return personnel;
+        personnel.getRoles().addAll(roleList) ;
+        for (Role role:roleList){
+            role.getPersonnels().add(personnel);
+            roleRepository.save(role);
+        }
+        return personnelRepository.findByUserId(userId);
+
     }
 
     public Role deletePersonnel(Long id, Long id2) {
@@ -48,6 +55,7 @@ public class RoleService extends BaseService<Role, RoleRepository> {
     public Role addPersonnel(Long id, Long id2) {
         Role role = roleRepository.findById(id).orElse(null);
         Personnel personnel = personnelRepository.findById(id2).orElse(null);
+        System.out.println("\nVoici Role = "+role+"\n\n Voici personnel = "+personnel);
         if (role == null || personnel == null) {
             return null;
         }

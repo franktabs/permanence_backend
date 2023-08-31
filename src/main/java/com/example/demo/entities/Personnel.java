@@ -99,8 +99,6 @@ public class Personnel implements Model {
     @OneToMany(mappedBy = "superviseur", cascade = CascadeType.PERSIST)
     private Set<Month> months_supervise = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "personnels", cascade = CascadeType.PERSIST)
-    private Set<Role> roles = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "recepteur", cascade = CascadeType.PERSIST)
     private Set<Notification> notifications = new LinkedHashSet<>();
@@ -108,6 +106,16 @@ public class Personnel implements Model {
     @OneToMany(mappedBy = "emetteur", cascade = CascadeType.PERSIST)
     private Set<Annonce> annonces = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "personnels", cascade = CascadeType.PERSIST)
+    private Set<Role> roles = new LinkedHashSet<>();
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
 
     public String getScreenname() {
@@ -134,13 +142,6 @@ public class Personnel implements Model {
         this.notifications = notifications;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     public Set<Month> getMonths_supervise() {
         return months_supervise;

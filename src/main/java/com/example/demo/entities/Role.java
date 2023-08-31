@@ -28,11 +28,10 @@ public class Role implements Model {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "role_personnel",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "personnel_id"))
-
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "role_personnels",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "personnels_id", referencedColumnName = "id"))
     private Set<Personnel> personnels = new LinkedHashSet<>();
 
     public Set<Personnel> getPersonnels() {
