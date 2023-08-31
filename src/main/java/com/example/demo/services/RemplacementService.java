@@ -24,7 +24,7 @@ public class RemplacementService extends BaseService<Remplacement, RemplacementR
         remplacement.setMotif(update_remplacement.getMotif());
         remplacement.setValidate(update_remplacement.getValidate());
         remplacement.setStart(update_remplacement.getStart());
-        remplacement.setEnd(update_remplacement.getEnd());
+        remplacement.setFin(update_remplacement.getFin());
         return remplacementRepository.save(remplacement);
     }
 

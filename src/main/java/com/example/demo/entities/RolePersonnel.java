@@ -7,25 +7,33 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "role_personnel")
+@Table(name = "role_personnel", indexes = {
+        @Index(name = "personnel_id_UNIQUE_role_personnel", columnList = "personnel_id, role_id", unique = true),
+        @Index(name = "fk_personnel_has_role_personnel1_idx", columnList = "personnel_id"),
+        @Index(name = "fk_personnel_has_role_role1_idx", columnList = "role_id")
+})
 public class RolePersonnel implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 

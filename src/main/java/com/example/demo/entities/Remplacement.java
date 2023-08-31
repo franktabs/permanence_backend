@@ -8,17 +8,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "remplacement")
+@Table(name = "remplacement", indexes = {
+        @Index(name = "fk_remplacement_personnel2_idx", columnList = "remplaceur"),
+        @Index(name = "fk_remplacement_personnel1_idx", columnList = "personnel_id")
+})
 public class Remplacement implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @Size(max = 255)
@@ -32,35 +37,34 @@ public class Remplacement implements Model {
     @Column(name = "validate")
     private Boolean validate;
 
-    @Column(name = "submissionDate")
+    @Column(name = "submission_date")
     private LocalDate submissionDate;
 
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
-    private LocalDate end;
+    @Column(name = "fin")
+    private LocalDate fin;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "remplaceur", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "remplaceur")
     private Personnel remplaceur;
-
     public Remplacement() {
     }
-    public Remplacement(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate end) {
+    public Remplacement(Long id, String message, String motif, Boolean validate, LocalDate submissionDate, LocalDate start, LocalDate fin) {
         this.id = id;
         this.message = message;
         this.motif = motif;
         this.validate = validate;
         this.submissionDate = submissionDate;
         this.start = start;
-        this.end = end;
+        this.fin = fin;
     }
 
     public Long getId() {
@@ -111,12 +115,12 @@ public class Remplacement implements Model {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDate getFin() {
+        return fin;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setFin(LocalDate fin) {
+        this.fin = fin;
     }
 
     public Personnel getPersonnel() {

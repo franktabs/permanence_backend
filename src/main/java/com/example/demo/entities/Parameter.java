@@ -9,7 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Entity
-@Table(name = "parameter")
+@Table(name = "parameter", indexes = {
+        @Index(name = "code_UNIQUE_parameter", columnList = "code", unique = true),
+        @Index(name = "fk_parameter_direction1_idx", columnList = "direction_id")
+})
 public class Parameter implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +33,9 @@ public class Parameter implements Model {
     @Column(name = "valeur")
     private String valeur;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "direction_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "direction_id")
     private Direction direction;
-
     public Parameter(){}
     public Parameter(Long id, @NotNull String code, @NotNull String libelle, String valeur) {
         this.id = id;

@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -17,35 +19,28 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "month")
+@Table(name = "month", indexes = {
+        @Index(name = "fk_month_personnel1_idx", columnList = "superviseur"),
+        @Index(name = "fk_month_planning1_idx", columnList = "planning_id")
+})
 public class Month implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @Size(max = 45)
     @Column(name = "name", length = 45)
     private String name;
 
-    @Column(name = "numero", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "numero", columnDefinition = "INT not null")
     private Long numero;
 
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
-    private LocalDate end;
-
-    public Month(){}
-
-    public Month(Long id, String name, Long numero, LocalDate start, LocalDate end) {
-        this.id = id;
-        this.name = name;
-        this.numero = numero;
-        this.start = start;
-        this.end = end;
-    }
+    @Column(name = "fin")
+    private LocalDate fin;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -54,8 +49,20 @@ public class Month implements Model {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "planning_id", nullable = false)
     private Planning planning;
+    public Month(){}
+
+    public Month(Long id, String name, Long numero, LocalDate start, LocalDate fin) {
+        this.id = id;
+        this.name = name;
+        this.numero = numero;
+        this.start = start;
+        this.fin = fin;
+    }
+
+
 
     @OneToMany(mappedBy = "month", cascade = CascadeType.PERSIST)
     private Set<Permanence> permanences = new LinkedHashSet<>();
@@ -100,12 +107,12 @@ public class Month implements Model {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDate getFin() {
+        return fin;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setFin(LocalDate fin) {
+        this.fin = fin;
     }
 
     public Personnel getSuperviseur() {
@@ -147,7 +154,7 @@ public class Month implements Model {
                 ", name='" + name + '\'' +
                 ", numero=" + numero +
                 ", start=" + start +
-                ", end=" + end +
+                ", fin=" + fin +
                 '}';
     }
 }

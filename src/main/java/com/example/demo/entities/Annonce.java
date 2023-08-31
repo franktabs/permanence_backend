@@ -15,11 +15,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "annonce")
+@Table(name = "annonce", indexes = {
+        @Index(name = "fk_notification_personnel1_idx", columnList = "emetteur")
+})
 public class Annonce implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @Size(max = 45)
@@ -33,10 +35,10 @@ public class Annonce implements Model {
     @Column(name = "submission_date")
     private Instant submissionDate;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "emetteur", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emetteur")
     private Personnel emetteur;
+
 
     @OneToMany(mappedBy = "annonce", cascade = CascadeType.PERSIST)
     private Set<Notification> notifications = new LinkedHashSet<>();

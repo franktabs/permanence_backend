@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.LinkedHashSet;
@@ -16,17 +18,21 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "departement")
+@Table(name = "departement", indexes = {
+        @Index(name = "fk_departement_direction1_idx", columnList = "direction_id"),
+        @Index(name = "organizationId_UNIQUE_departement", columnList = "organization_id", unique = true),
+        @Index(name = "direction_id_UNIQUE_departement", columnList = "direction_id, id", unique = true)
+})
 public class Departement implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
-    @Column(name = "organizationId", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "organization_id", columnDefinition = "INT not null")
     private Long organizationId;
 
-    @Column(name = "level", columnDefinition = "INT UNSIGNED")
+    @Column(name = "level", columnDefinition = "INT")
     private Long level;
 
     @Size(max = 45)
@@ -37,7 +43,7 @@ public class Departement implements Model {
     @Column(name = "treepath")
     private String treepath;
 
-    @Column(name = "parentorganizationId")
+    @Column(name = "parentorganization_id")
     private Long parentorganizationId;
 
     @Size(max = 255)
@@ -47,6 +53,7 @@ public class Departement implements Model {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "direction_id", nullable = false)
     private Direction direction;
 

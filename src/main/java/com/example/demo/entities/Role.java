@@ -14,11 +14,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", indexes = {
+        @Index(name = "name_UNIQUE_role", columnList = "name", unique = true)
+})
 public class Role implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @Size(max = 255)

@@ -7,36 +7,43 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "personnel_nuit")
+@Table(name = "personnel_nuit", indexes = {
+        @Index(name = "personnel_id_UNIQUE_personnel_nuit", columnList = "personnel_id, permanence_id", unique = true),
+        @Index(name = "fk_personnel_nuit_permanence1_idx", columnList = "permanence_id"),
+        @Index(name = "fk_personnel_nuit_personnel1_idx", columnList = "personnel_id")
+})
 public class PersonnelNuit implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "personnel_id", nullable = false)
     private Personnel personnel;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "permanence_id", nullable = false)
     private Permanence permanence;
 
     @NotNull
     @Column(name = "responsable", nullable = false)
-    private boolean responsable = false;
+    private Boolean responsable = false;
 
     @NotNull
     @Column(name = "is_substitute", nullable = false)
-    private boolean isSubstitute = false;
-
+    private Boolean isSubstitute = false;
     public boolean getIsSubstitute() {
         return isSubstitute;
     }

@@ -22,7 +22,7 @@ public class AbsenceService extends BaseService<Absence, AbsenceRepository> {
         Absence absence = absenceRepository.findById(id).orElse(null);
         if(absence==null) return null;
         if(!absence.getId().equals(absenceUpdate.getId())) return null;
-        absence.setEnd(absenceUpdate.getEnd());
+        absence.setFin(absenceUpdate.getFin());
         absence.setMessage(absenceUpdate.getMessage());
         absence.setMotif(absenceUpdate.getMotif());
         absence.setStart(absenceUpdate.getStart());

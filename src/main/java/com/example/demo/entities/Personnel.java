@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.LinkedHashSet;
@@ -15,11 +17,16 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "personnel")
+@Table(name = "personnel", indexes = {
+        @Index(name = "fk_personnel_departement_idx", columnList = "departement_id"),
+        @Index(name = "departement_id_UNIQUE_personnel", columnList = "departement_id, id", unique = true),
+        @Index(name = "userId_UNIQUE_personnel", columnList = "user_id", unique = true),
+        @Index(name = "emailaddress_UNIQUE_personnel", columnList = "emailaddress", unique = true)
+})
 public class Personnel implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @Size(max = 255)
@@ -33,15 +40,15 @@ public class Personnel implements Model {
     private String emailaddress;
 
     @Size(max = 45)
-    @Column(name = "telephoneCisco", length = 45)
+    @Column(name = "telephone_cisco", length = 45)
     private String telephoneCisco;
 
     @Size(max = 45)
-    @Column(name = "telephoneMobile", length = 45)
+    @Column(name = "telephone_mobile", length = 45)
     private String telephoneMobile;
 
     @NotNull
-    @Column(name = "userId", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @NotNull
@@ -57,22 +64,24 @@ public class Personnel implements Model {
     private String service;
 
     @Size(max = 255)
-    @Column(name = "libAge")
+    @Column(name = "lib_age")
     private String libAge;
 
-    @Column(name = "organizationId")
+    @Column(name = "organization_id")
     private Long organizationId;
 
     @Column(name = "agent")
     private Boolean agent;
 
-
-
-
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
+
+    @Size(max = 255)
+    @Column(name = "screenname")
+    private String screenname;
 
     @OneToMany(mappedBy = "personnel", cascade = {CascadeType.PERSIST})
     private Set<Remplacement> remplacements = new LinkedHashSet<>();
@@ -99,9 +108,7 @@ public class Personnel implements Model {
     @OneToMany(mappedBy = "emetteur", cascade = CascadeType.PERSIST)
     private Set<Annonce> annonces = new LinkedHashSet<>();
 
-    @Size(max = 255)
-    @Column(name = "screenname")
-    private String screenname;
+
 
     public String getScreenname() {
         return screenname;

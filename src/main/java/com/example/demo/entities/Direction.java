@@ -13,17 +13,19 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "direction")
+@Table(name = "direction", indexes = {
+        @Index(name = "organizationId_UNIQUE_direction", columnList = "organization_id", unique = true)
+})
 public class Direction implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
-    @Column(name = "organizationId", unique = true, columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "organization_id", columnDefinition = "INT not null")
     private Long organizationId;
 
-    @Column(name = "level", columnDefinition = "INT UNSIGNED")
+    @Column(name = "level", columnDefinition = "INT")
     private Long level;
 
     @Size(max = 45)
@@ -34,7 +36,7 @@ public class Direction implements Model {
     @Column(name = "treepath")
     private String treepath;
 
-    @Column(name = "parentorganizationId")
+    @Column(name = "parentorganization_id")
     private Long parentorganizationId;
 
     @Size(max = 255)

@@ -23,7 +23,7 @@ public  class AbsenceConvertController extends ModelBaseConvertController<Absenc
                 absence.getValidate(),
                 absence.getSubmissionDate(),
                 absence.getStart(),
-                absence.getEnd(),
+                absence.getFin(),
                 absence.getType()
         );
         if (depthPersonnel > 0) {

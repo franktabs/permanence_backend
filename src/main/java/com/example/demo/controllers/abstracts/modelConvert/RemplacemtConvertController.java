@@ -27,7 +27,7 @@ public class RemplacemtConvertController extends ModelBaseConvertController<Remp
                 remplacement.getValidate(),
                 remplacement.getSubmissionDate(),
                 remplacement.getStart(),
-                remplacement.getEnd()
+                remplacement.getFin()
         );
         if(depthPersonnel>0){
             if(remplacement.getPersonnel()!=null){

@@ -3,6 +3,8 @@ package com.example.demo.entities;
 /*import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;*/
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,11 +15,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "planning")
+@Table(name = "planning", indexes = {
+        @Index(name = "fk_direction_planning_idx", columnList = "direction_id")
+})
 public class Planning implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @NotNull
@@ -25,23 +29,30 @@ public class Planning implements Model {
     private LocalDate start;
 
     @NotNull
-    @Column(name = "end", nullable = false)
-    private LocalDate end;
+    @Column(name = "fin", nullable = false)
+    private LocalDate fin;
 
     @NotNull
     @Column(name = "periode", nullable = false)
     private Integer periode;
 
-    @Column(name = "isValid")
+    @Column(name = "is_valid")
     private Boolean isValid;
 
-    @OneToMany(mappedBy = "planning", cascade = {CascadeType.PERSIST}
-    )
-    private Set<Month> months = new LinkedHashSet<>();
-
-    @NotNull
     @Column(name = "submission_date")
     private Instant submissionDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "direction_id")
+    private Direction direction;
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 
     public Instant getSubmissionDate() {
         return submissionDate;
@@ -51,6 +62,9 @@ public class Planning implements Model {
         this.submissionDate = submissionDate;
     }
 
+    @OneToMany(mappedBy = "planning", cascade = {CascadeType.PERSIST}
+    )
+    private Set<Month> months = new LinkedHashSet<>();
     public Set<Month> getMonths() {
         return months;
     }
@@ -61,10 +75,10 @@ public class Planning implements Model {
 
     public Planning() {
     }
-    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull Integer periode, Boolean isValid, @NotNull Instant submissionDate) {
+    public Planning(Long id, @NotNull LocalDate start, @NotNull LocalDate fin, @NotNull Integer periode, Boolean isValid, @NotNull Instant submissionDate) {
         this.id = id;
         this.start = start;
-        this.end = end;
+        this.fin = fin;
         this.periode = periode;
         this.isValid = isValid;
         this.submissionDate = submissionDate;
@@ -86,12 +100,12 @@ public class Planning implements Model {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDate getFin() {
+        return fin;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setFin(LocalDate fin) {
+        this.fin = fin;
     }
 
     public Integer getPeriode() {

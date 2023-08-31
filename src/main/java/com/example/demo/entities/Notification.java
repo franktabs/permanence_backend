@@ -6,25 +6,32 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "notification")
+@Table(name = "notification", indexes = {
+        @Index(name = "notification_id_UNIQUE_notification", columnList = "annonce_id, recepteur", unique = true),
+        @Index(name = "fk_notification_has_personnel_personnel1_idx", columnList = "recepteur")
+})
 public class Notification implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "annonce_id", nullable = false)
     private Annonce annonce;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "recepteur", nullable = false)
     private Personnel recepteur;
 

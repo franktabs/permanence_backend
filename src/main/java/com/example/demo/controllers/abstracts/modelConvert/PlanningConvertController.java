@@ -26,7 +26,7 @@ public class PlanningConvertController extends ModelBaseConvertController<Planni
         PlanningDto planningDto = new PlanningDto(
                 planning.getId(),
                 planning.getStart(),
-                planning.getEnd(),
+                planning.getFin(),
                 planning.getPeriode(),
                 planning.getIsValid(),
                 planning.getSubmissionDate()

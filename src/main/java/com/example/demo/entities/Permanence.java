@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -16,11 +18,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "permanence")
+@Table(name = "permanence", indexes = {
+        @Index(name = "fk_permanence_month1_idx", columnList = "month_id")
+})
 public class Permanence implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT UNSIGNED not null")
+    @Column(name = "id", columnDefinition = "INT not null")
     private Long id;
 
     @NotNull
@@ -32,6 +36,12 @@ public class Permanence implements Model {
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "month_id", nullable = false)
+    private Month month;
+
     public Permanence() {
     }
     public Permanence(Long id, @NotNull LocalDate date, @NotNull String type) {
@@ -39,11 +49,6 @@ public class Permanence implements Model {
         this.date = date;
         this.type = type;
     }
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "month_id", nullable = false)
-    private Month month;
 
     @OneToMany(mappedBy = "permanence", cascade = CascadeType.PERSIST)
     private Set<PersonnelJour> personnelJours = new LinkedHashSet<>();

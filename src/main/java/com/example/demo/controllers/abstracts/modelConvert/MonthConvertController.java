@@ -61,7 +61,7 @@ public class MonthConvertController extends ModelBaseConvertController<Month, Mo
                 month.getName(),
                 month.getNumero(),
                 month.getStart(),
-                month.getEnd()
+                month.getFin()
         );
 
         if (depthPermanence > 0) {
