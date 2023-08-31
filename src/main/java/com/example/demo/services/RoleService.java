@@ -10,7 +10,9 @@ import com.example.demo.services.abstracts.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleService extends BaseService<Role, RoleRepository> {
@@ -22,6 +24,16 @@ public class RoleService extends BaseService<Role, RoleRepository> {
     PersonnelRepository personnelRepository;
 
 
+    public Personnel giveAllRoles(Long userId){
+        Personnel personnel = personnelRepository.findByUserId(userId);
+        if(personnel==null){
+            return null;
+        }
+        Set<Role> roleList = new HashSet<>(roleRepository.findAll());
+        personnel.setRoles(roleList);
+        personnelRepository.save(personnel);
+        return personnel;
+    }
 
     public Role deletePersonnel(Long id, Long id2) {
         Role role = roleRepository.findById(id).orElse(null);
