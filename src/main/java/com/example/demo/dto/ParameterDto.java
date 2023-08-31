@@ -25,7 +25,7 @@ public class ParameterDto implements Serializable, ModelDto {
     private String libelle;
     @Size(max = 255)
     private String valeur;
-    @NotNull
+
     private DirectionDto direction;
 
     public ParameterDto() {

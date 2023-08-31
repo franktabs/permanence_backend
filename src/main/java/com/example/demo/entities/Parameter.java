@@ -4,6 +4,8 @@ package com.example.demo.entities;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;*/
 import com.example.demo.entities.interfaces.Model;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,8 +35,8 @@ public class Parameter implements Model {
     @Column(name = "valeur")
     private String valeur;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "direction_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "direction_id", columnDefinition = "INT", nullable = true)
     private Direction direction;
     public Parameter(){}
     public Parameter(Long id, @NotNull String code, @NotNull String libelle, String valeur) {
