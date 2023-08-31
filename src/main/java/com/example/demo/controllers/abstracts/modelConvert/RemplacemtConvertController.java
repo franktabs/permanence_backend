@@ -1,14 +1,14 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.RemplacementDto;
 import com.example.demo.entities.Remplacement;
 import com.example.demo.services.RemplacementService;
 
 import static com.example.demo.controllers.abstracts.modelConvert.PersonnelConvertController.convertPersonnelToDto;
 
-public class RemplacemtConvertController extends ModelBaseConvertController<Remplacement, RemplacementDto, RemplacementService> {
+public class RemplacemtConvertController extends ModelConvertController<Remplacement, RemplacementDto, RemplacementService> {
     @Override
     public RemplacementDto convertModelToDto(Remplacement model, int... depth) {
         return convertRemplacementToDto(model, depth[0], depth[1]);

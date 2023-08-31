@@ -3,7 +3,7 @@ package com.example.demo.controllers.abstracts.modelConvert;
 import com.example.demo.controllers.PermanenceController;
 import com.example.demo.controllers.PersonnelController;
 import com.example.demo.controllers.PlanningController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.MonthDto;
 import com.example.demo.dto.PermanenceDto;
 import com.example.demo.entities.Month;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service()
-public class MonthConvertController extends ModelBaseConvertController<Month, MonthDto, MonthService> {
+public class MonthConvertController extends ModelConvertController<Month, MonthDto, MonthService> {
 
     @Override
     public Month convertDtoToModel(MonthDto modelDto) {

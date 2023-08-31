@@ -1,7 +1,7 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.*;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.*;
 import com.example.demo.entities.*;
 import com.example.demo.services.PersonnelService;
@@ -13,7 +13,7 @@ import static com.example.demo.controllers.RemplacementController.convertRemplac
 import static com.example.demo.controllers.abstracts.modelConvert.AbsenceConvertController.convertAbsenceToDto;
 import static com.example.demo.controllers.abstracts.modelConvert.DepartementConvertController.convertDepartementToDto;
 
-public class PersonnelConvertController extends ModelBaseConvertController<Personnel, PersonnelDto, PersonnelService> {
+public class PersonnelConvertController extends ModelConvertController<Personnel, PersonnelDto, PersonnelService> {
     @Override
     public PersonnelDto convertModelToDto(Personnel model, int... depth) {
         return convertPersonnelToDto(model, depth[0], depth[1], depth[2], depth[3], depth[4], depth[5], depth[6], depth[7], depth[8]);

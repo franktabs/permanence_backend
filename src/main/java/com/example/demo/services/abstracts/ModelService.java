@@ -1,11 +1,14 @@
 package com.example.demo.services.abstracts;
 
+import com.example.demo.controllers.abstracts.ModelController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
+import com.example.demo.dto.interfaces.ModelDto;
 import com.example.demo.entities.interfaces.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public interface  ModelService<J extends Model> {
+public interface  ModelService<J extends Model>  {
 
     public J create(J model);
 

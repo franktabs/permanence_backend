@@ -3,22 +3,19 @@ package com.example.demo.controllers.abstracts.modelConvert;
 import com.example.demo.controllers.MonthController;
 import com.example.demo.controllers.PersonnelJourController;
 import com.example.demo.controllers.PersonnelNuitController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
-import com.example.demo.dto.MonthDto;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.PermanenceDto;
 import com.example.demo.dto.PersonnelJourDto;
 import com.example.demo.dto.PersonnelNuitDto;
-import com.example.demo.entities.Month;
 import com.example.demo.entities.Permanence;
 import com.example.demo.entities.PersonnelJour;
 import com.example.demo.entities.PersonnelNuit;
-import com.example.demo.services.MonthService;
 import com.example.demo.services.PermanenceService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class PermanenceConvertController extends ModelBaseConvertController<Permanence, PermanenceDto, PermanenceService> {
+public class PermanenceConvertController extends ModelConvertController<Permanence, PermanenceDto, PermanenceService> {
 
 
 

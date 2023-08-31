@@ -1,7 +1,7 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.PersonnelDto;
 import com.example.demo.dto.RoleDto;
 import com.example.demo.entities.Personnel;
@@ -11,7 +11,7 @@ import com.example.demo.services.RoleService;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RoleConvertController extends ModelBaseConvertController<Role, RoleDto, RoleService> {
+public class RoleConvertController extends ModelConvertController<Role, RoleDto, RoleService> {
     @Override
     public RoleDto convertModelToDto(Role model, int... depth) {
         return convertRoleToDto(model, depth[0]);

@@ -1,15 +1,12 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.DepartementDto;
-import com.example.demo.dto.MonthDto;
 import com.example.demo.dto.PersonnelDto;
 import com.example.demo.entities.Departement;
-import com.example.demo.entities.Month;
 import com.example.demo.entities.Personnel;
 import com.example.demo.services.DepartementService;
-import com.example.demo.services.MonthService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +15,7 @@ import static com.example.demo.controllers.PersonnelController.convertPersonnelT
 import static com.example.demo.controllers.abstracts.modelConvert.DirectionConvertController.convertDirectionToDto;
 import static com.example.demo.controllers.abstracts.modelConvert.DirectionConvertController.convertDtoToDirection;
 
-public class DepartementConvertController extends ModelBaseConvertController<Departement, DepartementDto, DepartementService> {
+public class DepartementConvertController extends ModelConvertController<Departement, DepartementDto, DepartementService> {
 
 
     public static DepartementDto convertDepartementToDto(Departement departement, int depthDirection, int depthPersonnel) {

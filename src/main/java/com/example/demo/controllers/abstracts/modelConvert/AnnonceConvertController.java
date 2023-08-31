@@ -2,20 +2,17 @@ package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.NotificationController;
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.AnnonceDto;
-import com.example.demo.dto.MonthDto;
 import com.example.demo.dto.NotificationDto;
 import com.example.demo.entities.Annonce;
-import com.example.demo.entities.Month;
 import com.example.demo.entities.Notification;
 import com.example.demo.services.AnnonceService;
-import com.example.demo.services.MonthService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class AnnonceConvertController extends ModelBaseConvertController<Annonce, AnnonceDto, AnnonceService> {
+public class AnnonceConvertController extends ModelConvertController<Annonce, AnnonceDto, AnnonceService> {
 
 
     public static AnnonceDto convertAnnonceToDto(Annonce annonce, int depthEmetteur, int depthNotification){

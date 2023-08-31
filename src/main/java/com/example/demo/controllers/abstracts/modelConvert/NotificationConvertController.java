@@ -2,12 +2,12 @@ package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.AnnonceController;
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.NotificationDto;
 import com.example.demo.entities.Notification;
 import com.example.demo.services.NotificationService;
 
-public class NotificationConvertController extends ModelBaseConvertController<Notification, NotificationDto, NotificationService> {
+public class NotificationConvertController extends ModelConvertController<Notification, NotificationDto, NotificationService> {
 
 
 

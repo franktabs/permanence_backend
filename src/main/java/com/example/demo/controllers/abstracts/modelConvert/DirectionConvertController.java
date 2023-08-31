@@ -1,6 +1,6 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
 import com.example.demo.dto.ParameterDto;
@@ -16,7 +16,7 @@ import static com.example.demo.controllers.DepartementController.convertDepartem
 import static com.example.demo.controllers.DepartementController.convertDtoToDepartement;
 import static com.example.demo.controllers.ParameterController.convertParameterToDto;
 
-public class DirectionConvertController extends ModelBaseConvertController<Direction, DirectionDto, DirectionService> {
+public class DirectionConvertController extends ModelConvertController<Direction, DirectionDto, DirectionService> {
 
     @Override
     public Direction convertDtoToModel(DirectionDto modelDto) {

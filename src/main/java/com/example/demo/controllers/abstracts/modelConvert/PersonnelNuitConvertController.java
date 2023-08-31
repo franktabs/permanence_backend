@@ -2,12 +2,12 @@ package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.PermanenceController;
 import com.example.demo.controllers.PersonnelController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.PersonnelNuitDto;
 import com.example.demo.entities.PersonnelNuit;
 import com.example.demo.services.PersonnelNuitService;
 
-public class PersonnelNuitConvertController extends ModelBaseConvertController<PersonnelNuit, PersonnelNuitDto, PersonnelNuitService> {
+public class PersonnelNuitConvertController extends ModelConvertController<PersonnelNuit, PersonnelNuitDto, PersonnelNuitService> {
     @Override
     public PersonnelNuitDto convertModelToDto(PersonnelNuit model, int... depth) {
         return convertPersonnelNuitToDto(model, depth[0], depth[1]);

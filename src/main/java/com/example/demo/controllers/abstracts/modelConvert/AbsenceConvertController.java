@@ -1,17 +1,14 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.AbsenceDto;
-import com.example.demo.dto.MonthDto;
 import com.example.demo.entities.Absence;
-import com.example.demo.entities.Month;
 import com.example.demo.services.AbsenceService;
-import com.example.demo.services.MonthService;
 
 import static com.example.demo.controllers.PersonnelController.convertDtoToPersonnel;
 import static com.example.demo.controllers.PersonnelController.convertPersonnelToDto;
 
-public  class AbsenceConvertController extends ModelBaseConvertController<Absence, AbsenceDto, AbsenceService> {
+public  class AbsenceConvertController extends ModelConvertController<Absence, AbsenceDto, AbsenceService> {
 
 
 

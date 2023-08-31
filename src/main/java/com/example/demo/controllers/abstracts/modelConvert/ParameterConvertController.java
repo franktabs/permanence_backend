@@ -1,12 +1,12 @@
 package com.example.demo.controllers.abstracts.modelConvert;
 
 import com.example.demo.controllers.DirectionController;
-import com.example.demo.controllers.abstracts.ModelBaseConvertController;
+import com.example.demo.controllers.abstracts.ModelConvertController;
 import com.example.demo.dto.ParameterDto;
 import com.example.demo.entities.Parameter;
 import com.example.demo.services.ParameterService;
 
-public class ParameterConvertController extends ModelBaseConvertController<Parameter, ParameterDto, ParameterService> {
+public class ParameterConvertController extends ModelConvertController<Parameter, ParameterDto, ParameterService> {
 
     public static ParameterDto convertParameterToDto(Parameter parameter, int depthDirection){
         ParameterDto parameterDto = new ParameterDto(
