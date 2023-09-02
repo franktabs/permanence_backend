@@ -1,7 +1,6 @@
-package com.example.demo.validation;
+package com.example.demo.validations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -16,6 +15,7 @@ public class ValidationEntities<T> {
     Validator validator;
 
     public Map<String,String> objectErrors(T entities){
+
         Map<String, String> mapErrors = new HashMap<>();
         Errors errors = new BeanPropertyBindingResult(entities, "direction");
         validator.validate(entities, errors);
@@ -26,6 +26,7 @@ public class ValidationEntities<T> {
         }
         return mapErrors;
     }
+
 
 
 }

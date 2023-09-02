@@ -322,18 +322,15 @@ public class Personnel implements Model {
     }
 
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Personnel personnel = (Personnel) o;
-        return getId() != null && Objects.equals(getId(), personnel.getId());
+        return Objects.equals(id, personnel.id) && Objects.equals(firstname, personnel.firstname) && Objects.equals(emailaddress, personnel.emailaddress) && Objects.equals(telephoneCisco, personnel.telephoneCisco) && Objects.equals(telephoneMobile, personnel.telephoneMobile) && Objects.equals(userId, personnel.userId) && Objects.equals(sexe, personnel.sexe) && Objects.equals(fonction, personnel.fonction) && Objects.equals(service, personnel.service) && Objects.equals(libAge, personnel.libAge) && Objects.equals(organizationId, personnel.organizationId) && Objects.equals(agent, personnel.agent) && Objects.equals(departement, personnel.departement) && Objects.equals(screenname, personnel.screenname) && Objects.equals(remplacements, personnel.remplacements) && Objects.equals(absences, personnel.absences) && Objects.equals(personnelJours, personnel.personnelJours) && Objects.equals(personnelNuits, personnel.personnelNuits) && Objects.equals(months_supervise, personnel.months_supervise) && Objects.equals(notifications, personnel.notifications) && Objects.equals(annonces, personnel.annonces) && Objects.equals(roles, personnel.roles);
     }
 
     @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    public int hashCode() {
+        return Objects.hash(id, firstname, emailaddress, telephoneCisco, telephoneMobile, userId, sexe, fonction, service, libAge, organizationId, agent, departement, screenname, remplacements, absences, personnelJours, personnelNuits, months_supervise, notifications, annonces, roles);
     }
 }

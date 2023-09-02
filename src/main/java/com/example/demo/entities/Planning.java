@@ -44,7 +44,7 @@ public class Planning implements Model {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "direction_id")
+    @JoinColumn(name = "direction_id", columnDefinition = "INT")
     private Direction direction;
     public Direction getDirection() {
         return direction;

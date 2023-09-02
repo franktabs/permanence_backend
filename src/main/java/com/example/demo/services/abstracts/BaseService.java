@@ -20,11 +20,13 @@ public abstract class BaseService< J extends Model , T extends ModelRepository<J
     @Override
     public J create(J model){
         System.out.println("\n\nmodel en enregistrer => "+model );
+        if(model==null) return null;
         return repository.save(model);
     }
 
     @Override
     public J update(J modelUpdate, Long id){
+        if(modelUpdate==null || id ==null) return null;
         J model1 = repository.findById(id).orElse(null);
         if(model1==null) return null;
         if(!model1.getId().equals(modelUpdate.getId())) return null;
