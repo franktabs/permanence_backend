@@ -16,4 +16,7 @@ public interface PlanningRepository extends ModelRepository<Planning, Long> {
     @Modifying
     @Query("delete from Planning p where p.id = ?1")
     int deleteModel(Long aLong);
+
+
+
 }

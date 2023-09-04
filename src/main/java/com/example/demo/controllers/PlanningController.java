@@ -8,6 +8,7 @@ import com.example.demo.dto.PlanningDto;
 import com.example.demo.entities.Direction;
 import com.example.demo.entities.Month;
 import com.example.demo.entities.Planning;
+import com.example.demo.entities.Role;
 import com.example.demo.repositories.PlanningRepository;
 import com.example.demo.services.PlanningService;
 import com.example.demo.utils.StringExtract;
@@ -28,4 +29,15 @@ import java.util.*;
 @RequestMapping("/planning")
 public class PlanningController extends PlanningConvertController {
 
+    @Autowired
+    PlanningService planningService ;
+
+    @GetMapping("/personnel/{id}")
+    public ResponseEntity<Set<PlanningDto>> getPersonnelPlanning(@PathVariable Long id){
+        Set<PlanningDto> planningDtoList = planningService.findPlanningByPersonnelId(id);
+        if(planningDtoList==null){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(planningDtoList);
+    }
 }
