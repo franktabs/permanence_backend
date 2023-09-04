@@ -102,7 +102,7 @@ public class PersonnelJour implements Model {
         return "PersonnelJour{" +
                 "id=" + id +
                 ", personnel=" + personnel +
-                ", permanence=" + permanence +
+
                 ", responsable=" + responsable +
                 '}';
     }

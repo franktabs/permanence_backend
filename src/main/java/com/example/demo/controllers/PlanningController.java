@@ -25,18 +25,19 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
-@CrossOrigin()
-@RequestMapping("/planning")
+@CrossOrigin
+@RequestMapping(path = "planning")
 public class PlanningController extends PlanningConvertController {
 
     @Autowired
-    PlanningService planningService ;
+    PlanningService planningService;
 
-    @GetMapping("/personnel/{id}")
-    public ResponseEntity<Set<PlanningDto>> getPersonnelPlanning(@PathVariable Long id){
+
+    @GetMapping(path = "personnel/{id}")
+    public ResponseEntity<Set<PlanningDto>> getPersonnelPlanning(@PathVariable Long id) {
         Set<PlanningDto> planningDtoList = planningService.findPlanningByPersonnelId(id);
-        if(planningDtoList==null){
-            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (planningDtoList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(planningDtoList);
     }

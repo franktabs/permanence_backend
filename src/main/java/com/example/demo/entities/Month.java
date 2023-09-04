@@ -155,6 +155,8 @@ public class Month implements Model {
                 ", numero=" + numero +
                 ", start=" + start +
                 ", fin=" + fin +
+                ", superviseur=" + superviseur +
+
                 '}';
     }
 }

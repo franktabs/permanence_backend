@@ -331,6 +331,6 @@ public class Personnel implements Model {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, emailaddress, telephoneCisco, telephoneMobile, userId, sexe, fonction, service, libAge, organizationId, agent, departement, screenname, remplacements, absences, personnelJours, personnelNuits, months_supervise, notifications, annonces, roles);
+        return Objects.hash(id, firstname, emailaddress, telephoneCisco, telephoneMobile, userId, sexe, fonction, service, libAge, organizationId, agent, departement, screenname, remplacements, absences, personnelJours, personnelNuits, months_supervise, notifications, annonces);
     }
 }

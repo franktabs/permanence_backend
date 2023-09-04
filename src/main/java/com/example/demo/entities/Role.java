@@ -77,6 +77,6 @@ public class Role implements Model {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, personnels);
+        return Objects.hash(id, name);
     }
 }

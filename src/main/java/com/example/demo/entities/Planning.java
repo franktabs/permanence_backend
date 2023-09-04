@@ -124,4 +124,17 @@ public class Planning implements Model {
         this.isValid = isValid;
     }
 
+    @Override
+    public String toString() {
+        return "Planning{" +
+                "id=" + id +
+                ", start=" + start +
+                ", fin=" + fin +
+                ", periode=" + periode +
+                ", isValid=" + isValid +
+                ", submissionDate=" + submissionDate +
+                ", direction=" + direction +
+                ", months=" + months +
+                '}';
+    }
 }
