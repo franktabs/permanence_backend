@@ -20,27 +20,25 @@ public interface PlanningRepository extends ModelRepository<Planning, Long> {
     int deleteModel(Long aLong);
 
     @Query(
-            value = "select idPerson, sum(apparition) as apparition from ( " +
-                    "select pn.personnel as idPerson, count(*) as apparition " +
-                    "from Planning as p " +
+            value = "select id, sum(apparition) as apparition from ( " +
+                    "select pn.personnel_id as id, count(*) as apparition " +
+                    "from (select * from Planning pl where pl.id = ?1 ) as p " +
                     "join Month as m on m.planning_id = p.id " +
                     "join Permanence as per on per.month_id = m.id " +
                     "join Personnel_Nuit as pn on pn.permanence_id = per.id " +
-                    "where p.id = ?1 " +
-                    "group by pn.personnel " +
+                    "group by pn.personnel_id " +
                     "union " +
-                    "select pj.personnel as idPerson, count(*) as apparition " +
-                    "from Planning as p " +
+                    "select pj.personnel_id as id, count(*) as apparition " +
+                    "from (select * from Planning pl where pl.id = ?1 ) as p  " +
                     "join Month as m on m.planning_id = p.id " +
                     "join Permanence as per on per.month_id = m.id " +
                     "join Personnel_Jour as pj on pj.permanence_id = per.id " +
-                    "where p.id = ?1 " +
-                    "group by pj.personnel " +
-                    ") " +
-                    "group by idPerson ",
+                    "group by pj.personnel_id " +
+                    ") as personne " +
+                    "group by id ",
             nativeQuery = true
     )
-    List<Object[]> countAllPersonnels(Long id);
+    List<Object[]> countAllPersonnelsPlanning(Long id);
 
 
 }

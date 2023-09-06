@@ -40,13 +40,13 @@ public class PlanningService extends BaseService<Planning, PlanningRepository> {
 
             if (!idListPlanning.contains(planning.getId())) {
 
-                if(!idListMonths.contains(month.getId())){
+                if (!idListMonths.contains(month.getId())) {
 
                     month.setPermanences(new HashSet<>(Set.of(permanence)));
                     month.getPermanences().add(permanence);
                     monthMap.put(month.getId(), month);
                     idListMonths.add(month.getId());
-                }else{
+                } else {
                     month = monthMap.get(month.getId());
                     month.getPermanences().add(permanence);
                 }
@@ -54,14 +54,14 @@ public class PlanningService extends BaseService<Planning, PlanningRepository> {
                 idListPlanning.add(planning.getId());
                 planningMap.put(planning.getId(), planning);
 
-            }else{
+            } else {
                 planning = planningMap.get(planning.getId());
-                if(!idListMonths.contains(month.getId())){
+                if (!idListMonths.contains(month.getId())) {
                     month.setPermanences(new HashSet<>(Set.of(permanence)));
                     month.getPermanences().add(permanence);
                     monthMap.put(month.getId(), month);
                     idListMonths.add(month.getId());
-                }else{
+                } else {
                     month = monthMap.get(month.getId());
                     month.getPermanences().add(permanence);
                 }
@@ -70,10 +70,25 @@ public class PlanningService extends BaseService<Planning, PlanningRepository> {
 
         }
 
-        for(Planning planning : planningMap.values()){
+        for (Planning planning : planningMap.values()) {
             PlanningDto planningDto = PlanningController.convertPlanningToDto(planning, 1);
             planningDtoList.add(planningDto);
         }
         return planningDtoList;
+    }
+
+    public List<Map<Long, Long>> countPersonnelsPlanning(Long id) {
+        boolean existe = planningRepository.existsById(id);
+        if (existe) {
+            List<Object[]> objectList = planningRepository.countAllPersonnelsPlanning(id);
+            List<Map<Long, Long>> listCount = new ArrayList<>();
+            Map<Long, Long> stringMap = new TreeMap<>();
+            for (Object[] object : objectList) {
+                stringMap.put(Long.valueOf(object[0].toString()), Long.valueOf(object[1].toString()));
+            }
+            listCount.add(stringMap);
+            return listCount;
+        }
+        return null;
     }
 }

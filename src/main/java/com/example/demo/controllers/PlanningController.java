@@ -41,4 +41,13 @@ public class PlanningController extends PlanningConvertController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(planningDtoList);
     }
+
+    @GetMapping(path = "count-personnels/{id}")
+    public ResponseEntity<List<Map<Long, Long>> > getCountPersonnelsPlanning(@PathVariable Long id){
+        List<Map<Long, Long>>  objects = planningService.countPersonnelsPlanning(id);
+        if(objects==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(objects);
+    }
 }
