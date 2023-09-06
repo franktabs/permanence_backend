@@ -65,8 +65,7 @@ public class PlanningService extends BaseService<Planning, PlanningRepository> {
                     month = monthMap.get(month.getId());
                     month.getPermanences().add(permanence);
                 }
-                System.out.println("Moi à l'ajout "+ idListMonths+" \n Planning => "+idListPlanning);
-                System.out.println("Ajout du mois => "+planning.getMonths().add(month));
+                planning.getMonths().add(month);
             }
 
         }
