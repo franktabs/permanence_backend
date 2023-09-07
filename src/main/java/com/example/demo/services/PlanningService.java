@@ -77,17 +77,15 @@ public class PlanningService extends BaseService<Planning, PlanningRepository> {
         return planningDtoList;
     }
 
-    public List<Map<Long, Long>> countPersonnelsPlanning(Long id) {
+    public Map<Long, Long> countPersonnelsPlanning(Long id) {
         boolean existe = planningRepository.existsById(id);
         if (existe) {
             List<Object[]> objectList = planningRepository.countAllPersonnelsPlanning(id);
-            List<Map<Long, Long>> listCount = new ArrayList<>();
             Map<Long, Long> stringMap = new TreeMap<>();
             for (Object[] object : objectList) {
                 stringMap.put(Long.valueOf(object[0].toString()), Long.valueOf(object[1].toString()));
             }
-            listCount.add(stringMap);
-            return listCount;
+            return stringMap;
         }
         return null;
     }

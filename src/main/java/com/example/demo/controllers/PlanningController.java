@@ -43,8 +43,8 @@ public class PlanningController extends PlanningConvertController {
     }
 
     @GetMapping(path = "count-personnels/{id}")
-    public ResponseEntity<List<Map<Long, Long>> > getCountPersonnelsPlanning(@PathVariable Long id){
-        List<Map<Long, Long>>  objects = planningService.countPersonnelsPlanning(id);
+    public ResponseEntity<Map<Long, Long>> getCountPersonnelsPlanning(@PathVariable Long id){
+        Map<Long, Long> objects = planningService.countPersonnelsPlanning(id);
         if(objects==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
