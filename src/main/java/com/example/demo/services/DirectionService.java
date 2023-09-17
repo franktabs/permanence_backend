@@ -28,6 +28,10 @@ public class DirectionService extends BaseService<Direction, DirectionRepository
     @Autowired
     private DepartementRepository departementRepository;
 
+    public Direction findMinOrganizationId(){
+        return directionRepository.findMinOrganizationId();
+    }
+
     public List<OrganisationDto> configDirection(List<DirectionDto> directionDtos, Config config) {
         Set<Long> organizationIdDirections = new HashSet<>();
         List<OrganisationDto> organisations = new ArrayList<>();

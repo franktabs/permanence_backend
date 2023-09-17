@@ -12,5 +12,10 @@ import java.util.List;
 
 @Service
 public class DepartementService extends BaseService<Departement, DepartementRepository> {
+    @Autowired
+    DepartementRepository departementRepository;
 
+    public Departement findMinOrganizationId(){
+        return departementRepository.findMinOrganizationId();
+    }
 }

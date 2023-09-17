@@ -17,4 +17,9 @@ public interface DepartementRepository extends ModelRepository<Departement, Long
     @Query("delete from Departement d where d.id = ?1")
     int deleteModel(Long id);
 
+    @Query("select d from Departement d where d.organizationId = ( select MIN(d2.organizationId) from Departement d2 )")
+    Departement findMinOrganizationId();
+
+
+
 }

@@ -1,7 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.controllers.abstracts.modelConvert.DirectionConvertController;
+import com.example.demo.dto.DepartementDto;
 import com.example.demo.dto.DirectionDto;
+import com.example.demo.entities.Departement;
+import com.example.demo.entities.Direction;
 import com.example.demo.enumeration.Config;
 import com.example.demo.dto.interfaces.OrganisationDto;
 import com.example.demo.services.DirectionService;
@@ -25,36 +28,42 @@ public class DirectionController extends DirectionConvertController {
     @Autowired
     DirectionService directionService;
 
+    @GetMapping(path = "min-organizationId")
+    public ResponseEntity<DirectionDto> getMinOrganizationId() {
+        Direction direction = directionService.findMinOrganizationId();
+        if (direction == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(convertDirectionToDto(direction, 0, 0));
+        }
+    }
+
     @PostMapping(path = "/config-actualise")
     public ResponseEntity<?> configActualise(@Valid @RequestBody List<DirectionDto> directionDtos, BindingResult bindingResult) {
-        try{
+        try {
             if (bindingResult.hasErrors()) {
                 return actionError(bindingResult);
             }
             List<OrganisationDto> ligne = directionService.configDirection(directionDtos, Config.MISE_A_JOUR);
             return ResponseEntity.ok().body(ligne);
-        }
-        catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             return catchMessageDataIntegrity(e);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return catchMessageException(e);
         }
     }
 
     @PostMapping(path = "/config-recreate")
     public ResponseEntity<?> configRecreate(@Valid @RequestBody List<DirectionDto> directionDtos, BindingResult bindingResult) {
-        try{
+        try {
             if (bindingResult.hasErrors()) {
                 return actionError(bindingResult);
             }
             List<OrganisationDto> listDirection = directionService.configDirection(directionDtos, Config.RECREATE);
             return ResponseEntity.ok().body(listDirection);
-        }
-        catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             return catchMessageDataIntegrity(e);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return catchMessageException(e);
         }
     }

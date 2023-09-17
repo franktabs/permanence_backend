@@ -42,6 +42,14 @@ public class PersonnelController extends PersonnelConvertController {
         return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
+    @GetMapping(path="/min-userId")
+    public ResponseEntity<PersonnelDto> getMinUserIdPersonnel(){
+        Personnel personnel = personnelService.getMinUserId();
+        if(personnel==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    }
 
     @PostMapping(path = "/config-actualise")
     public ResponseEntity<?> configActualise(@Valid @RequestBody List<PersonnelDto> personnelDtos, BindingResult bindingResult) {

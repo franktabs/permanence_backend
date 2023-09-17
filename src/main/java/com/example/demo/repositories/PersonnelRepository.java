@@ -18,6 +18,10 @@ public interface PersonnelRepository extends ModelRepository<Personnel, Long> {
     @Query("delete from Personnel p where p.id = ?1")
     int deleteModel(Long id);
 
+    @Query("select p from Personnel p where p.userId = (select MIN(p2.userId) from  Personnel p2 )")
+    Personnel findMinUserId();
+
+
 
 
 

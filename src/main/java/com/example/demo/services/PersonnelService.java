@@ -30,6 +30,9 @@ public class PersonnelService extends BaseService<Personnel, PersonnelRepository
         return personnelRepository.findByUserId(id);
     }
 
+    public  Personnel getMinUserId(){
+        return personnelRepository.findMinUserId();
+    }
     public List<PersonnelDto> configPersonnel(List<PersonnelDto> personnelDtos, Config config){
 
         List<PersonnelDto> personnelDtosSave = new ArrayList<>();

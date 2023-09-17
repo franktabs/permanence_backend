@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 
+import com.example.demo.entities.Departement;
 import com.example.demo.entities.Direction;
 import com.example.demo.repositories.abstracts.ModelRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,8 @@ public interface DirectionRepository extends ModelRepository<Direction, Long> {
     int deleteModel(Long id);
 
 
-
+    @Query("select d from Direction d where d.organizationId = ( select MIN(d2.organizationId) from Direction d2 )")
+    Direction findMinOrganizationId();
 
 
 }
