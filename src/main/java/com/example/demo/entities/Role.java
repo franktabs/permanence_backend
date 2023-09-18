@@ -30,7 +30,7 @@ public class Role implements Model {
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "role_personnels",
+    @JoinTable(name = "role_personnel",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "personnels_id", referencedColumnName = "id"))
     private Set<Personnel> personnels = new LinkedHashSet<>();

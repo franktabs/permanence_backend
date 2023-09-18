@@ -1,6 +1,8 @@
 package com.example.demo.entities;
 
 
+import com.example.demo.entities.interfaces.Model;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "critere", indexes = {@Index(name = "name_Unique_critere", columnList = "nom", unique = true)})
-public class Critere {
+public class Critere implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT not null")
