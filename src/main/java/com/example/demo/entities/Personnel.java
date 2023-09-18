@@ -79,6 +79,10 @@ public class Personnel implements Model {
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_id")
+    private Groupe groupe;
+
     @Size(max = 255)
     @Column(name = "screenname")
     private String screenname;

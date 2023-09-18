@@ -1,0 +1,62 @@
+package com.example.demo.entities;
+
+import com.example.demo.entities.interfaces.Model;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "groupe", indexes = {@Index(name = "name_Unique_groupe", columnList = "nom", unique = true)})
+public class Groupe implements Model {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, columnDefinition = "INT not null")
+    private Long id;
+
+    @Size(max = 45)
+    @NotNull
+    @NotBlank
+    @Column(name = "nom")
+    private String nom;
+
+
+    @OneToMany(mappedBy = "groupe", cascade = CascadeType.PERSIST)
+    private Set<Personnel> personnels = new LinkedHashSet<>();
+
+    public Groupe() {
+    }
+
+    public Groupe(Long id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Set<Personnel> getPersonnels() {
+        return personnels;
+    }
+
+    public void setPersonnels(Set<Personnel> personnels) {
+        this.personnels = personnels;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+}
