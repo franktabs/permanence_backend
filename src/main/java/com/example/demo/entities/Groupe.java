@@ -27,6 +27,13 @@ public class Groupe implements Model {
     @OneToMany(mappedBy = "groupe", cascade = CascadeType.PERSIST)
     private Set<Personnel> personnels = new LinkedHashSet<>();
 
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "groupe_critere",
+    joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "critere_id", referencedColumnName = "id")
+    )
+    private Set<Critere> criteres = new LinkedHashSet<>();
     public Groupe() {
     }
 

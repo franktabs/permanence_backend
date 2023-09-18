@@ -19,6 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "personnel", indexes = {
         @Index(name = "fk_personnel_departement_idx", columnList = "departement_id"),
+        @Index(name = "fk_personnel_group_idx", columnList = "group_id"),
         @Index(name = "departement_id_UNIQUE_personnel", columnList = "departement_id, id", unique = true),
         @Index(name = "userId_UNIQUE_personnel", columnList = "user_id", unique = true),
         @Index(name = "emailaddress_UNIQUE_personnel", columnList = "emailaddress", unique = true)
