@@ -44,6 +44,22 @@ public class GroupeDto implements Serializable, ModelDto {
         this.nom = nom;
     }
 
+    public Set<CritereDto> getCriteres() {
+        return criteres;
+    }
+
+    public void setCriteres(Set<CritereDto> criteres) {
+        this.criteres = criteres;
+    }
+
+    public Set<PersonnelDto> getPersonnels() {
+        return personnels;
+    }
+
+    public void setPersonnels(Set<PersonnelDto> personnels) {
+        this.personnels = personnels;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

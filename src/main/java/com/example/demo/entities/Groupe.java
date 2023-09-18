@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -66,4 +67,24 @@ public class Groupe implements Model {
         this.id = id;
     }
 
+    public Set<Critere> getCriteres() {
+        return criteres;
+    }
+
+    public void setCriteres(Set<Critere> criteres) {
+        this.criteres = criteres;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Groupe groupe = (Groupe) o;
+        return Objects.equals(id, groupe.id) && Objects.equals(nom, groupe.nom) && Objects.equals(personnels, groupe.personnels) && Objects.equals(criteres, groupe.criteres);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom, personnels, criteres);
+    }
 }

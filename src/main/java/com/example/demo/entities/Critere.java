@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -56,5 +57,18 @@ public class Critere implements Model {
 
     public void setGroupes(Set<Groupe> groupes) {
         this.groupes = groupes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Critere critere = (Critere) o;
+        return Objects.equals(id, critere.id) && Objects.equals(nom, critere.nom) && Objects.equals(groupes, critere.groupes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom, groupes);
     }
 }

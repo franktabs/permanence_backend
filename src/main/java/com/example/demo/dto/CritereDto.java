@@ -14,7 +14,7 @@ public class CritereDto implements Serializable, ModelDto {
     @NotNull
     private String nom;
 
-    private Set<GroupeDto> groupeDtos = new LinkedHashSet<>();
+    private Set<GroupeDto> groupes = new LinkedHashSet<>();
 
     public CritereDto() {
     }
@@ -40,11 +40,11 @@ public class CritereDto implements Serializable, ModelDto {
         this.nom = nom;
     }
 
-    public Set<GroupeDto> getGroupeDtos() {
-        return groupeDtos;
+    public Set<GroupeDto> getGroupes() {
+        return groupes;
     }
 
-    public void setGroupeDtos(Set<GroupeDto> groupeDtos) {
-        this.groupeDtos = groupeDtos;
+    public void setGroupes(Set<GroupeDto> groupes) {
+        this.groupes = groupes;
     }
 }
