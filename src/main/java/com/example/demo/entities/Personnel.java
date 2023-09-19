@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "personnel", indexes = {
         @Index(name = "fk_personnel_departement_idx", columnList = "departement_id"),
-        @Index(name = "fk_personnel_group_idx", columnList = "group_id"),
+        @Index(name = "fk_personnel_groupe_idx", columnList = "groupe_id"),
         @Index(name = "departement_id_UNIQUE_personnel", columnList = "departement_id, id", unique = true),
         @Index(name = "userId_UNIQUE_personnel", columnList = "user_id", unique = true),
         @Index(name = "emailaddress_UNIQUE_personnel", columnList = "emailaddress", unique = true)
@@ -80,8 +80,8 @@ public class Personnel implements Model {
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "groupe_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "groupe_id", nullable = true, columnDefinition = "INT")
     private Groupe groupe;
 
     @Size(max = 255)

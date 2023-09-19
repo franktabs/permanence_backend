@@ -19,6 +19,7 @@ public abstract class ModelMessageController<D extends ModelDto> {
         if (message.isEmpty()) {
             message.put("errors", e.getMostSpecificCause().getMessage());
         }
+
         return ResponseEntity.badRequest().body(message);
     }
     public ResponseEntity<Map<String, String>> catchMessageException(Exception e){
