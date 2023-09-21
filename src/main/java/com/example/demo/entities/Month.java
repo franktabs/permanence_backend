@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "month", indexes = {
+@Table(name = "perm_month", indexes = {
         @Index(name = "fk_month_personnel1_idx", columnList = "superviseur"),
         @Index(name = "fk_month_planning1_idx", columnList = "planning_id")
 })

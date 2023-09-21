@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "direction", indexes = {
+@Table(name = "perm_direction", indexes = {
         @Index(name = "organizationId_UNIQUE_direction", columnList = "organization_id", unique = true)
 })
 public class Direction implements Model {

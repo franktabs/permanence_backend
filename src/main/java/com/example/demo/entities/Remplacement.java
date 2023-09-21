@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "remplacement", indexes = {
+@Table(name = "perm_remplacement", indexes = {
         @Index(name = "fk_remplacement_personnel2_idx", columnList = "remplaceur"),
         @Index(name = "fk_remplacement_personnel1_idx", columnList = "personnel_id")
 })

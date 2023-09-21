@@ -13,7 +13,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Objects;
 
 @Entity
-@Table(name = "notification", indexes = {
+@Table(name = "perm_notification", indexes = {
         @Index(name = "notification_id_UNIQUE_notification", columnList = "annonce_id, recepteur", unique = true),
         @Index(name = "fk_notification_has_personnel_personnel1_idx", columnList = "recepteur")
 })

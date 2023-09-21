@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "permanence", indexes = {
+@Table(name = "perm_permanence", indexes = {
         @Index(name = "fk_permanence_month1_idx", columnList = "month_id")
 })
 public class Permanence implements Model {

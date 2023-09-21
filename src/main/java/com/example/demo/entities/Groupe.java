@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "groupe", indexes = {@Index(name = "name_Unique_groupe", columnList = "nom", unique = true)})
+@Table(name = "perm_groupe", indexes = {@Index(name = "name_Unique_groupe", columnList = "nom", unique = true)})
 public class Groupe implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Groupe implements Model {
 
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "groupe_critere",
+    @JoinTable(name = "perm_groupe_critere",
     joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "critere_id", referencedColumnName = "id")
     )

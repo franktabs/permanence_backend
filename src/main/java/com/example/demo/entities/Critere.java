@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "critere", indexes = {@Index(name = "name_Unique_critere", columnList = "nom", unique = true)})
+@Table(name = "perm_critere", indexes = {@Index(name = "name_Unique_critere", columnList = "nom", unique = true)})
 public class Critere implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

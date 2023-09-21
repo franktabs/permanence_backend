@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "annonce", indexes = {
+@Table(name = "perm_annonce", indexes = {
         @Index(name = "fk_notification_personnel1_idx", columnList = "emetteur")
 })
 public class Annonce implements Model {

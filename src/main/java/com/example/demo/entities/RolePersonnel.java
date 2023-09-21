@@ -14,7 +14,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Objects;
 
 @Entity
-@Table(name = "role_personnel", indexes = {
+@Table(name = "perm_role_personnel", indexes = {
         @Index(name = "personnel_id_UNIQUE_role_personnel", columnList = "personnel_id, role_id", unique = true),
         @Index(name = "fk_personnel_has_role_personnel1_idx", columnList = "personnel_id"),
         @Index(name = "fk_personnel_has_role_role1_idx", columnList = "role_id")

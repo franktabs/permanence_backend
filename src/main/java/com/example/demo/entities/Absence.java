@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "absence", indexes = {
+@Table(name = "perm_absence", indexes = {
         @Index(name = "personnel_id_UNIQUE_absence", columnList = "personnel_id, id", unique = true),
         @Index(name = "fk_absence_personnel1_idx", columnList = "personnel_id")
 })

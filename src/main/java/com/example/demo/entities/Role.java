@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "role", indexes = {
+@Table(name = "perm_role", indexes = {
         @Index(name = "name_UNIQUE_role", columnList = "name", unique = true)
 })
 public class Role implements Model {
@@ -30,7 +30,7 @@ public class Role implements Model {
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "role_personnel",
+    @JoinTable(name = "perm_role_personnel",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "personnel_id", referencedColumnName = "id"))
     private Set<Personnel> personnels = new LinkedHashSet<>();

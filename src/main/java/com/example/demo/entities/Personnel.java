@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "personnel", indexes = {
+@Table(name = "perm_personnel", indexes = {
         @Index(name = "fk_personnel_departement_idx", columnList = "departement_id"),
         @Index(name = "fk_personnel_groupe_idx", columnList = "groupe_id"),
         @Index(name = "departement_id_UNIQUE_personnel", columnList = "departement_id, id", unique = true),

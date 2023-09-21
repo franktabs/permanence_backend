@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "planning", indexes = {
+@Table(name = "perm_planning", indexes = {
         @Index(name = "fk_direction_planning_idx", columnList = "direction_id")
 })
 public class Planning implements Model {

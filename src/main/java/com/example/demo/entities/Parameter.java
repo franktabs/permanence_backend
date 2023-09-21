@@ -11,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Entity
-@Table(name = "parameter", indexes = {
+@Table(name = "perm_parameter", indexes = {
         @Index(name = "code_UNIQUE_parameter", columnList = "code", unique = true),
         @Index(name = "fk_parameter_direction1_idx", columnList = "direction_id")
 })
