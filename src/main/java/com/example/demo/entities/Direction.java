@@ -14,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "perm_direction", indexes = {
-        @Index(name = "organizationId_UNIQUE_direction", columnList = "organization_id", unique = true)
+        @Index(name = "organizationId_UNIQUE_direction", columnList = "organization_id", unique = true),
+        @Index(name = "name_UNIQUE_direction", columnList = "name", unique = true)
 })
 public class Direction implements Model {
     @Id

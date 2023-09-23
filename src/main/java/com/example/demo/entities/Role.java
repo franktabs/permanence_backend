@@ -15,9 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "perm_role", indexes = {
-        @Index(name = "name_UNIQUE_role", columnList = "name", unique = true)
-})
+@Table(name = "perm_role")
 public class Role implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,7 @@ public class Role implements Model {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)

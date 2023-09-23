@@ -21,8 +21,6 @@ import java.util.Set;
         @Index(name = "fk_personnel_departement_idx", columnList = "departement_id"),
         @Index(name = "fk_personnel_groupe_idx", columnList = "groupe_id"),
         @Index(name = "departement_id_UNIQUE_personnel", columnList = "departement_id, id", unique = true),
-        @Index(name = "userId_UNIQUE_personnel", columnList = "user_id", unique = true),
-        @Index(name = "emailaddress_UNIQUE_personnel", columnList = "emailaddress", unique = true)
 })
 public class Personnel implements Model {
     @Id
@@ -37,7 +35,7 @@ public class Personnel implements Model {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "emailaddress", nullable = false)
+    @Column(name = "emailaddress", nullable = false, unique = true)
     private String emailaddress;
 
     @Size(max = 45)
@@ -49,7 +47,7 @@ public class Personnel implements Model {
     private String telephoneMobile;
 
     @NotNull
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, unique = true)
     private Long userId;
 
     @NotNull

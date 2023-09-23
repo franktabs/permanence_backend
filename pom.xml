@@ -75,6 +75,22 @@
 			<version>5.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Pour JasperReports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.0</version>
+		</dependency>
+
+		<!-- Pour JasperReports Spring Boot Starter -->
+<!--
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-spring-boot-starter</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+-->
+
 	</dependencies>
 
 	<build>

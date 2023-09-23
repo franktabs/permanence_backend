@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Entity
 @Table(name = "perm_parameter", indexes = {
-        @Index(name = "code_UNIQUE_parameter", columnList = "code", unique = true),
         @Index(name = "fk_parameter_direction1_idx", columnList = "direction_id")
 })
 public class Parameter implements Model {
@@ -23,12 +22,12 @@ public class Parameter implements Model {
 
     @Size(max = 45)
     @NotNull
-    @Column(name = "code", nullable = false, length = 45)
+    @Column(name = "code", nullable = false, length = 45, unique = true)
     private String code;
 
     @Size(max = 45)
     @NotNull
-    @Column(name = "libelle", nullable = false, length = 45)
+    @Column(name = "libelle", nullable = false, length = 45, unique = true)
     private String libelle;
 
     @Size(max = 255)

@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "perm_absence", indexes = {
         @Index(name = "personnel_id_UNIQUE_absence", columnList = "personnel_id, id", unique = true),
-        @Index(name = "fk_absence_personnel1_idx", columnList = "personnel_id")
+        @Index(name = "fk_perm_absence_personnel1_idx", columnList = "personnel_id")
 })
 public class Absence implements Model {
 
