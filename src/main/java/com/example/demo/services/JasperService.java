@@ -10,7 +10,9 @@ import org.jfree.data.time.Day;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +34,9 @@ public class JasperService {
                 MoisJasper moisJasper = new MoisJasper();
 
                 moisJasper.setSuperviseur(getOneString(month.getSuperviseur()));
-                Set<Permanence> permanenceList = month.getPermanences();
+                Set<Permanence> permanenceSet = month.getPermanences();
+                List<Permanence> permanenceList = new ArrayList<>(permanenceSet);
+                permanenceList.sort((Comparator.comparing(Permanence::getDate)));
                 int parcoursPermanence = 0;
                 int nbrSemaine = 0;
 
