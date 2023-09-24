@@ -21,19 +21,20 @@ public interface PlanningRepository extends ModelRepository<Planning, Long> {
 
     @Query(
             value = "select id, sum(apparition) as apparition from ( " +
-                    "select pn.personnel_id as id, count(*) as apparition " +
+                    "(select pn.personnel_id as id, count(*) as apparition " +
                     "from (select * from perm_Planning pl where pl.id = ?1 ) as p " +
                     "join perm_Month as m on m.planning_id = p.id " +
                     "join perm_Permanence as per on per.month_id = m.id " +
                     "join perm_Personnel_Nuit as pn on pn.permanence_id = per.id " +
-                    "group by pn.personnel_id " +
+                    "group by pn.personnel_id )" +
                     "union " +
-                    "select pj.personnel_id as id, count(*) as apparition " +
+                    "(select pj.personnel_id as id, count(*) as apparition " +
                     "from (select * from perm_Planning pl where pl.id = ?1 ) as p  " +
                     "join perm_Month as m on m.planning_id = p.id " +
                     "join perm_Permanence as per on per.month_id = m.id " +
                     "join perm_Personnel_Jour as pj on pj.permanence_id = per.id " +
                     "group by pj.personnel_id " +
+                    ") " +
                     ") as personne " +
                     "group by id ",
             nativeQuery = true

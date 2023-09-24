@@ -6,6 +6,7 @@ import com.example.demo.entities.jasper.DayJasper;
 import com.example.demo.entities.jasper.MoisJasper;
 import com.example.demo.entities.jasper.PlanningJasper;
 import com.example.demo.entities.jasper.SemaineJasper;
+import com.example.demo.utils.ZeroPadding;
 import org.jfree.data.time.Day;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class JasperService {
                     parcoursPermanence = parcoursPermanence % 7;
                     if (parcoursPermanence == 0) {
                         SemaineJasper semaineJasper = new SemaineJasper();
-                        String periode = permanence.getDate().getDayOfMonth() + "/" + permanence.getDate().getMonthValue() + 1+" au ";
+                        String periode = ZeroPadding.paddingNumber(permanence.getDate().getDayOfMonth()) + "/" + permanence.getDate().getMonthValue() + " au ";
                         DayJasper dayJasper = getNormalDayJasper(permanence);
                         semaineJasper.getLundi().add(dayJasper);
                         semaineJasper.setPeriode(periode);
@@ -83,10 +84,10 @@ public class JasperService {
                     } else if (parcoursPermanence == 6) {
 
                         String periode = (moisJasper.getSemaine().get(nbrSemaine)).getPeriode();
-                        periode = permanence.getDate().getDayOfMonth()+"/"+permanence.getDate().getMonthValue()+1;
+                        periode = periode + ZeroPadding.paddingNumber(permanence.getDate().getDayOfMonth()) + "/" + permanence.getDate().getMonthValue();
                         (moisJasper.getSemaine().get(nbrSemaine)).setPeriode(periode);
                         for (int k = 0; k < 2; k++) {
-                            DayJasper dayJasper ;
+                            DayJasper dayJasper;
                             if (k == 0) {
                                 Set<PersonnelJour> personnelJourSet = permanence.getPersonnelJours();
                                 dayJasper = getDayJasper(personnelJourSet);

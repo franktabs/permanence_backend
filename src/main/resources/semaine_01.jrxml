@@ -31,9 +31,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="60" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="70" height="60" uuid="9e0df5c9-04f5-4eb3-ba71-ac8f96823482">
+				<reportElement x="0" y="0" width="70" height="48" uuid="9e0df5c9-04f5-4eb3-ba71-ac8f96823482">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -42,20 +42,13 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{periode}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="70" y="0" width="70" height="60" uuid="5d65feea-faaa-4c1c-84b7-e1729fc48e61"/>
-				<subreportParameter name="greenColor">
-					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
-				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lundi})]]></dataSourceExpression>
-				<returnValue subreportVariable="weekend" toVariable="greenColor"/>
-				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="140" y="0" width="70" height="60" uuid="d5614686-7099-4edd-85f2-e80e890219a2"/>
+				<reportElement x="140" y="0" width="70" height="48" uuid="d5614686-7099-4edd-85f2-e80e890219a2"/>
 				<subreportParameter name="greenColor">
 					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -64,7 +57,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="210" y="0" width="70" height="60" uuid="ed0bdddc-719d-486c-bf35-b6a07dc5b63c"/>
+				<reportElement x="210" y="0" width="70" height="48" uuid="ed0bdddc-719d-486c-bf35-b6a07dc5b63c"/>
 				<subreportParameter name="greenColor">
 					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -73,7 +66,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="280" y="0" width="70" height="60" uuid="23966fe1-e538-4106-bff9-45cc6793e691"/>
+				<reportElement x="280" y="0" width="70" height="48" uuid="23966fe1-e538-4106-bff9-45cc6793e691"/>
 				<subreportParameter name="greenColor">
 					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -82,7 +75,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="350" y="0" width="70" height="60" uuid="8972bfa1-0c15-42e8-94ed-60bba47c5365"/>
+				<reportElement x="350" y="0" width="70" height="48" uuid="8972bfa1-0c15-42e8-94ed-60bba47c5365"/>
 				<subreportParameter name="greenColor">
 					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -91,7 +84,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="420" y="0" width="70" height="60" uuid="43b135be-0b4b-4bb8-9a6e-c76dc586d849"/>
+				<reportElement x="420" y="0" width="70" height="48" uuid="43b135be-0b4b-4bb8-9a6e-c76dc586d849"/>
 				<subreportParameter name="redColor">
 					<subreportParameterExpression><![CDATA[$P{redColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -100,7 +93,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="490" y="0" width="70" height="60" uuid="e037f776-a8f7-4c9d-86d8-84e36e2397f9"/>
+				<reportElement x="490" y="0" width="70" height="48" uuid="e037f776-a8f7-4c9d-86d8-84e36e2397f9"/>
 				<subreportParameter name="redColor">
 					<subreportParameterExpression><![CDATA[$P{redColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -109,7 +102,7 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="560" y="0" width="70" height="60" uuid="658c06f8-7d6a-4a65-978f-796061b15ca6"/>
+				<reportElement x="560" y="0" width="70" height="48" uuid="658c06f8-7d6a-4a65-978f-796061b15ca6"/>
 				<subreportParameter name="redColor">
 					<subreportParameterExpression><![CDATA[$P{redColor}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -118,12 +111,21 @@
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="630" y="0" width="70" height="60" uuid="dc00ab62-0af1-4b50-b0f8-1ba76cf811a7"/>
+				<reportElement x="630" y="0" width="70" height="48" uuid="dc00ab62-0af1-4b50-b0f8-1ba76cf811a7"/>
 				<subreportParameter name="redColor">
 					<subreportParameterExpression><![CDATA[$P{redColor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dimanche_nuit})]]></dataSourceExpression>
 				<returnValue subreportVariable="weekend" toVariable="redColor"/>
+				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="70" y="0" width="70" height="48" uuid="c5efabbd-8027-4d5e-948b-9b72c62d94e4"/>
+				<subreportParameter name="greenColor">
+					<subreportParameterExpression><![CDATA[$P{greenColor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{mardi})]]></dataSourceExpression>
+				<returnValue subreportVariable="weekend" toVariable="greenColor"/>
 				<subreportExpression><![CDATA["person_day.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
