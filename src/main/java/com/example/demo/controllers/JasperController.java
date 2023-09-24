@@ -1,10 +1,14 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.jasper.PlanningJasper;
+import com.example.demo.services.JasperService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,39 +27,27 @@ import java.util.Map;
 @RequestMapping(path = "jasper")
 public class JasperController {
 
-    public class Client{
-        private String name;
+    @Autowired
+    JasperService jasperService;
 
-        public Client() {
-        }
 
-        public Client(String name) {
-            this.name = name;
-        }
+    @GetMapping("pdf/{id}")
+    public ModelAndView generatePdf(HttpServletResponse response, @PathVariable Long id) throws IOException, JRException, SQLException {
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    @GetMapping("pdf")
-    public ModelAndView generatePdf(HttpServletResponse response) throws IOException, JRException, SQLException {
-
-        File file = ResourceUtils.getFile("classpath:permanence_01.jrxml");
+        File file = ResourceUtils.getFile("classpath:planning_01.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-        List<Client> data = new ArrayList<>();
-        data.add(new Client("Frank"));
+        PlanningJasper planningJasper1 = jasperService.generatePlanningJasper(id) ;
+
+        List<PlanningJasper> data = new ArrayList<>(List.of(planningJasper1));
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
         Map<String, Object> reportParams = new HashMap<>();
-        reportParams.put("data", "myData");
+        reportParams.put("title", "PLANNING DE PERMANENCE AOUT A SEPTEMBRE");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportParams, dataSource );
         response.setContentType("application/pdf");
         JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
         return null;
     }
+
+
 
 }

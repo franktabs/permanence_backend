@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.entities.interfaces.Model;
+import com.example.demo.entities.interfaces.PersonnelDay;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
@@ -19,7 +20,7 @@ import java.util.Objects;
         @Index(name = "fk_personnel_nuit_permanence1_idx", columnList = "permanence_id"),
         @Index(name = "fk_personnel_nuit_personnel1_idx", columnList = "personnel_id")
 })
-public class PersonnelNuit implements Model {
+public class PersonnelNuit implements Model, PersonnelDay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT not null")
