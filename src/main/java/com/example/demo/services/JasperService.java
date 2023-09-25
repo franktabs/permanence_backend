@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class JasperService {
@@ -40,7 +37,7 @@ public class JasperService {
                 permanenceList.sort((Comparator.comparing(Permanence::getDate)));
                 int parcoursPermanence = 0;
                 int nbrSemaine = 0;
-
+                System.out.println("\n\n\n permanenceList first permanence =>"+permanenceList.get(0)+"\n\n\n");
 
                 for (Permanence permanence : permanenceList) {
                     parcoursPermanence = parcoursPermanence % 7;
@@ -52,8 +49,10 @@ public class JasperService {
                         semaineJasper.setPeriode(periode);
 
                         moisJasper.getSemaine().add(semaineJasper);
-                    } else if (parcoursPermanence > 0 && parcoursPermanence < 5) {
+                    }
+                    else if (parcoursPermanence > 0 && parcoursPermanence < 5) {
                         DayJasper dayJasper = getNormalDayJasper(permanence);
+
                         if (parcoursPermanence == 1) {
                             (moisJasper.getSemaine().get(nbrSemaine)).getMardi().add(dayJasper);
                         } else if (parcoursPermanence == 2) {
@@ -66,7 +65,8 @@ public class JasperService {
                             (moisJasper.getSemaine().get(nbrSemaine)).getVendredi().add(dayJasper);
 
                         }
-                    } else if (parcoursPermanence == 5) {
+                    }
+                    else if (parcoursPermanence == 5) {
                         DayJasper dayJasper;
                         for (int k = 0; k < 2; k++) {
                             if (k == 0) {
@@ -81,7 +81,8 @@ public class JasperService {
                         }
 
 
-                    } else if (parcoursPermanence == 6) {
+                    }
+                    else if (parcoursPermanence == 6) {
 
                         String periode = (moisJasper.getSemaine().get(nbrSemaine)).getPeriode();
                         periode = periode + ZeroPadding.paddingNumber(permanence.getDate().getDayOfMonth()) + "/" + permanence.getDate().getMonthValue();
@@ -122,13 +123,13 @@ public class JasperService {
 
     public DayJasper getNormalDayJasper(Permanence permanence) {
         DayJasper dayJasper = new DayJasper();
-        if (permanence.getType() != "ouvrable") {
+        if (!Objects.equals(permanence.getType(), "ouvrable")) {
             Set<PersonnelNuit> personnelNuitSet = permanence.getPersonnelNuits();
             dayJasper = getDayJasper(personnelNuitSet);
-
         } else {
             Set<PersonnelJour> personnelJourSet = permanence.getPersonnelJours();
             dayJasper = getDayJasper(personnelJourSet);
+            dayJasper.setType_jour(permanence.getType());
 
         }
         return dayJasper;

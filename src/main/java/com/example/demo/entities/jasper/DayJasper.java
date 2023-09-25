@@ -5,15 +5,25 @@ public class DayJasper{
     private String person2;
     private String person3;
     private String person4;
+    private String type_jour;
 
     public DayJasper() {
     }
 
-    public DayJasper(String person1, String person2, String person3, String person4) {
+    public DayJasper(String person1, String person2, String person3, String person4, String type_jour) {
         this.person1 = person1;
         this.person2 = person2;
         this.person3 = person3;
         this.person4 = person4;
+        this.type_jour = type_jour;
+    }
+
+    public String getType_jour() {
+        return type_jour;
+    }
+
+    public void setType_jour(String type_jour) {
+        this.type_jour = type_jour;
     }
 
     public String getPerson1() {
