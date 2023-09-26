@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planning_01" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10" uuid="f0b9d3ef-3eb1-4c13-bc14-5d0873476078">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planning_01" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="10" uuid="f0b9d3ef-3eb1-4c13-bc14-5d0873476078">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="title" class="java.lang.String"/>
 	<queryString>
@@ -25,7 +25,7 @@
 	<pageHeader>
 		<band height="33">
 			<textField>
-				<reportElement x="370" y="0" width="50" height="12" uuid="43fb512b-fd39-40f2-b6b2-36fe3b9f8bac">
+				<reportElement x="360" y="0" width="55" height="14" uuid="43fb512b-fd39-40f2-b6b2-36fe3b9f8bac">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -35,10 +35,10 @@
 				<textFieldExpression><![CDATA["( Page "+($V{PAGE_NUMBER})+"/"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="410" y="0" width="40" height="12" uuid="91897bf9-f7e3-4d44-9359-c9a92ccdae44">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<reportElement x="400" y="0" width="40" height="14" uuid="91897bf9-f7e3-4d44-9359-c9a92ccdae44">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
