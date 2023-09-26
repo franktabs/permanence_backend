@@ -61,7 +61,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial Black" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Légende]]></text>
 			</staticText>
@@ -95,7 +95,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial Black" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Chef Permanence Semaince]]></text>
@@ -106,7 +106,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial Black" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Chef Weekend Ferié Nuit]]></text>
@@ -117,7 +117,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial Black" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Membre Permanence]]></text>
@@ -128,7 +128,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial Black" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Membre du Ferier Jour]]></text>

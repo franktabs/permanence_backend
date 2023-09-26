@@ -118,6 +118,7 @@ public class JasperService {
 
     public String getOneString(Personnel personnel) {
         if (personnel == null) return null;
+        if(personnel.getFirstname().length()<=10) return  personnel.getFirstname().toUpperCase();
         return (personnel.getFirstname().toUpperCase().split(" "))[0];
     }
 
