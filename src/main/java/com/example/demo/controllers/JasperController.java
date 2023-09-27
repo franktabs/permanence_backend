@@ -64,12 +64,12 @@ public class JasperController {
         public ResponseEntity<InputStreamResource> exportExcel(HttpServletResponse response, @PathVariable Long id, @RequestBody ModelJasper modelJasper) {
             try {
                 // Charger le rapport JasperReports
-                File file = ResourceUtils.getFile("classpath:planning_01.jrxml");
+                File file = ResourceUtils.getFile("classpath:planning_02.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 
                 if(modelJasper==null){
                     modelJasper=new ModelJasper();
-                    modelJasper.setTitle("Plannification mois de octobre à decembre");
+                    modelJasper.setTitle("PLANNIFICATION");
                 }
 
                 // Récupérer les données pour le rapport, par exemple à partir d'une source de données
