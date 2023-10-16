@@ -141,16 +141,19 @@ public class JasperService {
 
         int parcoursDay = 1;
         for (PersonnelDay personnelDay : personnelDaySet) {
-            if (parcoursDay == 1) {
+            if (personnelDay.getResponsable()) {
                 dayJasper.setPerson1(getOneString(personnelDay.getPersonnel()));
-            } else if (parcoursDay == 2) {
-                dayJasper.setPerson2(getOneString(personnelDay.getPersonnel()));
-            } else if (parcoursDay == 3) {
-                dayJasper.setPerson3(getOneString(personnelDay.getPersonnel()));
-            } else if (parcoursDay == 4) {
-                dayJasper.setPerson4(getOneString(personnelDay.getPersonnel()));
+            } else{
+                if (parcoursDay == 1 ) {
+                    dayJasper.setPerson2(getOneString(personnelDay.getPersonnel()));
+                } else if (parcoursDay == 2 ) {
+                    dayJasper.setPerson3(getOneString(personnelDay.getPersonnel()));
+                } else if (parcoursDay == 3) {
+                    dayJasper.setPerson4(getOneString(personnelDay.getPersonnel()));
+                }
+                parcoursDay++;
             }
-            parcoursDay++;
+
         }
         return dayJasper;
     }
