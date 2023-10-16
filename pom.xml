@@ -80,7 +80,13 @@
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>6.20.6</version>
-		</dependency>		<!-- Pour JasperReports Spring Boot Starter -->
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>6.16.0</version>
+		</dependency>
+		<!-- Pour JasperReports Spring Boot Starter -->
 <!--
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
