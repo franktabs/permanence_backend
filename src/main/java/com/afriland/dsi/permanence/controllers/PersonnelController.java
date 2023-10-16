@@ -1,0 +1,124 @@
+package com.afriland.dsi.permanence.controllers;
+
+import com.afriland.dsi.permanence.controllers.abstracts.modelConvert.PersonnelConvertController;
+import com.afriland.dsi.permanence.dto.*;
+import com.afriland.dsi.permanence.entities.*;
+import com.afriland.dsi.permanence.enumeration.Config;
+import com.afriland.dsi.permanence.services.PersonnelService;
+import com.afriland.dsi.permanence.utils.StringExtract;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.*;
+
+import static com.afriland.dsi.permanence.controllers.AbsenceController.convertAbsenceToDto;
+import static com.afriland.dsi.permanence.controllers.DepartementController.convertDepartementToDto;
+import static com.afriland.dsi.permanence.controllers.RemplacementController.convertRemplacementToDto;
+
+@RestController
+@CrossOrigin
+@RequestMapping(path = "personnel")
+public class PersonnelController extends PersonnelConvertController {
+
+    @Autowired
+    PersonnelService personnelService ;
+
+    @Autowired
+    Validator validator;
+
+
+    @GetMapping(path = "/userId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonnelDto> getPersonnelByUserId(@PathVariable Long id) {
+        Personnel personnel = personnelService.getByUserId(id);
+        if (personnel == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    }
+
+    @GetMapping(path="/min-userId")
+    public ResponseEntity<PersonnelDto> getMinUserIdPersonnel(){
+        Personnel personnel = personnelService.getMinUserId();
+        if(personnel==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPersonnelToDto(personnel, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    }
+
+    @PostMapping(path = "/config-actualise")
+    public ResponseEntity<?> configActualise(@Valid @RequestBody List<PersonnelDto> personnelDtos, BindingResult bindingResult) {
+        try{
+            if (bindingResult.hasErrors()) {
+                return actionError(bindingResult);
+            }
+            List<PersonnelDto> ligne = personnelService.configPersonnel(personnelDtos, Config.MISE_A_JOUR);
+            return ResponseEntity.ok().body(ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            return catchMessageDataIntegrity(e);
+        }
+        catch (Exception e){
+            return catchMessageException(e);
+        }
+    }
+
+    @PostMapping(path = "/config-recreate")
+    public ResponseEntity<?> configRecreate(@Valid @RequestBody List<PersonnelDto> personnelDtos, BindingResult bindingResult) {
+        try{
+            if (bindingResult.hasErrors()) {
+               return actionError(bindingResult);
+            }
+            List<PersonnelDto> ligne = personnelService.configPersonnel(personnelDtos, Config.RECREATE);
+            return ResponseEntity.ok().body( ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            Map<String, String> message = StringExtract.keyValueError(e.getMostSpecificCause().getMessage());
+            System.out.println("\n\nerreur ici"+ message+"\n\n");
+            if(message.isEmpty()) {
+                message.put("errors", e.getMostSpecificCause().getMessage());
+            }
+            return ResponseEntity.badRequest().body(message);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur au niveau du serveur c'est produit");
+        }
+    }
+
+    @PostMapping(path = "/firstnames")
+    public ResponseEntity<?> getByManyFirstname(@RequestBody List<String> firstname){
+        try{
+            Set<PersonnelDto> ligne = personnelService.getPersonnelByManyFirstname(firstname);
+            return ResponseEntity.ok().body(ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            return catchMessageDataIntegrity(e);
+        }
+        catch (Exception e){
+            return catchMessageException(e);
+        }
+
+    }
+
+    @GetMapping(path = "/firstname/{firstname}")
+    public ResponseEntity<?> getByFirstname(@PathVariable String firstname){
+        try{
+            List<PersonnelDto> ligne = personnelService.getPersonnelByFirstname(firstname);
+            return ResponseEntity.ok().body(ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            return catchMessageDataIntegrity(e);
+        }
+        catch (Exception e){
+            return catchMessageException(e);
+        }
+
+    }
+
+}
