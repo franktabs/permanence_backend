@@ -18,12 +18,12 @@ public class CritereConvertController extends ModelConvertController<Critere, Cr
 
     @Override
     public CritereDto convertModelToDto(Critere model, int... depth) {
-        return null;
+        return convertCritereToDto(model, 1);
     }
 
     @Override
     public Critere convertDtoToModel(CritereDto modelDto) {
-        return null;
+        return convertDtoToCritere(modelDto);
     }
 
     public static CritereDto convertCritereToDto(Critere critere, int depthGroupe) {

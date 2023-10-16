@@ -26,12 +26,12 @@ public class GroupeConvertController extends ModelConvertController<Groupe, Grou
 
     @Override
     public GroupeDto convertModelToDto(Groupe model, int... depth) {
-        return null;
+        return convertGroupeToDto(model, 1, 1);
     }
 
     @Override
     public Groupe convertDtoToModel(GroupeDto modelDto) {
-        return null;
+        return convertDtoToGroupe(modelDto);
     }
 
 

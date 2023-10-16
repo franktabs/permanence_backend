@@ -91,5 +91,34 @@ public class PersonnelController extends PersonnelConvertController {
         }
     }
 
+    @PostMapping(path = "/firstnames")
+    public ResponseEntity<?> getByManyFirstname(@RequestBody List<String> firstname){
+        try{
+            Set<PersonnelDto> ligne = personnelService.getPersonnelByManyFirstname(firstname);
+            return ResponseEntity.ok().body(ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            return catchMessageDataIntegrity(e);
+        }
+        catch (Exception e){
+            return catchMessageException(e);
+        }
+
+    }
+
+    @GetMapping(path = "/firstname/{firstname}")
+    public ResponseEntity<?> getByFirstname(@PathVariable String firstname){
+        try{
+            List<PersonnelDto> ligne = personnelService.getPersonnelByFirstname(firstname);
+            return ResponseEntity.ok().body(ligne);
+        }
+        catch (DataIntegrityViolationException e){
+            return catchMessageDataIntegrity(e);
+        }
+        catch (Exception e){
+            return catchMessageException(e);
+        }
+
+    }
 
 }

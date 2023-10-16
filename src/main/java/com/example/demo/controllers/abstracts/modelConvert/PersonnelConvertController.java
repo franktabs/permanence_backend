@@ -21,7 +21,7 @@ public class PersonnelConvertController extends ModelConvertController<Personnel
 
     @Override
     public Personnel convertDtoToModel(PersonnelDto modelDto) {
-        return convertDtoToModel(modelDto);
+        return convertDtoToPersonnel(modelDto);
     }
 
     public static PersonnelDto convertPersonnelToDto(Personnel personnel, int depthDepartement, int depthAbsence, int depthRemplacement, int depthPersonnelNuit, int depthPersonnelJour, int depthMonthSupervise, int depthRole, int depthNotification, int depthAnnonce) {

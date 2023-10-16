@@ -276,4 +276,5 @@ public class PersonnelDto implements Serializable, ModelDto {
     public String getScreenname() {
         return screenname;
     }
+
 }
