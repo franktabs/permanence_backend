@@ -23,7 +23,7 @@ import java.util.Objects;
 public class PersonnelJour implements Model, PersonnelDay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT not null")
+    @Column(name = "id")
     private Long id;
 
     @NotNull

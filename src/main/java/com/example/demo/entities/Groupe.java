@@ -15,7 +15,7 @@ import java.util.Set;
 public class Groupe implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "INT not null")
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Size(max = 45)

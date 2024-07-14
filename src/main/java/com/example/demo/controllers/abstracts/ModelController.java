@@ -47,9 +47,6 @@ public abstract class ModelController<J extends Model, D extends ModelDto, T ext
         return ResponseEntity.status(HttpStatus.CREATED).body(convertModelToDto(service.create(model), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
-
-
-
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<D> getOneModel(@PathVariable Long id){
         J model = service.getModelById(id);

@@ -20,7 +20,7 @@ import java.util.Set;
 public class Direction implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT not null")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "organization_id", columnDefinition = "INT not null")

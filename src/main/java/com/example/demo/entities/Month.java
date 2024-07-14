@@ -26,7 +26,7 @@ import java.util.Set;
 public class Month implements Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "INT not null")
+    @Column(name = "id")
     private Long id;
 
     @Size(max = 45)
